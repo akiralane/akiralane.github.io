@@ -1,0 +1,627 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Red-Black Trees</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="cf0b6b62-0af0-4968-9025-4e43fdfad129" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🏮</span></div><h1 class="page-title">Red-Black Trees</h1></header><div class="page-body"><p id="441ce51b-b9d5-48a0-9ac8-da0092f4aaf3" class="">Red-black trees are another strategy for balancing trees, where nodes are assigned either &quot;red&quot; or &quot;black&quot; according to two rules:<div class="indented"><p id="340c5445-e106-409f-bdd5-800f4996d4d5" class="">Red Rule: the direct <mark class="highlight-pink">children</mark> of a red node must be <mark class="highlight-pink">black</mark>. You can&#x27;t have a red node point to a red node.</p><p id="250662ec-7357-4d87-92f6-5a13407c86a1" class="">Black Rule: the <mark class="highlight-pink">number of black nodes</mark> in all paths to a node with <mark class="highlight-pink">one or fewer</mark> children must be the same.</p></div></p><p id="6f73c6eb-d5cd-43d7-90eb-4244ed7e26e2" class="">This ensures that no path from the root to a node with one or fewer children is <mark class="highlight-pink">more than twice as long</mark> as another, which means that the tree will be kept full.</p><figure id="6fc2dbe7-b633-4d21-8a57-258e575caf2f" class="image"><a href="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled.png"><img style="width:288px" src="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled.png"/></a></figure><hr id="9cda336c-68f9-4168-9c18-d13f21e4871b"/><h2 id="ffb18ead-78b6-403f-acc2-500e2e5a4c60" class="">Restructuring</h2><p id="97d239bd-ed50-4f7e-a322-ee3face8394f" class="">When inserting a new element, we first find its position. If it&#x27;s <mark class="highlight-pink">the root</mark>, we colour it <mark class="highlight-pink">black</mark>. Otherwise, we colour it red. This often means we need to restructure the tree.</p><p id="d9f01d82-08ba-4f85-9955-7d0bb0341db9" class="">How we do this depends on the new node&#x27;s &quot;<mark class="highlight-pink">uncle</mark>&quot; - the sibling of the parent node. </p><p id="886cbacf-e930-4501-a093-c50d90748f18" class="">If the new node&#x27;s parent is red (i.e. we need to restructure the tree), <div class="indented"><p id="bd0a32a0-fb0c-4d9e-86bb-440b9a7a2943" class="">If the node has a red &quot;uncle&quot;, we <mark class="highlight-pink">relabel</mark> the tree.</p><p id="68962792-5685-43ef-8d84-22328e52976a" class="">If the node has a black or no &quot;uncle&quot;, we <mark class="highlight-pink">rotate</mark> the tree in order to &quot;create&quot; the uncle <em>(although it will not actually end up being the new node&#x27;s uncle since the new node will itself change positions)</em>.</p></div></p><h3 id="e02534a4-474c-4635-98bf-5a6785d47377" class="">Example</h3><p id="d38b0ad8-ac9f-431a-b896-f00d87a15425" class="">Here, we have just performed <code>add(16)</code> to a valid red-black tree and caused it to become invalid, since there&#x27;s a red which is the direct child of another red. We need to do something about this. </p><figure id="dd19f4d6-85b3-45a8-a3f1-0e3f3320c3f4" class="image"><a href="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%201.png"><img style="width:480px" src="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%201.png"/></a></figure><p id="33aa16fc-4d0a-4154-8b6c-a73a6b4fce8b" class="">The node has no uncle, so we need to rotate in order to &quot;create&quot; it, in a sense. Here, the imbalance is on the inside, so we need a double rotation (right-left, I think? 16 swaps with 18 in a right rotation about 18, then 15 goes down and 16 goes up in a left rotation about 15):</p><figure id="a7da1b93-95c7-48bc-95d6-a6fe2b8c078e" class="image"><a href="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%202.png"><img style="width:480px" src="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%202.png"/></a></figure><p id="030e355e-7276-4978-a9a4-984bf2a4071e" class="">Notice that the <mark class="highlight-pink">colours of the positions</mark> are maintained, not the <mark class="highlight-pink">colours of the nodes</mark>. By doing that, we have not altered the number of black nodes on a single branch. </p><p id="c4b3d76a-531e-41f9-a7f9-4210892e6107" class="">Now say that we want to perform <code>add(17)</code>, which again makes the tree invalid:</p><figure id="5183147d-eacb-44f9-aa26-d58e18c68aa8" class="image"><a href="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%203.png"><img style="width:480px" src="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%203.png"/></a></figure><p id="6eb91dfb-f60d-4662-b94d-76a83fe1ddde" class="">The uncle of 17 is 15, which is a red node. This means we need to <mark class="highlight-pink">recolour</mark> the tree. We recolour the parent of the newly added node alongside that node&#x27;s parent and sibling in order to maintain the number of black nodes along a branch, as per the Black Rule.</p><figure id="cae6b433-fe9e-4a51-9a4f-d6ba7b27c069" class="image"><a href="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%204.png"><img style="width:480px" src="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%204.png"/></a></figure><p id="78a58293-3e0f-4557-b62e-19c1b3927d71" class="">Oh no! There are still two red nodes next to each other. We look for the uncle of 16, which is 4. This is a black node, which means we need a <mark class="highlight-pink">rotation</mark>.</p><figure id="42cc5a97-13b9-44d7-8dcc-26ac7cc916df" class="image"><a href="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%205.png"><img style="width:480px" src="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%205.png"/></a></figure><p id="99a4ee0a-2d8c-4f6d-8e1d-4fd33bd045e6" class="">We perform a single left rotation about 7, which gives 16 a red uncle. The tree is now valid again.</p><hr id="365cc89a-a9be-4566-adb4-ba35dcda92f4"/><h2 id="78c98365-d7be-4000-b5f7-7e42068f4dda" class="">Performance of Red-Black Trees</h2><p id="6fdcc811-9539-48b9-a450-41decac9f991" class="">Red-black trees are more complicated to code than AVL trees, as this page demonstrates.</p><p id="848fe733-9eb3-40ec-89c3-9f060d26b0dd" class="">They&#x27;re all <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\Theta(\log(n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>, but in practice:</p><p id="acdc6c45-f151-4c00-92f9-a3704dfc6be5" class="">Red-black trees tend to be slightly less compact than AVL trees, which makes search a bit slower...? However, insertion and deletion run slightly quicker, somehow.</p><p id="afdff3dc-1964-4e65-8bca-e3ba5cb0c830" class="">Both Java&#x27;s <code>Collection</code> and C++&#x27;s <code>STL</code> use red-black trees.</p><hr id="2e296a41-5124-4cc9-97be-c353b6677d37"/><h2 id="95cfd271-37af-47b6-a35c-2e192706426b" class="">TreeSet</h2><p id="898f5710-1032-4646-991d-70005580c5e9" class="">Java&#x27;s <code>Collection</code> class has a <code>TreeSet</code> class implemented using a red-black tree. This iterates over the elements in order (unlike the <code>HashSet</code>). These are the classes to use if you want a collection of objects with no repetitions.</p><p id="4821e05b-5540-4424-a98a-71c93ea95a8f" class="">A <code>TreeSet</code> has a guaranteed order, unlike most sets. They are ordered using their natural ordering, or by a <code>Comparator</code>.</p><h2 id="c3ebef76-ec5f-4f85-98f0-204c66f19821" class="">Maps</h2><p id="41e8fcdf-0e46-43fc-9c59-98d582947926" class="">One major ADT we haven&#x27;t seen an implementation for yet is the map.</p><p id="dc816dcc-db66-4d85-ac18-ba8e7d2f624f" class="">The Java class <code>TreeMap&lt;K, V&gt;</code> implements maps using red-black trees.</p><p id="1d22caa9-e161-4cc3-bf58-5639382fd30a" class="">We can implement <code>Map</code> using a <code>TreeSet</code> by making each node hold an <code>Entry&lt;K, V&gt;</code> object. </p><figure id="34ea80b2-e375-4fff-bd1e-9e376b0a79ec" class="image"><a href="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%206.png"><img style="width:576px" src="Red-Black%20Trees%20cf0b6b620af0496890254e43fdfad129/Untitled%206.png"/></a></figure><h2 id="71aa9168-4761-40c8-b2b1-8ea750104183" class="">Conclusions for binary search trees in general</h2><ul id="45af65e6-08de-4f3e-bbed-c71e46d28a19" class="bulleted-list"><li>All types of BST are very efficient (order <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> insertion, deletion and search) providing that they are balanced</li></ul><ul id="38432dbf-f230-4024-a5ea-cd82b5ac47f0" class="bulleted-list"><li>Balanced trees are achieved by performing rotations</li></ul><ul id="e2726ca6-b33f-4dc5-8ac7-f7ba0d1eeed7" class="bulleted-list"><li>There are different strategies for when to rotate, including AVL and red-black.</li></ul><ul id="bc7c53a0-b9f2-4f15-9842-8aea0bcdf055" class="bulleted-list"><li>BSTs are used for implementing <mark class="highlight-pink">sets</mark> and <mark class="highlight-pink">maps</mark>.</li></ul></div></article></body></html>

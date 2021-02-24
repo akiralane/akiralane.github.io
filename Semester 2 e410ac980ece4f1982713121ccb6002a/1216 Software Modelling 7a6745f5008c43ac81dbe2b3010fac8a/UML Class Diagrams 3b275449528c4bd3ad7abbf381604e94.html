@@ -1,0 +1,631 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>UML Class Diagrams</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3b275449-528c-4bd3-ad7a-bbf381604e94" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🥋</span></div><h1 class="page-title">UML Class Diagrams</h1></header><div class="page-body"><p id="7ce583a2-f64e-42d4-888a-8070d3e3e669" class="">Object modelling models the actual clases and entities used in the system.</p><p id="fdbded3a-d778-4d56-92cb-55679a5b1ec7" class="">Class diagrams partition the system into areas of responsibility (classes) and describes the associations between them.</p><p id="73d95f9b-c124-49ca-bcc9-b4665b78f673" class="">They can be at three distinct levels:</p><ul id="75c6903b-c34d-402f-a93f-032f360c3ee2" class="bulleted-list"><li><strong>Conceptual</strong>: shows concepts in project domain</li></ul><ul id="905890a4-e474-4265-aba9-5c9ca26ad6d2" class="bulleted-list"><li><strong>Specification</strong>: shows interfaces between components</li></ul><ul id="ac797e69-d8b4-4843-9d74-42f9417ba958" class="bulleted-list"><li><strong>Implementation</strong>: shows classes which correspond directly to code</li></ul><h2 id="ebc8327c-fb5b-4920-b1c3-f6538e320617" class="">Classes</h2><p id="74cb0ac9-7939-488d-ba50-de873d5c608d" class="">A class is represented as a box split in three: <mark class="highlight-pink">name</mark>, <mark class="highlight-pink">attributes</mark>, <mark class="highlight-pink">methods </mark>in that order.</p><p id="e3c2183b-b99a-4fd6-aa1c-0f130dbb2484" class="">These qualities are assigned symbols which describe their scope:</p><ul id="9729b4e8-0388-41b4-ab1d-0439c76b4bbc" class="bulleted-list"><li>+: public</li></ul><ul id="abe1e0ff-3fcf-4b2a-ba2e-855de8c2e3be" class="bulleted-list"><li>#: protected</li></ul><ul id="383da31f-e9dc-424a-bbcc-f183e22e74fb" class="bulleted-list"><li>~: default</li></ul><ul id="f41e56c9-177d-4f5b-a0fb-c8162b7aebf5" class="bulleted-list"><li>-: private</li></ul><figure id="b0e95cec-6c5e-4217-869b-0a2f92a7e3d2" class="image"><a href="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled.png"><img style="width:120px" src="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled.png"/></a></figure><p id="138a735c-8fd7-4b34-8b91-0dea823d6a62" class="">Multiplicity works the same way as use case diagrams.</p><p id="8cf5493b-e26e-4011-bef5-2beb27e504f7" class="">You can also label associations, for clarity.</p><figure id="be52c729-8ec3-47f9-9e62-1706964ade74" class="image"><a href="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%201.png"><img style="width:347px" src="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%201.png"/></a></figure><p id="c63dd617-b476-4fdc-9326-98984746aebe" class="">A class can be associated with itself. An example is that employees manage other employees; managers are themselves employees.</p><figure id="08266f58-6c00-49c0-96dc-d0fa2a823a6b" class="image"><a href="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%202.png"><img style="width:167px" src="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%202.png"/></a></figure><h3 id="07f17ef6-288e-49b6-b7d6-59203c3ceb78" class="">Association classes</h3><p id="572dddb7-188b-447b-9af1-d67ee2ba8e65" class="">Association classes describe properties which don&#x27;t fit in one class or another, since the properties represent <mark class="highlight-pink">an association</mark> between those classes. </p><ul id="b9474f8c-b535-482b-9b0a-e1467ef1db4d" class="bulleted-list"><li>Let’s say you have students and they’re studying courses. That’s simple; a course can have many students, and a student can study many courses.</li></ul><ul id="01b7b391-c76a-47e6-b6e5-f84e4fbee7d4" class="bulleted-list"><li>But now you want to store what semester they’re in, what optional modules they’ve picked etc.</li></ul><ul id="344de1b4-31e6-4f0b-8e90-ae3f7e6a3042" class="bulleted-list"><li>Do we store these attributes in Student or Course? Neither, because they’re attributes that describe the association, not the actual classes.</li></ul><figure id="becc14e6-c117-47d0-aef6-b33bbe8bf8d6" class="image"><a href="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%203.png"><img style="width:584px" src="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%203.png"/></a></figure><p id="ea3f9a04-c899-4afd-b9e1-c30408aef517" class="">Both the above syntaxes are valid.</p><h3 id="99ea3fd9-22e0-4926-a8b6-61fd0d37796d" class="">Generalisation</h3><p id="5488b3e7-0255-4aaf-896e-72a4d14b5535" class="">Generalisations in class diagrams are analogous to inheritance in OOP (sometimes it will directly describe inheritance, if you are drawing a class diagram at the <strong>implementation</strong> level).</p><p id="0cf7cfc2-01e9-4c5c-9f62-7df09d9fc292" class="">The label on a generalisation, sometimes called the &quot;<mark class="highlight-pink">discriminator</mark>&quot;, describes the criteria used in the specialisation.</p><figure id="5548dd73-ecfc-4b94-93dc-8546947dd52b" class="image"><a href="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%204.png"><img style="width:449px" src="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%204.png"/></a></figure><h3 id="3e2adc1d-48bf-4ff6-8c36-3b01e2b68ce4" class="">Aggregation and Composition</h3><p id="30f4bdec-1c2c-4edf-8b2a-5440a4caeb5a" class="">Aggregations are special types of associations meaning that one class is &quot;part of&quot; another class. They are represented by a <mark class="highlight-pink">hollow diamond</mark> at the end of the association line. In the below example, the square has a colour. If you were to delete the square, the colour would still exist - just not on the square.</p><figure id="b6a53102-8430-47e7-b264-6c71dfde27c3" class="image"><a href="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%205.png"><img style="width:230px" src="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%205.png"/></a></figure><p id="cf04af89-fcc5-4717-9094-9913c744bd6c" class="">Composition is a strong kind of aggregation. They are represnted by a <mark class="highlight-pink">filled diamond</mark> at the end of the association line. In the below example, there are rooms in a building. If you were to destroy the building, you&#x27;d have a hard time finding any rooms in it. You know, since there&#x27;s no building there anymore.</p><figure id="81151a71-5c87-446c-838c-13009ecc46d8" class="image"><a href="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%206.png"><img style="width:241px" src="UML%20Class%20Diagrams%203b275449528c4bd3ad7abbf381604e94/Untitled%206.png"/></a></figure><p id="21072a31-4cd9-4cd0-abbb-46405b9354ac" class="">
+</p><p id="38924620-e996-4bb1-9dfa-f2a254b8e238" class="">
+</p><p id="85ecba1a-ade5-4a17-bbe2-ec2d0e6208e1" class="">
+</p><p id="f2b18b53-5dea-4bb3-babe-be158d6a2383" class="">dear god I&#x27;ve spent far too long writing these notes</p><p id="acaa377c-3279-4fa4-8b97-c3d55ca35b8c" class="">ありがとうbarnesさん</p><p id="4972746f-3379-4feb-95e8-329f7057af4f" class="">あんたが強い。私より強い、とにかく。</p><p id="25dbace0-5574-44da-8af7-1e41d904b1de" class="">
+</p></div></article></body></html>

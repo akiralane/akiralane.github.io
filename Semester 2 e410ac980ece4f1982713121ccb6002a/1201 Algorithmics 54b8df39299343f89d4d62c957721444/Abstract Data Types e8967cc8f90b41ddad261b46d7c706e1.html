@@ -1,0 +1,629 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Abstract Data Types</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e8967cc8-f90b-41dd-ad26-1b46d7c706e1" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🗼</span></div><h1 class="page-title">Abstract Data Types</h1></header><div class="page-body"><p id="0f084597-daac-40bc-8aa7-a9d2be3965a6" class="">In the object-oriented methodology you separate the <mark class="highlight-pink">interface </mark>from the <mark class="highlight-pink">implementation</mark>. The actual implementation is encapsulated and may be changed without affecting how the class is used.</p><p id="578280e6-8825-47c6-8aeb-75a5b1993fb2" class="">The interface is the set of public methods.</p><p id="7c1bfde6-83db-4402-a789-2887c3cd772a" class="">An <mark class="highlight-pink">abstract data type</mark> (ADT) specifies a set of operations through which a certain data structure can be accessed. You are &quot;entering into an agreement&quot; that you only intend to use the underlying structure in the declared way.</p><p id="b6d42feb-d64c-4fee-971b-1b638339061a" class="">Common ADTs include <mark class="highlight-pink">stacks, queues, sets and maps</mark>. Each has a limited set of operations on it.</p><p id="ff7a84d1-5798-456f-9cec-10ef2dea5cac" class="">There are many possible implementations for a given ADT: for example, a stack can be implemented as an array which can only be accessed via <code>pop</code>, <code>push</code> and <code>peek</code>.</p><blockquote id="d0f0ddf6-05b2-451b-a313-ecbd195f6f0f" class="">By declaring your intentions with an ADT, you are making your algorithms easier to understand and maintain.</blockquote><hr id="3dead51d-c614-4f92-8746-bbb1a34324ac"/><h2 id="1611ce10-f918-4bb7-b1ba-1e177c308c46" class="">Stacks</h2><p id="2a869a8e-1007-4393-b24d-6d56355cc7b5" class="">Stacks are <mark class="highlight-pink">LIFO</mark> memory - Last In First Out.</p><p id="775fc3af-45e5-4ee1-abad-dee2a613c919" class="">They can be accessed using:</p><ul id="2f0f5755-989d-48b1-be2e-3cd5d874b94e" class="bulleted-list"><li><mark class="highlight-pink">T</mark><code>pop()</code>: remove the top item and return it,</li></ul><ul id="6a8792c2-8ab2-46e6-b7b9-a7919b50e506" class="bulleted-list"><li><code>push(item)</code>: add an item to the top,</li></ul><ul id="dd50ffca-5384-4e70-910f-28b1edd7fe9e" class="bulleted-list"><li><mark class="highlight-pink">T</mark><code>peek()</code>: return the top item,</li></ul><ul id="1fb7f140-1c7b-41c6-aa02-34d8708e833e" class="bulleted-list"><li><mark class="highlight-pink">bool </mark><code>isEmpty()</code>: true if stack is empty, false otherwise.</li></ul><p id="a671c341-6396-439e-9b6a-d788f792b253" class="">Stacks are useful because the interface is very simple. It reduces the access to memory, which prevents interactions in a way which may break the program.</p><p id="4cf96698-5480-4c9a-be95-7ddaa68a07c2" class="">They are sufficient for many applications: for example, matching parentheses or XML tags can be done with stacks quite intuitively.</p><p id="6530ce88-2a5d-47fc-82b0-3aefd59a98e0" class="">Arithmetic expressions can be evaluated via stacks by <code>push</code>ing a number to the number stack, <code>push</code>ing the operator to an operator stack and then <code>push</code>ing the other number to the number stack. The stacks can now be reduced down using the information from both and this process can be repeated with following arithmetic elements.</p><figure id="378b3783-1696-4870-b92e-f62e8881813c" class="image"><a href="Abstract%20Data%20Types%20e8967cc8f90b41ddad261b46d7c706e1/Untitled.png"><img style="width:973px" src="Abstract%20Data%20Types%20e8967cc8f90b41ddad261b46d7c706e1/Untitled.png"/></a></figure><hr id="cbb6f2e7-c5e8-4f91-990a-b5ee9d0d6020"/><h2 id="a6a3bd40-3436-43b2-8eaf-e394f7a76629" class="">Queues</h2><p id="1bdcd7a1-6355-4c7b-b43d-6ec9b1751caf" class="">Queues are <mark class="highlight-pink">FIFO</mark> memory - First In First Out.</p><p id="4ef3dd15-3638-4388-ba9d-b487ab5eface" class="">They can be accessed using:</p><ul id="f0ebe638-5563-4f0b-8c56-235fcaf7727e" class="bulleted-list"><li><code>enqueue(item)</code>: add an item to the end of the queue,</li></ul><ul id="175e9c9d-eec8-46ab-9c98-5ab1d10af34a" class="bulleted-list"><li><mark class="highlight-pink">T </mark><code>peek()</code>: return the item at the front of the queue,</li></ul><ul id="e99f38ec-e0c9-43f5-83e6-cc9aa29e9425" class="bulleted-list"><li><mark class="highlight-pink">T</mark> <code>dequeue()</code>: removes and returns the item at the front of the queue,</li></ul><ul id="c6a9ee2f-36f8-4d1c-bb3e-9eabbf28c8fc" class="bulleted-list"><li><mark class="highlight-pink">bool</mark> <code>isEmpty()</code>: true if queue is empty, false otherwise.</li></ul><p id="dd0e5eaa-d621-4ab4-9e3e-01c1202a5665" class="">Priority queues are also a thing; they hold the data each bound to a numerical representation of their priorities.</p><p id="68cb7ddd-1249-4fa1-b6fb-4dc4fd74b664" class="">They have the methods:</p><ul id="42315b80-db9b-47a6-bc3d-afd5d41e1622" class="bulleted-list"><li><code>insert(item, priority)</code>: add an item at priority <code>priority</code>,</li></ul><ul id="294d3596-c8c9-4f85-86a7-ebae14916627" class="bulleted-list"><li><mark class="highlight-pink">T </mark><code>findMin()</code>: return the item with the highest priority (smallest numerical value),</li></ul><ul id="4a2f149a-45ae-4ac2-b85f-b814294fc89b" class="bulleted-list"><li><mark class="highlight-pink">T </mark><code>deleteMin()</code>: remove the item with the highest priority.</li></ul><p id="cfbbeaac-8a9c-4a00-ae63-4fdafc1a032b" class="">Queues and priority queues are used in operating systems for things like print/job queues, or communication/message passing. Priority queues are used specifically for <mark class="highlight-pink">greedy algorithms</mark>, like Prim&#x27;s minimum spanning tree algorithm.</p><p id="04c58cdc-de0a-483e-8da2-fb1f3eb64f5b" class="">The most efficient implementation of a queue uses a heap, surprisingly.</p><hr id="d2ce24e5-f371-4c8d-83a6-0aa80baadf4d"/><h2 id="0307637e-0ad8-447d-908a-b6f2c2f65e30" class="">Lists</h2><p id="83bf84fb-9fb8-4817-8f42-78e24600d5c4" class="">A list is a collection where the order of elements is important.</p><p id="04079340-985d-4e5c-bc31-e691c09218d9" class="">I won&#x27;t list the methods because you&#x27;ve used them so much.</p><p id="dab72582-0d00-42a7-ac37-81329bc007d9" class="">Java has a <code>List&lt;T&gt;</code> interface and provides specific implementations for this interface like <code>ArrayList&lt;T&gt;</code> and <code>LinkedList&lt;T&gt;</code>.</p><p id="ac4c5978-017e-4632-a7d8-dc49b5ffcc46" class="">A linked list is a collection of elements where each element points to the next - their order is not given by their physical placement in the collection. This allows for efficient insertion or removal of elements from any position in the sequence during iteration.</p><p id="e0b599c7-23b4-4834-b33b-29737d22774d" class="">There&#x27;s more detail on linked lists and arrays on the next page.</p><hr id="1aa88484-44e0-41e3-a409-e04b4b4629c3"/><h2 id="e3357898-9f74-4251-9cf8-c07de167a3ac" class="">Sets</h2><p id="9a10cdc4-f891-47ab-b96f-0cded7fba90a" class="">Sets model mathematical sets. There is no order or repetition in a set.</p><p id="fdea0c34-b8ab-4718-a241-4676b0aa40d6" class="">Operations: <code>add</code>, <code>remove</code>, <code>contains</code>, <code>size</code>, <code>isEmpty</code>. You can imagine what those do.</p><p id="ace763ec-c12a-422d-99ab-6e106d78d524" class="">Java has a <code>Set&lt;T&gt;</code> interface which is commonly implemented using <code>HashSet</code>s or <code>TreeSet</code>s. The best one to use depends on the application.</p><hr id="75adf26f-22b3-4481-9733-e9a17afb64e1"/><h2 id="120bc186-befd-4c21-bfe4-ed9765a9150a" class="">Program to Interfaces, not Implementations</h2><p id="84c78d9d-5679-449f-a294-34a22eaa509d" class="">Use data structures through their interfaces:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="e69d7909-e777-4a25-bcc1-1949ac231044" class="code"><code><span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> someSet <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> someList <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre><p id="c248f78b-5531-4280-8f1f-f55e3a4072c3" class="">This makes modification and maintenance easier because it&#x27;s not implementation dependent.</p><p id="6da1758b-c384-40f5-88d6-b62f263f997b" class="">Declare your intentions, not your actions; program to interfaces, not implementations.</p><p id="8be4569f-50ae-482a-840c-382fcfe65073" class="">
+</p></div></article></body></html>
