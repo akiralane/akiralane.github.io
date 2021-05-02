@@ -1,0 +1,627 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[ Coursework checklist ]</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ff3a4a54-6f4b-4be1-8bca-76bc2ee10b58" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/woodcuts_9.jpg" style="object-position:center 79.64%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">⚜️</span></div><h1 class="page-title">[ Coursework checklist ]</h1></header><div class="page-body"><figure id="6fc0989c-fdc9-4cd9-bfeb-67abbc6c8ff5"><a href="https://secure.ecs.soton.ac.uk/noteswiki/w/COMP1206/Coursework" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">ECS - ECS Intranet Login</div></div><div class="bookmark-href"><img src="https://secure.ecs.soton.ac.uk/favicon.ico" class="icon bookmark-icon"/>https://secure.ecs.soton.ac.uk/noteswiki/w/COMP1206/Coursework</div></div><img src="https://secure.ecs.soton.ac.uk/style/images/header/ecs_logo.gif" class="bookmark-image"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="9dcaa0da-d4ec-45fa-b81e-b07bbb181b64"><div style="font-size:1.5em"><span class="icon">🏹</span></div><div style="width:100%">Remember!! This checklist is much simpler than the actual coursework description. <mark class="highlight-pink">Always</mark> check the wiki above before attempting to write any code, because you might be missing crucial detail. </div></figure><hr id="c500508b-024d-4a61-b954-2f82592aeabb"/><ul id="97a9b00e-360d-4cba-b544-286fb1e78ca9" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Game Logic 🧬</span><ul id="c8b130e5-a7a3-4356-a8a8-59b01a6b7d23" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Grid class</span><ul id="c9ccd268-d812-4a3d-8b28-1cc0823e3461" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>canPlayPiece</code> method</span></li></ul><ul id="6a26d87b-ddab-49c7-9fca-23d68312da69" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>playPiece</code> method</span></li></ul></li></ul><ul id="761c6f3f-f037-4032-88ee-56ac375d6bf9" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Game class</span><ul id="3f64ed14-ae94-4e92-8521-c7a08bf75379" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>spawnPiece</code> method</span></li></ul><ul id="6cfb71dc-0c25-40cf-9b7b-7d20b623d77b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a <code>currentPiece</code> field</span></li></ul><ul id="aab168e4-2c7a-4155-9b09-be0f05618a56" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Upon initialisation of the game, spawn a new <code>GamePiece</code> and set as the <code>currentPiece</code></span></li></ul><ul id="22a88182-c227-4b0f-a12d-002420ced1c6" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>nextPiece</code> method</span></li></ul><ul id="d05ad35d-5258-45fa-a3fd-dd6a99517ff4" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update <code>blockClicked</code> method</span></li></ul><ul id="b0e72881-3a29-4afc-9f31-0d662412a811" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>afterPiece</code> method</span></li></ul></li></ul></li></ul><hr id="f8d140a7-15df-46cc-9a1c-1b69d3d48890"/><ul id="a0d6a856-8021-45a8-b979-5dbd611e6730" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">User Interface 🎨</span><ul id="38cff587-24be-413d-b4e9-6ed5a5e2ab8b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add bindable properties <code>score</code>, <code>level</code>, <code>lives</code>, <code>multiplier</code> to Game class</span></li></ul><ul id="898b3e3a-c47d-41a6-ad7e-11a7ecfc1ae3" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add accessor methods for above properties</span></li></ul><ul id="aab82d85-a196-446b-b7ab-d988b8de37ab" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create UI elements to show the above properties in the ChallengeScene</span></li></ul><ul id="3cd72da0-0443-4f91-b7c0-bb62a4ddae31" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>score</code> method in Game class</span></li></ul><ul id="7cbd0f1e-b93f-42b4-a7b8-e4d39539ec57" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Implement multiplier</span></li></ul><ul id="bd9c09b1-ad74-45bb-b30f-83c2095c19e1" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Implement level</span></li></ul><ul id="323394b4-a85e-43a0-a98d-6bed5e7507ec" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create Multimedia class</span><ul id="45a08add-1a26-4d5f-be85-edaa906eeb49" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">SFX</span></li></ul><ul id="0ef682e1-3d0a-4347-895d-33a6f61a68ec" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">BGM</span></li></ul></li></ul><ul id="b9a9bedc-d272-4163-a7f2-d1160602ddcc" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Implement BGM on menu and in-game using the multimedia class</span></li></ul></li></ul><hr id="4fcc6f43-9593-4274-b798-e31b88181406"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b5bd0bf5-a2fc-4f0a-b871-b5c483a66bd8"><div style="font-size:1.5em"><span class="icon">🏹</span></div><div style="width:100%">Remember!! This checklist is much simpler than the actual coursework description. <mark class="highlight-pink">Always</mark> check the wiki before attempting to write any code, because you might be missing crucial detail. </div></figure><hr id="cfeb5e28-2aec-46e5-bdf2-f1ce6e0c35c4"/><ul id="d51eb073-def3-459a-ac94-7c262dad9ffa" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Enhancing the UI ✨</span><ul id="ad38c5f1-c041-4792-a865-1c9e7701e914" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create PieceBoard which can display a specific piece</span></li></ul><ul id="5162c0f1-c749-4c33-96e5-7fbf7c84de35" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update MenuScene to be an actual menu</span></li></ul><ul id="a2cc4953-1ccc-4c46-a739-46e505e26294" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create InstructionsScene</span><ul id="5cc55972-0610-4e11-a5d2-78e667a3db82" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Dynamically display all 15 game pieces using PieceBoard</span></li></ul></li></ul><ul id="5a67ec1b-0609-4b91-8bc3-cc7caa15018f" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add keyboard listeners to exit scenes</span></li></ul><ul id="f2543560-6efa-4845-994b-21f29aaad91c" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a <code>NextPieceListener</code> interface</span></li></ul><ul id="c6dbc540-f032-48e7-8577-b742f24ab564" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a <code>NextPieceListener</code> field and <code>setNextPieceListener</code> to Game</span></li></ul><ul id="d4996d6b-8127-4939-8c5b-e8d95399b9a1" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a <code>NextPieceListener</code> in the ChallengeScene which listens for new pieces in the game</span><ul id="295d2762-9a58-428e-867a-427c641db68b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a PieceBoard to ChallengeScene</span></li></ul><ul id="ea6f7f55-c4df-4380-91c5-4fcff9f55af8" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">When the listener is triggered, pass the new piece to the PieceBoard so that it displays</span></li></ul></li></ul></li></ul><hr id="67fecaad-b34f-4317-b11f-7636d369c90b"/><ul id="5a914b70-e4e8-4d04-8eb3-6a03700364a5" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Events ⏲️</span><ul id="9cb49d8b-b61c-4b9f-a961-3914bad62b14" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>rotateCurrentPiece</code> method</span></li></ul><ul id="fa526914-af22-43a4-b439-b2f1c4797492" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>followingPiece</code> field</span></li></ul><ul id="b0f9a4d3-5a06-4dc9-a740-f98075a6fb86" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update <code>nextPiece</code> which makes the following piece the current piece and replaces the following piece</span></li></ul><ul id="05e798ff-613f-4cbf-81ad-7556a826cde4" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a smaller PieceBoard which shows the following piece</span><ul id="85c2e771-7c79-4207-8f8e-6fa7cab01caa" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update <code>NextPieceListener</code> to also pass the following piece</span></li></ul></li></ul><ul id="5439e757-bb52-4415-8ad4-7d1545056690" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>swapCurrentPiece</code> method</span></li></ul><ul id="6f610dd7-fdf8-4454-8c25-322247a74a77" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>RightClicked</code> listener with <code>setOnRightClicked</code> method</span></li></ul><ul id="2192c1b9-4fac-4600-bd7a-d353cb0a31ef" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Implement it so that right clicking on the main GameBoard or left clicking on the current-piece PieceBoard rotates the next piece...? Refer to the demo for accurate functionality, the wording is strange here.</span></li></ul><ul id="d1e3b903-1a88-4d2e-9357-759dfc0be979" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">SFX for game events</span></li></ul><ul id="2f8162cf-a14b-4f85-8146-505f16a86023" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add keyboard support</span></li></ul></li></ul><hr id="4706c1b7-5cdd-4964-ab2d-0f1d43f6ebaa"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ee71603f-e939-46c4-bbef-00ce5a4f64b9"><div style="font-size:1.5em"><span class="icon">🏹</span></div><div style="width:100%">Remember!! This checklist is much simpler than the actual coursework description. <mark class="highlight-pink">Always</mark> check the wiki before attempting to write any code, because you might be missing crucial detail. </div></figure><hr id="623dff90-0b56-4a60-aecf-20522f8cc18a"/><ul id="62ebff10-6af7-43ee-8e23-d2e544c2f82f" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Graphics 🎭</span><ul id="196e1b3e-a638-4ae2-af3a-3f6d49dda711" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Change GameBlock to make nicer filled and empty tiles</span></li></ul><ul id="a3352370-b9d4-45d4-9669-482b218e2055" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update PieceBoard and GameBlock to show a &quot;middle square&quot; selector cursor thing</span></li></ul><ul id="eff13e5b-d54c-401d-a9b4-6f12620bfe07" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add events to update the GameBoard and GameBlock to highlight the square currently hovered over</span></li></ul><ul id="3ac584aa-eac1-4abe-87f1-06788d0860bb" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a new <code>fadeOut</code> method on the GameBlock (used to indicate a cleared block)</span></li></ul><ul id="14b761d6-d822-45c0-8293-09dc3d818888" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a new <code>fadeOut</code> method on the Game<strong>Board</strong> which triggers <code>fadeOut</code> for a set of blocks</span></li></ul><ul id="b4f8ba81-91a3-45c9-8200-403825a73d25" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a <code>LineClearedListener</code></span></li></ul><ul id="095e4dfd-da8d-4d11-8269-88b533353994" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Use the <code>LineClearedListener</code> in the ChallengeScene to pass them to fade out in the GameBoard</span></li></ul></li></ul><hr id="7f48bf4e-5c4c-447d-ba2a-5f23a1f5ae61"/><ul id="0c13d645-11ba-47b5-abaa-6c93309106af" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Game Loop ♿</span><ul id="6095ca9f-df43-489b-a14a-67965219ee8c" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>getTimerDelay</code> function in Game</span></li></ul><ul id="4e41332c-4316-413f-be8d-c26178541a36" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>Timer</code> or <code>ExecutorService</code> which calls a gameLoop method</span></li></ul><ul id="0a49c36f-fe68-4cc9-9ea3-26f3518e70a0" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a <code>GameLoopListener</code></span></li></ul><ul id="79e5caab-f169-4033-aba3-ef4dd07ed154" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add an animated timer bar to the ChallengeScene</span><ul id="4f1c1086-4b0e-441f-9814-c84c451476bf" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">It should change colour to indicate urgency</span></li></ul></li></ul><ul id="a705324d-f8be-49d0-a78f-5d3744147cd0" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">The game should end when lives <mark class="highlight-pink">goes below zero</mark></span></li></ul></li></ul><hr id="f695a0e2-3699-4220-8034-ed90a161e642"/><p id="818f352a-93dd-417c-a0b9-90b2b69cca53" class="">The game should be working at this point! We&#x27;re just adding features now. Yay!</p><p id="d9e4d32f-3717-4c8d-96c3-d203e5773673" class="">TODO:<div class="indented"><ul id="4dd09cf2-edb1-4334-a847-d004f484e588" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Make menu nicer</span></li></ul><ul id="a79cad00-85a2-41fb-82a9-939e08e9d302" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add some texture to blocks? like maybe the triangle effect</span></li></ul><ul id="e7183680-3d1a-4c00-ae5e-870629c03b8a" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add menu keyboard control</span></li></ul></div></p><hr id="028efb96-f965-4c33-b38d-26d06dd0a255"/><ul id="6be76aa3-2253-4dbd-b694-f54318229615" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Scores 🏅</span><ul id="9d3611ac-9a5e-4619-9013-44d5c952506b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a <code>ScoresScene</code> custom component</span></li></ul><ul id="2d1bdfe6-2ee9-44f2-bbc6-dccc15911eee" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a <code>ScoresList</code> custom component and add it to the ScoresScene</span></li></ul><ul id="313f3158-d20a-410c-92f4-17bcff956c17" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Write a <code>saveScores</code> method which writes the scores to a file</span></li></ul><ul id="a6375456-a64b-4b44-aaa0-2804e0799312" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Write a <code>loadScores</code> method which updates the score list from the file</span></li></ul><ul id="bd67a047-1751-4591-b5ef-a897f7b04c5b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">When the <code>ScoresScene</code> starts:</span><ul id="e71d215c-c665-4c5c-a3fc-e03e195828c4" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Load the list of scores and link it to the <code>ScoresList</code></span></li></ul><ul id="08d0e997-e465-41bd-b141-c581689f7cf2" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">If the score has beaten any of the scores, prompt the user for their name and insert it at the correct position. Update the scores file</span></li></ul><ul id="52c9ed31-b7ca-4a77-8451-ff04501db639" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Reveal the high scores</span></li></ul></li></ul><ul id="297b53d5-eef4-4f0b-a3ed-77e74b2f4769" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>getHighScore</code> method</span></li></ul><ul id="ecb208de-d915-4da7-8289-091feec9391c" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">When starting a game in the ChallengeScene, the highest score should be displayed in the UI, unless the highest score is the current game. In that case, increase the high score as the current game increases in score.</span></li></ul></li></ul><hr id="1857b022-8529-4ded-9916-11e42cb3ab72"/><ul id="b4462153-b64d-4f45-8424-076b1d9af93b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Online Scores 🌐</span><ul id="61676911-559b-4267-a71d-1524a2535c36" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a <code>remoteScores</code> <code>SimpleListProperty</code> in the Scene</span></li></ul><ul id="e0e8d2fa-be9e-49f3-90ee-a4f92c505a14" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>loadOnlineScores</code> method</span></li></ul><ul id="ed5885a5-bac0-429d-afe6-75f519a6d5f9" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Use a <code>CommunicationsListener</code> in the ScoresScene create a second ordered list of online high scores</span><ul id="ce6b26be-a739-4d6d-8290-050cea63c039" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update the <code>remoteScores</code> list. Ensure you only trigger displaying/checking the high scores <mark class="highlight-pink">after</mark> the list arrives!</span></li></ul></li></ul><ul id="a54b2915-2406-4801-8513-d9e909d11fda" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked"><code>writeOnlineScore</code> method</span></li></ul><ul id="26a03c8a-9863-4f11-8161-0acd1bded16f" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add another <code>ScoresList</code> component bound to the <code>remoteScores</code> property to display the online list alongside the local one</span></li></ul></li></ul><p id="8df3f643-b5b8-4060-8a49-bd5662ebc31a" class="">See the wiki for the network protocol.</p><hr id="66895640-9b6c-4c42-bc7e-42dbdd6f51c6"/><p id="cc2e21a0-2854-4fc1-be10-3d31d75ca193" class="">lobby protocol handled:</p><ul id="b0854174-440e-476e-928a-e77e3059a78d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">At any time</span><ul id="e5b3b3bb-af77-4f57-be1b-3c0ba685ce33" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Send</span><ul id="12b9417a-a073-4a4e-9c67-0cb3d20da764" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">LIST</span></li></ul><ul id="36e33e2a-994c-4d7c-bc00-386d8010992f" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">CREATE</span></li></ul><ul id="28da4c39-6122-4ada-baad-d4161eba8b6a" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">JOIN</span></li></ul><ul id="7b1c54bb-b8b7-447a-b49c-74d27f696e16" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">QUIT - unnecessary, let oli handle it for me &gt;:)</span></li></ul></li></ul><ul id="75dab8f8-6bab-4a32-86f1-ef5b2a2ff6fd" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Receive</span><ul id="276fe116-968b-4231-b87e-877692c78282" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">CHANNELS</span></li></ul><ul id="cf744c74-de5c-46b9-8e79-591a358563c4" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">JOIN</span></li></ul><ul id="83838a6e-d3ac-42ff-a1b8-ff61ef7c4629" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">HOST</span></li></ul><ul id="b0c0b523-5158-48cd-a32a-41fbe263dc9b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">ERROR</span></li></ul></li></ul></li></ul><ul id="632abdfd-eb35-417f-99bd-55e3c2411a55" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">In a channel</span><ul id="13a32b5b-475b-4a59-8779-3ceed997433c" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Send</span><ul id="0b01db36-798a-4ec0-9641-ab560bcc63b5" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">MSG</span></li></ul><ul id="b8bbdbb4-1395-409d-8c0c-dfba121115fc" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">NICK</span></li></ul><ul id="16934592-a631-4dff-956d-24645430d6db" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">START</span></li></ul><ul id="a799da29-f6c6-4b73-a73e-dfaa40135142" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">PART</span></li></ul><ul id="8afa4b7e-5be3-4aef-b011-ebfd11c08545" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">USERS - seems unneccessary</span></li></ul></li></ul><ul id="4537828d-81b4-4050-a14f-6c765d73a78e" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Receive</span><ul id="d76b6ea4-0e08-40f2-9833-8e4ea74e76c9" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">NICK - for changing the name of all messages when nickname is changed</span></li></ul><ul id="411873b1-fcb4-407e-9b3a-45099119f0d6" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">START</span></li></ul><ul id="1f0fe736-ac8a-4a2b-940c-3061f0de3683" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">PARTED - why does this exist</span></li></ul><ul id="e35f1a0a-f1b4-4669-8900-f9fce575c2ea" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">USERS</span></li></ul><ul id="f93ed307-c5b2-49a0-8627-7f6961c5e967" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">NICK - I have written this twice</span></li></ul><ul id="5be20013-ac5b-48a9-8e16-0b092992c66c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">START - I have also written this twice</span></li></ul><ul id="4fe8d00d-b8a2-4943-852e-6f68a3a97497" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">MSG</span></li></ul></li></ul></li></ul><hr id="3c65e771-16f6-4b46-a3bf-2f0b40628b0e"/><ul id="ffa49171-d919-4244-a02f-a06afb081f60" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Multiplayer 🧨</span><ul id="20800dfc-b30b-4258-9770-c7d658793871" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">The Lobby ☕</span><ul id="b3343999-f2bb-44e5-a495-9f50cd2972b7" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a multiplayer menu option</span></li></ul><ul id="fe71e211-83f9-4279-9bea-80e26fa926bb" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a LobbyScene and make the menu option open it</span><ul id="7cd231f1-c3d5-4e7d-a78f-85a27810430a" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">On opening, it should start a repeating timer requiresint current channels using the Communicator</span></li></ul><ul id="3d58c2f1-118c-4ac9-aa03-12958bec5a6e" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a listener to the Communicator to handle incoming messages</span></li></ul><ul id="28e4ee8d-3816-469e-9f52-8662f9babad8" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Handle the different commands which are recieved... you might need to leave this one until you&#x27;ve finished the rest of the functionality, I think</span></li></ul></li></ul><ul id="42797077-5555-4095-85be-1cbc662b6746" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a button to start a new channel. Channel names must be unique, but maybe leave that for error handling a few steps down</span></li></ul><ul id="5023c1ae-b078-4ef2-9238-f49fcad530e9" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Allow the user to join a channel</span></li></ul><ul id="4b046096-04b6-4e5e-ad9c-a76ff849340c" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a chat box to send and receive messages in the channel</span></li></ul><ul id="a712272b-a620-479d-a246-7caf8f414741" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a button to start the game if the user is the host</span></li></ul><ul id="6d549bdd-31dd-40a0-b4ce-30ade9fbd1ba" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add a button to leave the channel</span></li></ul><ul id="a08d526d-396a-49a8-acdd-19bc4193a23c" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Add error handling. Remember that channel names must be unique</span></li></ul><p id="e52f7048-b090-43ed-b4e3-30cc9783ed3b" class="">Again, see the wiki for the network protocol required here.</p></li></ul><ul id="30284db0-4f33-4d03-b34d-47d253d86552" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">The Game 🎲</span><ul id="74c46bce-bdb1-47f4-9efd-9454957dd880" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a Leaderboard which extends the ScoreList</span></li></ul><ul id="79be1fb6-a71a-4e48-a619-8948c81ad8be" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a MultiplayerScene which extends the ChallengeScene</span></li></ul><ul id="7210fad8-79b7-4c5c-b123-34c3e4f02699" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update the UI to include chat and the leaderboard</span><ul id="4645bfaa-7037-4385-9729-b5e01ecab68a" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Maybe remove some less important elements during multiplayer?</span></li></ul></li></ul><ul id="fd9f2006-a85f-40ea-907d-635b10b27831" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Create a MultiplayerGame which extends Game</span><ul id="52fa762d-ddcf-4d0c-af2a-56c66e9eac71" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">This should listen for incoming pieces, score updates and chat messages</span></li></ul><ul id="efbc3e8e-b580-4e85-84ce-ab6b00b098d9" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">When score updates are received, update the lsit which should be bound to the leaderboard</span></li></ul></li></ul><ul id="fee78df9-119f-48df-8833-58e54edab755" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Send appropriate updates using the Communicator</span></li></ul><ul id="224efe0a-92ec-4825-8a02-5aa5ec96cfd0" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update the leaderboard to track number of lives</span><ul id="08adf51d-3ccb-42de-8db5-41e805641a65" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Upon game over, they should be crossed off the leaderboard</span></li></ul></li></ul><ul id="7437b7a3-d5b2-418e-abe5-0887143837c8" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Update the ScoresScene to substitute showing local game scores for the multiplayer game scores, held in the MultiplayerGame object</span></li></ul></li></ul></li></ul><hr id="5638b6a6-ae30-4a45-ad57-097542cadf72"/><ul id="f58dd2bf-959f-4d23-a62d-697c3d42ab41" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">add keyboard controls to the menus you haven&#x27;t yet</span></li></ul><h2 id="f260bc16-a11e-437b-a4f5-0147ffd12daa" class="">Extension Zone 🔪</h2><ul id="039164f9-0dd6-4f5d-86ab-30f8146de5a7" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Do one.</span></li></ul><hr id="c4cc9b6d-69e6-420a-b701-aeafd9f9c220"/><p id="395b63f3-5305-4b48-a8cb-cc112eddc7f0" class="">It&#x27;s over. You&#x27;re done. That&#x27;s it.</p></div></article></body></html>

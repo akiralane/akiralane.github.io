@@ -1,0 +1,673 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>C: Pointers and Memory</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="01c002d7-8cb8-4a23-938a-75a8de10fbe4" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📚</span></div><h1 class="page-title">C: Pointers and Memory</h1></header><div class="page-body"><p id="59aec393-6fd5-4c9a-84ac-bea5e30d6fa9" class="">⚠️ The compiler doesn&#x27;t initialise variables in C - not even with a null value. The variable gets whatever value is stored in that memory location, which could be anything. これも危ない</p><p id="d8269e4d-3f4f-461c-a027-e4cb0df868de" class="">Always initialise your variables - especially the pointers!</p><h3 id="1cd55d11-6f17-4aef-99ec-f0e3a2016d47" class="">Memory size - sizeof</h3><p id="15d904f0-1530-426c-9754-d00fca9ee7c7" class="">The <code>sizeof</code> operator tells you how much space is allocated to a variable in number of bytes.</p><p id="440e726c-73c8-473e-b5c6-97ff1228f4bf" class="">For example, <code>sizeof</code> can be used to determine the memory size of an array. The number of bytes required to store an array is equal to the number of bytes of the stored type times the number of elements (woo, no overhead).</p><pre id="78d6bb22-9c49-4fa9-abdc-e608cf1d4366" class="code"><code>int array[10];
+sizeof(array); // returns 40
+// 4 bytes worth of int times 10 elements = 40 bytes</code></pre><h2 id="c30ae068-0ba5-42cf-8e9d-515ab464c884" class="">Memory Location</h2><h3 id="70b6a6f6-9724-4368-8d17-708e3b62308e" class="">Addressing - &amp;</h3><p id="6960c77e-7982-4922-9f55-b02d7a4b4260" class="">The <code>&amp;</code> operator gets you the memory location of a variable.</p><p id="4640e339-4e4c-4322-8d04-93e4b9650a4b" class="">For a variable <code>var</code>, we can get the address with <code>&amp;var</code>.</p><p id="c1f93f34-619d-4e47-b5dc-e41c7999ab27" class="">It&#x27;s worth taking a look at how this is organised in memory:</p><figure id="3fe2b4f8-236f-48f4-9b70-21172946e596" class="image"><a href="C%20Pointers%20and%20Memory%2001c002d78cb84a23938a75a8de10fbe4/Untitled.png"><img style="width:336px" src="C%20Pointers%20and%20Memory%2001c002d78cb84a23938a75a8de10fbe4/Untitled.png"/></a><figcaption>temp is an array, obviously</figcaption></figure><h3 id="3dd9396e-277b-449a-8bf6-938016a8810f" class="">Pointers - *</h3><p id="f6dabf6e-1fc2-42be-80c6-456cdf0b598b" class="">A pointer is a variable which <mark class="highlight-pink">holds a memory address</mark>. They are declared mostly like other variables, except the variable name should be prefixed with <code>*</code>.</p><p id="9e8c57e8-048b-4d4e-9e7b-2ce168a50d3c" class="">Further, pointers need a type, because the type specifies the kind of data that lives at the memory location.</p><p id="64ffd56c-4697-4654-8ed9-ec22525f135e" class="">Example: <code>int *pointerVar</code> then <code>pointerVar = &amp;var</code> where var is an int.</p><p id="7dc54653-9666-48a0-b79b-1de226e52e42" class="">Arrays behave slightly differently here. The compiler knows that an array is an address for a series of values; you don&#x27;t need the <code>&amp;</code> operator:</p><pre id="c9d930c4-50c7-4d64-bf46-300887188b25" class="code"><code>int array[5] = {2, 4, 6, 8, 10}
+int *a;
+
+a = array; // a now points to the array
+a = &amp;array; // THIS IS WRONG AND BAD AND SUCKS</code></pre><p id="efb6c248-0ef3-4516-8de1-6042bc2724b1" class="">However, if you want a specific element of the array, you will need the <code>&amp;</code> as per common sense.</p><p id="f732644a-3a96-4835-8866-6b73a120c02a" class="">Here&#x27;s an example of using pointers:</p><pre id="a8ed6eb8-5e31-4eab-9908-e14a94f5954e" class="code"><code>#include &lt;stdio.h&gt;
+
+int main() {
+		
+	float euros, pounds;
+	float *p_euros; // declare pointer, which we will point to euros in a bit
+	// remember that this means whatever is at this pointer has to be a float
+
+	printf(&quot;Enter a value in pounds: &quot;);
+	scanf(&quot;%f&quot;, &amp;pounds); // put the result into the pounds variable
+
+	euros = pounds * 0.8763;
+	printf(&quot;%f pounds are %f euros.&quot;, pounds, euros);
+
+	p_euros = &amp;euros; // initialise pointer to euros variable
+	printf(&quot;&#x27;euros&#x27; is %i bytes long at address %p.&quot;, sizeof(euros), p_euros);
+
+	return 0;
+
+}</code></pre><p id="a456bfbb-db0e-46e3-acac-3518ee34f4c0" class="">You <mark class="highlight-pink">DO NOT</mark> use the asterisk when a pointer variable is initialised - ONLY when it&#x27;s being declared as a pointer.<div class="indented"><p id="38f3262e-a44b-4c0a-8e4b-23d3143defcd" class=""><code>*p_euros = &amp;euros</code> IS INCORRECT.</p></div></p><p id="19e3b6c4-1e12-4865-a77c-6a9c31477d6b" class="">You do, however, use the asterisk when <mark class="highlight-pink">dereferencing</mark> a pointer in order to get its value:</p><pre id="994f5da4-9cd6-4f90-b01c-cc24d1c70049" class="code"><code>int var, *pointer
+
+var = 1;
+pointer = &amp;var;    // pointer now contains the address of var
+
+printf(var);       // 1
+printf(pointer);   // 0x7ffeefbff638 or some shit
+printf(*pointer);  // 1 - we have accessed the value which was pointed to!!</code></pre><p id="8b3e0cb5-93dc-4925-9a78-04699c4f843b" class="">In fact, <code>var</code> and <code>*pointer</code> are effectively the same.</p><p id="89b665ec-ba62-4104-945f-0d09b94744f2" class="">We can do <code>*pointer = 3</code> and <code>var</code> will now contain the value 3.</p><p id="47d55922-9375-4200-8169-136c742bddb4" class="">We can even initialise variables through a pointer to their address:</p><pre id="ccd54661-2a70-46db-9838-8de624556b25" class="code"><code>int var;
+int *pointer;
+
+pointer = &amp;var;
+*pointer = 63;
+
+// var now has been initialised with the value 63.</code></pre><h2 id="ec071acf-beea-4feb-82cb-31724516bc15" class="">Pointer arithmetic</h2><p id="e7882e55-8bb4-463c-8f52-0ec8e5730888" class="">This more direct access to memory allows us to do some wacky things.</p><p id="66572d86-a717-41dd-9172-2d2e8dd58376" class="">For example, we can iterate through an array by incrementing a pointer to that array and dereferencing it for each element! </p><pre id="4b6421ed-f9a9-4fe6-ac6d-1f406a3138b2" class="code"><code>int array[5] = {1, 2, 4, 8, 16}
+int x, *array_pointer;
+array_pointer = array; // don&#x27;t need &amp; when pointing to arrays
+
+for (x = 0; x &lt; 5; x++) {
+	printf(&quot;array[%i] is %i \n&quot;, x, *array_pointer); // dereference at each element
+	array_pointer++;
+}</code></pre><p id="a71ec5f8-6362-436f-896e-5c017761c4a8" class="">Adding to a pointer makes it jump the number of bytes of the type that it&#x27;s pointing to. Useful!</p><p id="f9e19e94-9e06-402f-818f-7563c6ca0b68" class="">This means you can also do something like <code>*(pointer + x)</code> and increment <code>x</code> in each iteration of a loop.</p><h3 id="4c377e4b-9891-45ea-93bf-824a4f92ccfa" class="">Increment operator reminder</h3><p id="bc6f5f9c-b397-45a3-b7a0-29063f98bd0f" class="">Also, remember that the increment operator <code>++</code> can be used inline, and its behaviour depends on whether it is appended or prepended to the operand.<div class="indented"><p id="283a11f8-5a2a-4523-a6ba-1842ef147873" class="">Further, the increment operator is <mark class="highlight-pink">more closely binding</mark> than the dereference operator.</p><p id="40ad97f7-0adc-4d75-acc2-4eb1dd1a1bc5" class="">This means that something like <code>printf(&quot;array[%i] is %i \n&quot;, x, *array_pointer++);</code> has exactly the same behaviour as the two lines in the loop above. <code>printf(&quot;array[%i] is %i \n&quot;, x, ++*array_pointer);</code>, however, will <mark class="highlight-pink">add one to the value at the address</mark>.</p></div></p><p id="f0a4876b-a5fc-4638-871a-3ff691ea655d" class="">Generally;</p><p id="40769226-b08c-4a90-a3c1-92c01d3fbe0f" class=""><code>a++</code> is &quot;return a, <mark class="highlight-pink">then</mark> add one to it&quot;</p><p id="38d9abdd-4b7e-4cec-8c6b-29c0d42d1735" class=""><code>++a</code> is &quot;add one to a, <mark class="highlight-pink">then</mark> return its value&quot;</p><p id="7d67f579-f7b6-48df-9608-5c3e1d4026ac" class="">There&#x27;s an entire fucking table of increment-dereference operators combinations, each with subtly different behaviours. Just avoid using them both at once, please.</p><p id="1908ebb6-4a77-469c-8efb-9a54b827e49f" class="">
+</p></div></article></body></html>
