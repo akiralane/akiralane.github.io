@@ -1,0 +1,634 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Test Design</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c5f6bf84-7dd3-4dbd-85c4-9d497918b469" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🚃</span></div><h1 class="page-title">Test Design</h1></header><div class="page-body"><figure id="a072ca78-17d6-4542-a155-7691ab1ae831" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled.png"><img style="width:546px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled.png"/></a><figcaption>This is the life cycle model of testing.</figcaption></figure><p id="1df8a1da-1e6d-440e-b1b2-b2e6c60e12e9" class="">The above falls apart when our tests suck. How do we make good tests?</p><h1 id="66e92d7f-c327-46b2-9df4-1f21d3b60842" class="">Testing theory</h1><figure id="15857f77-ea98-4c3a-8f36-8e665ab595a8" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%201.png"><img style="width:371px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%201.png"/></a><figcaption>Ideally, we want T to fully cover S.</figcaption></figure><p id="08f6e796-8745-4edd-aaee-0f2ee316a1ff" class="">Failure of omission is <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>−</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">S-P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span><span>﻿</span></span>.</p><p id="b4218d9e-184c-4407-a764-cb043a3ef6d2" class="">Failure of comission is <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>−</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">P-S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></span><span>﻿</span></span>.</p><p id="dbacbffa-7628-4eef-9db9-2f41efd9a6f1" class="">The correct behaviour falls under <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>∩</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">P\cap S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></span><span>﻿</span></span>.</p><p id="03ac2f2a-5ed2-452a-898a-dac8a340b64c" class="">As shown in the diagram, we want <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span><span>﻿</span></span> to fully cover <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></span><span>﻿</span></span> - however, it is unreasonable and often impossible to test all cases or even anything near all cases. Hence, we need clever test design to optimise coverage.<div class="indented"><p id="84f30eee-847e-4648-bc78-c03cff49ad96" class="">Requirements specification must be precise, clear, unambiguous and complete.</p><p id="6649b4c1-fa66-4795-8815-8771056b39fb" class=""><mark class="highlight-pink">Negative</mark> as well as <mark class="highlight-pink">positive</mark> test cases are required:<div class="indented"><p id="b51cac17-e687-42fe-87a9-5a31d11423cc" class="">Positive test cases assert that good inputs succeed while negative tests assert that bad inputs are handled properly.</p></div></p></div></p><h2 id="be1b6688-4df2-4adf-8369-38e2fa506b5c" class="">Equivalence class testing</h2><p id="a10da558-a154-46d2-a923-4a1db3586980" class="">Two values share an equivalence class if they are treated in the same way according to the specification:</p><pre id="e4ea4b95-a176-4bda-8801-8c308d7af08b" class="code"><code>if (amount &lt;= 2000)
+• then Total = 0
+else if (amount &gt; 2000 &amp; amount &lt;= 15000)
+• then Total = (amount-2000) * tax_rate[1]
+else
+• Total = 13000 * tax_rate[1] + (amount-15000) * tax_rate[2]</code></pre><p id="2a7e4e66-c315-46f1-99e1-13da7842e167" class="">There are three equivalence classes in the above: <div class="indented"><p id="44ce5e80-f04a-4dc0-860f-f43b081d7474" class="">[0, 2000], (2000, 15000], (15000, MAX]</p></div></p><p id="496244f7-4877-4d9e-9c9b-1b4ea2682844" class="">Like in maths, an <mark class="highlight-pink">open interval</mark> <code>()</code> does not include its endpoints while a <mark class="highlight-pink">closed interval</mark> <code>[]</code> does (these can be used together, as shown above). Is this naming convention a little unintuitive...?</p><blockquote id="c82fac09-d786-4176-bb37-016c7259133f" class=""><strong>The idea: </strong>we need only to test a single value from each equivalence class; testing more would be redundant.</blockquote><h3 id="dbb15745-cfb2-4cf4-bad3-68ed87ba1e29" class="">Weak normal ECT</h3><p id="77e67482-53e9-4f7a-9ee6-77771ce1a384" class="">We define equivalence classes on the domain of input for each variable.</p><p id="f6becd94-54b5-472e-9c09-29030b4e85af" class="">In doing this, we assume <mark class="highlight-pink">independence of the input variables</mark> and also make the <mark class="highlight-pink">single fault assumption</mark>:<div class="indented"><p id="4988654f-1d86-40ef-a0b7-58e4bead7fb7" class="">&quot;failures are only rarely the results of the simultaneous occurence of two or more faults&quot;</p></div></p><figure id="4a1b58cb-442f-4902-a38d-ce393a61854a" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%202.png"><img style="width:289px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%202.png"/></a><figcaption>We have 5 equivalence classes here, though there are 6 <mark class="highlight-pink">combinations</mark> of equivalence classes. Look at the rows and columns.</figcaption></figure><p id="39c59fd7-2551-4b3c-b812-50db6cfbe430" class="">In the above, you can see that we need 3 test cases.</p><h3 id="7062a793-b2c8-41f4-8608-ff3edeb4feab" class="">Weak robust ECT</h3><p id="d40b2238-764e-452c-99b2-e8e3f084b6c3" class="">This includes weak normal, except it adds out of range test-cases for each variable.</p><figure id="2adf5d52-e7a2-4dff-90e2-ad4da007012a" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%203.png"><img style="width:277px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%203.png"/></a></figure><h3 id="9e6f21cc-283a-465e-93b5-5a528a95f994" class="">Strong normal ECT</h3><p id="dbafb09d-d294-4840-bc1f-94d8c697c94f" class="">We cover every combination of equivalence classes for the domain of all variables.</p><p id="25af27bd-55b7-4d38-a067-cb3dc368e393" class="">As opposed to weak normal ECT, we assume <mark class="highlight-pink">dependence</mark> among input variables and make the <mark class="highlight-pink">multiple fault assumption</mark>.</p><figure id="8598215a-b779-4cac-be84-ab44aea16e5e" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%204.png"><img style="width:291px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%204.png"/></a></figure><h3 id="7d6121e9-395a-4162-a420-ab306c3eb7ad" class="">Strong robust ECT</h3><p id="86afcc46-0bc8-4943-8d95-71f81c2fbfdf" class="">Same a strong normal, except we also check for <mark class="highlight-pink">all out-of-range</mark> combinations.</p><figure id="dbab3cbe-83af-4195-837b-3497e8a9a6be" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%205.png"><img style="width:275px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%205.png"/></a></figure><h3 id="313ed739-165a-4e64-abfe-a85f3d30da81" class="">Boundary value testing</h3><p id="5622d2df-b63b-4dac-b2c9-50ce5ca767f1" class="">Complements equivalence class partitioning: we assume that the boundaries of the input and output partitions are more error-prone.</p><figure id="79ecbe8f-3b75-4710-9474-0c048ad68083" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%206.png"><img style="width:243px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%206.png"/></a></figure><p id="0d8de3cd-b194-47c8-aefc-2c9e9a8d6932" class="">We pick values near the extremes and on the extremes, alongside a single centre-range test case.</p><p id="eb457ee2-82b6-43d0-b181-912bb9ab2cfe" class="">We can add robustness by choosing values just past the extremes.</p><p id="a092b0b0-ac98-4b12-9472-7fa7e1e98fd4" class="">We can also add the worst cases (multiple-fault assumption) by testing at the edges of more than one variable at a time:</p><figure id="7d5508d3-564a-4e91-83da-5e472e0fd112" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%207.png"><img style="width:240px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%207.png"/></a></figure><p id="d719e2b1-9909-4c1c-a30c-cc7fcae18dd9" class="">Using both robustness and worst-case testing at the same time gets kinda ridiculous:</p><figure id="59023140-3277-46e6-a64c-857c0f2e1355" class="image"><a href="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%208.png"><img style="width:240px" src="Test%20Design%20c5f6bf847dd34dbd85c49d497918b469/Untitled%208.png"/></a><figcaption>There are 7^n test cases lmao</figcaption></figure><p id="0b3ffb95-6366-43ae-bb46-bfd159da1ab2" class="">
+</p></div></article></body></html>

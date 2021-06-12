@@ -1,0 +1,628 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Data Modelling and Relationships</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5fe98687-1215-4a10-80c6-a4ddb6f8c71d" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🎍</span></div><h1 class="page-title">Data Modelling and Relationships</h1></header><div class="page-body"><nav id="bdeacc8f-8244-4afd-b123-2abc25157fe9" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f18b4689-ab3e-45c8-b498-99f1dac248a5">Conceptual</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#77b78423-783e-4706-aa60-0883bca4c5c1">Logical Model</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f48da78d-b732-4387-81cc-9b89f4612fe6">Physical Model</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2dbd901b-a6ba-4e54-950b-fc79c2456cfa">Relationships</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fb386765-e377-4a4f-a8ea-e7d83c90e168">Crow&#x27;s foot notation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f9ca95c9-b5a1-445b-bc4d-dad156e03bce">Cardinality and Modality</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#df58ae58-1278-44a7-afc3-3302d598fa05">Keys</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#832d2cd5-0c47-4c99-8dbe-63404444531d">Primary Key</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2b4857a1-5ad6-46a4-891f-91a8b26fbf28">Foreign Keys</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5f4113d0-1db1-42ec-8187-92091d7d49e0">Maintaining referential integrity</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d5d43a54-6ff9-4afc-93e0-97c7b2ad70c3">Surrogate Keys</a></div></nav><hr id="38d727f6-ee33-40e9-a463-4562bcf9f284"/><p id="5214201e-0ac3-4dc5-9b25-0d4821f49296" class="">There are three types:</p><ul id="d3e109ce-27eb-4f1e-9497-1e729f130f30" class="bulleted-list"><li>Conceptual → Ideas</li></ul><ul id="fdd20848-ab34-463d-9c1c-3a438100e965" class="bulleted-list"><li>Logical → High level design</li></ul><ul id="c8d91126-1b5a-4aa1-825b-a788adf5105e" class="bulleted-list"><li>Phyiscal → Low level</li></ul><h3 id="f18b4689-ab3e-45c8-b498-99f1dac248a5" class="">Conceptual</h3><p id="7035efa2-ef6b-46b3-b996-dc08a78ef07d" class="">Directly from the requirements and domain; <mark class="highlight-pink">no thought to actual database design</mark>.</p><p id="ce15e3e4-b81f-434c-bca1-f6d22f4f378a" class="">Includes entity names, relationships and sometimes attributes.</p><h3 id="77b78423-783e-4706-aa60-0883bca4c5c1" class="">Logical Model</h3><p id="cf1ab141-7dc4-4af5-9d15-6e985a7bf108" class="">Identification of attributes and attribute types.</p><h3 id="f48da78d-b732-4387-81cc-9b89f4612fe6" class="">Physical Model</h3><p id="29447cb7-c6a9-4f7b-bd67-4e047cde93c1" class="">Consideration of database structure, including actual tables and fields.</p><p id="d7e8007b-0fb1-4ebc-93af-2351768cb38a" class="">Provides a <mark class="highlight-pink">concrete implementation of relationships</mark> using keys, indices, join tables etc.</p><hr id="eb9c0cb1-c74c-4d96-b32a-d1fa9bc45153"/><h1 id="2dbd901b-a6ba-4e54-950b-fc79c2456cfa" class="">Relationships</h1><p id="d07fa967-3a57-40ba-bbb6-c785c8a0346e" class="">Cardinality:<div class="indented"><p id="22d4da3e-fd37-491d-8fd5-8c179b643ac0" class="">one-to-one (an employee has one address)</p><p id="65e7cb43-07fd-46cc-a3ae-8d894290516d" class="">one-to-many (an employee may work on multiple projects)</p><p id="3b8ebc93-8526-4b30-9626-05e93f8791fa" class="">many-to-many (many employees may work on many projects each)</p></div></p><p id="46c77ee9-f2d3-43ad-9fb2-2e3336428a4a" class="">Identifying/non-identifying:<div class="indented"><p id="9ed8d61d-394a-41a9-bc3a-399338d585a2" class="">when a foreign key is/isn&#x27;t part of the primary key of a child table</p></div></p><p id="a5646556-9134-4fe0-b3bd-7bae7018f4eb" class="">Mandatory/optional:<div class="indented"><p id="20a7a376-be59-4f1c-9ebe-c2b3bb702ac8" class="">hmmmmmmm take a guess</p></div></p><h2 id="fb386765-e377-4a4f-a8ea-e7d83c90e168" class="">Crow&#x27;s foot notation</h2><figure id="ccc624fe-a186-40e7-b261-e3fe738a6e28" class="image"><a href="Data%20Modelling%20and%20Relationships%205fe9868712154a1080c6a4ddb6f8c71d/Untitled.png"><img style="width:336px" src="Data%20Modelling%20and%20Relationships%205fe9868712154a1080c6a4ddb6f8c71d/Untitled.png"/></a><figcaption>weird crows</figcaption></figure><h2 id="f9ca95c9-b5a1-445b-bc4d-dad156e03bce" class="">Cardinality and Modality</h2><p id="d3f7337d-1dc1-487c-a3ae-d9a128f6a282" class="">These are the indicators of the business rules around a relationship.</p><p id="08eb34de-e65c-489b-9b0c-0926bedd02a6" class="">Cardinality, as outlined above, refers to the <strong>maximum</strong> number of times <mark class="highlight-pink">an instance</mark> of an entity can be associated with <mark class="highlight-pink">instances</mark> in the related entity.</p><p id="19cc20f1-7011-495d-9d36-ede0c10fca30" class="">Modality refers to the <strong>minimum</strong> number of times an instance can be related to instances in the related entity.</p><hr id="ce91b4ef-bd22-4b81-a83a-37e1bc36e0ee"/><h1 id="df58ae58-1278-44a7-afc3-3302d598fa05" class="">Keys</h1><h2 id="832d2cd5-0c47-4c99-8dbe-63404444531d" class="">Primary Key</h2><p id="4126e3d4-3451-4a9e-b667-9357abae59c5" class="">A primary key ensures every row is unique.<div class="indented"><p id="38bdf56f-4c46-43ac-85ca-28c47bd4fb7f" class="">You can&#x27;t have two rows with the same value(s) for the primary key.</p><p id="198cb8d8-1d30-4b16-80b0-ce93ba7846b2" class="">A primary key can be on a single field <mark class="highlight-pink">or multiple fields</mark>.</p><p id="36682aba-f702-4b4b-9964-b0c4853459ec" class="">If you don&#x27;t provide one, SQLite uses an automatically generated rowid</p></div></p><h2 id="2b4857a1-5ad6-46a4-891f-91a8b26fbf28" class="">Foreign Keys</h2><p id="fb4d1538-8003-44bc-a000-e134d3637923" class="">Foreign keys help ensure referential integrity between tables.</p><p id="4916dd5d-a822-49d3-94c0-faa64cb6b3a7" class="">If a column in T1 references a column in T2, we can&#x27;t have a value in T1 that isn&#x27;t in T2.</p><p id="9c446ede-2eb2-4a08-ba9a-b84c730fb219" class="">Foreign keys are created when the table is created<div class="indented"><p id="c2539092-3043-4a58-a4f6-e7cf6adf19b2" class=""><code>FOREIGN KEY (column) REFERENCES Table(column)</code></p></div></p><p id="527e17a9-116f-4193-aae9-c04661c072cc" class="">Foreign key constraints have to be turned on for this to work.<div class="indented"><p id="c0da17d9-6177-4b9f-8a41-17a58785849d" class="">The pragma command changes the way the DBMS is set up; we can use it to turn on foreign key support.<div class="indented"><p id="3f37e4ec-c593-4221-938c-5db751934775" class=""><code>PRAGMA foreign_keys = ON;</code></p></div></p></div></p><h3 id="5f4113d0-1db1-42ec-8187-92091d7d49e0" class="">Maintaining referential integrity</h3><p id="88cc6c67-ba91-48a7-b5d6-0dd1a350c141" class="">We can tailor this behaviour using <code>ON DELETE</code> and <code>ON UPDATE</code>.<div class="indented"><p id="2e7687ee-32d9-483c-b32d-3bf76b9e0e23" class=""><code>FOREIGN KEY (column) REFERENCES Table(column) ON DELETE &lt;action&gt; ON UPDATE &lt;action&gt;</code></p></div></p><p id="25440739-2348-48ee-8b05-6ce452fe7aff" class="">Potential actions:<div class="indented"><p id="c5e8161b-50cb-4e5b-a96d-133ebd720c0a" class=""><code>CASCADE</code> the deletion/updates to the referring tables.<div class="indented"><p id="eb0e5c50-a547-433b-9f4b-416679416c05" class="">Might not be always appropriate - if you delete a booking, you don&#x27;t want to delete the person from your database!</p></div></p><p id="0053cb4f-e5a7-4a97-85b4-f104b802c393" class=""><code>RESTRICT</code> prevents the parent being updated/deleted.</p><p id="0fef5ce2-0744-417a-900b-6c492db30768" class=""><code>SET DEFAULT</code> sets the key value to the default. <code>SET NULL</code> has similar behaviour, in the way you&#x27;d expect. </p></div></p><h2 id="d5d43a54-6ff9-4afc-93e0-97c7b2ad70c3" class="">Surrogate Keys</h2><p id="cb048f26-e165-46ce-8423-2ca2832037f0" class="">Things like automatic ID fields are what we term <mark class="highlight-pink">surrogate keys</mark>; they have <strong>no business meaning</strong>.</p><p id="687512f6-3bce-425d-983c-520e7413ffb1" class="">Surrogate keys are attributes created and maintained in the context of the system to aid in uniquely identifying an instance of an entity - they do not have any relation to the real world.</p><p id="b4a49047-6fe2-4339-a353-f8cbcdc3ba33" class="">They&#x27;re used because natural keys aren&#x27;t generally stable, consistent or efficient enough to use in a database.</p><p id="e731be81-06fb-4adf-b7fb-f5e53af31f44" class="">They are added as part of physical design, after logical modelling and normalisation.</p><p id="cb92f498-c12d-4653-b390-b3b6a1fdc86b" class="">Don&#x27;t overdo it though!</p></div></article></body></html>
