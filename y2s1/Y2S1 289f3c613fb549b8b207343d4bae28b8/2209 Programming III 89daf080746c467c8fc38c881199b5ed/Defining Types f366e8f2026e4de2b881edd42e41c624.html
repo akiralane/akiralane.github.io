@@ -1,0 +1,697 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Defining Types</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f366e8f2-026e-4de2-b881-edd42e41c624" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🕰️</span></div><h1 class="page-title">Defining Types</h1></header><div class="page-body"><nav id="3b76c547-1c97-42c6-b180-9ebebfbabec6" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ba9b2af2-47e2-49e8-a32c-4f2e491ef6ab">Type synonyms</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6e5e60c1-e3bf-4674-8ebd-8f6c53270f34">Parameterised type synonyms</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d4624ed5-59a0-44e0-ad89-c2396a2f5b47">Nested and recursive type synonyms</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#828bdc55-9280-4071-a80f-13777d212104">Making new types</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#088fde42-0415-4fc9-b908-a64ac236685a">Keyword <code>data</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a6d94119-06b7-4541-91d6-7f0e99d52ce2">Simple Constructors</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0a37cad4-04ad-4234-80b2-c1be217b04be">Using <code>data</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#01de8fe0-9a81-43f6-9c6f-5003dae1a096">Constructors with multiple parameters</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e6a507c5-40e3-44a5-91cc-00d20781f746">newtype</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7581fd6b-fdeb-415a-8390-c0fcd09e9a7a">Maybe</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1bf23d4d-7bc8-420c-86eb-0bbda1528d64">Recursive types</a></div></nav><h1 id="ba9b2af2-47e2-49e8-a32c-4f2e491ef6ab" class="">Type synonyms</h1><p id="23ac3d1c-bbf1-4541-a206-7f019fda3463" class="">As you know, <code>String</code> is a synonym for <code>[Char]</code>. Then, what&#x27;s the point of <code>String</code>?</p><p id="6ba0bc41-b281-495c-b12f-1a2f5fc5c119" class="">It provides better documentation of the type of a function - it helps to indicate intended usage. </p><p id="a335d796-f230-4f36-a0e5-7aeb68482b8a" class="">Haskell lets you build your own synonyms:</p><pre id="9226ca79-9476-42cf-a89b-bb0c9bfd173c" class="code"><code>type Pos = (Int, Int)
+
+-- this makes concepts relating to positions easier to understand
+origin :: Pos
+origin = (0,0)
+
+moveLeft :: Pos -&gt; Pos
+moveLeft (x,y) = (x-1, y)</code></pre><h2 id="6e5e60c1-e3bf-4674-8ebd-8f6c53270f34" class="">Parameterised type synonyms</h2><p id="11f609cb-114b-4f2e-81e3-cb15f2e766a9" class="">Typically, we use type synonyms as a means of describing an <mark class="highlight-orange">assembly of types</mark>. For example, an <em>association</em> is a list of pairs of keys and values (like a Python dictionary, but a list).</p><p id="d1eb9972-63b8-487c-949f-cb2470380ab8" class="">To allow creating these, Haskell allows type synonyms to carry parameters:</p><pre id="1c8e6b60-2631-4c85-8ee1-8e5211b72ca4" class="code"><code>type Association k v = [ (k,v) ]
+
+find :: Eq k =&gt; k -&gt; Association k v -&gt; v
+find k a = head [ v | (k&#x27;, v) &lt;- a, k==k&#x27;]</code></pre><p id="1b7c3f95-f635-4b49-805d-6f33decd4194" class="">These can&#x27;t be partially applied; you can&#x27;t create an <code>IntAssoc</code> type (from <code>Int</code> to <code>a</code>) by feeding an <code>Int</code> to <code>Association</code>.</p><h2 id="d4624ed5-59a0-44e0-ad89-c2396a2f5b47" class="">Nested and recursive type synonyms</h2><p id="6074ec0e-ace2-4177-b608-dc6ab464bc84" class="">Nested type synonyms are allowed - that is, you can define type synonyms in terms of other synonyms.</p><p id="df3e6b3f-32c4-456e-b59d-d844313e626e" class=""><mark class="highlight-orange">Recursive type synonyms are not allowed</mark>.</p><h1 id="828bdc55-9280-4071-a80f-13777d212104" class="">Making new types</h1><p id="adfe0618-1301-49df-96c2-76aba7889b99" class="">Note that you&#x27;re <mark class="highlight-orange">not creating a new type</mark> when you use the <code>type</code> keyword. It really is just a synonym. This means that our <code>moveLeft</code> function from above <mark class="highlight-orange">will also accept any pair</mark>, even if it&#x27;s not explicitly declared as a <code>Pos</code>.</p><p id="ff782760-0f92-497d-8bb6-978a6d7eecc8" class="">What if I wanted to create a new type which behaved a lot like an <code>Int</code>, but I don&#x27;t want functions on the type to be able to accept an <code>Int</code> instead?<div class="indented"><p id="930d6f60-db17-41cb-ac22-35b92c2c0d26" class="">For example, if I have introduced some sort of guard when creating this new type which guarantees something about its value - like a bounded int, or even numbers only.</p></div></p><h2 id="088fde42-0415-4fc9-b908-a64ac236685a" class="">Keyword <code>data</code></h2><p id="8d8e3630-4ed2-4d12-90e8-78f93df1ddd6" class="">The <code>data</code> keyword lets us do just this - we can define a new type which is <mark class="highlight-orange">not</mark> just a new name for an existing type. But first, let&#x27;s talk about constructors.</p><h3 id="a6d94119-06b7-4541-91d6-7f0e99d52ce2" class="">Simple Constructors</h3><p id="f4ac7fb1-3f9f-4f95-9a2f-9d8428df1acc" class="">A constructor is just a name tag which identified the values in a type.</p><p id="dba5a447-b538-4f6b-bdf0-efa1b0b64142" class="">These can be <mark class="highlight-orange">nullary</mark>, which means the name is all there is:<div class="indented"><p id="c0333f2e-b697-4008-a197-026fe028560f" class=""><code>Bool</code> contains the <mark class="highlight-orange">nullary constructors</mark> <code>True</code> and <code>False</code>. There&#x27;s no data on top of those names.</p></div></p><p id="99d0b7b8-68af-4499-ad34-21a1abecc553" class="">Constructors may also take one or more arguments - this is how we build larger values in the type.</p><h3 id="0a37cad4-04ad-4234-80b2-c1be217b04be" class="">Using <code>data</code></h3><p id="8acb3b42-0bbc-40db-9a7e-6a9d707d1efd" class="">Here&#x27;s what a unary constructor looks like:</p><pre id="36e26e8a-830c-4cff-8c45-e874adfa04af" class="code"><code>data Foo = F Int</code></pre><p id="52e38d0a-54a3-460c-a402-1c78c21ee41f" class=""><code>:type F 5</code> in GHCI will tell us that <code>F 5 :: Foo</code>.</p><p id="812c6e25-c164-48f9-b4a2-f656997d55c1" class="">We have the constructor <code>F</code> for the type <code>Foo</code> which can take an <code>Int</code>.</p><p id="10ccc83d-c4b4-44ec-bff6-b595a833b044" class="">Of course, we can also use the keyword to create entirely new finite types where every value is listed explicitly - somewhat like an <code>enum</code> in other languages.</p><pre id="5e57a5b2-5ee5-425f-9c54-de714f8519b6" class="code"><code>data Day = Mon | Tue | Wed | Thu | Fri | Sat | Sun
+
+isWeekend :: Day -&gt; Bool
+isWeekend Sat = True
+isWeekend Sun = True
+isWeekend _   = False
+
+isWeekday :: Day -&gt; Bool
+isWeekday = not . isWeekend</code></pre><h3 id="01de8fe0-9a81-43f6-9c6f-5003dae1a096" class="">Constructors with multiple parameters</h3><p id="707aef62-9791-4098-b56a-416d08253d34" class="">As you&#x27;d expect, constructors can take more than one parameter.</p><pre id="8158653c-992b-40c8-992b-505f955fb40c" class="code"><code>data Shape = Circle Float | Rect Float Float
+
+-- | Create an equal-sided Rect from a float
+square :: Float -&gt; Shape
+square n = Rect n n
+
+-- | Find the area of a shape
+area :: Shape -&gt; Float
+area (Circle r) = pi * (r^2)
+area (Rect x y) = x * y</code></pre><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="9e311d9c-dec5-40d1-95fe-0e0c0841a09c"><div style="font-size:1.5em"><span class="icon">‼️</span></div><div style="width:100%">Notice how pattern matching works on constructors - even user defined ones!</div></figure><h2 id="e6a507c5-40e3-44a5-91cc-00d20781f746" class="">newtype</h2><p id="84a0b515-a7f8-48c3-b0da-9a37f29b7343" class="">Declaring a brand new type for something like our <code>Foo = F Int</code> has a <mark class="highlight-orange">computational cost</mark>, because every function which uses it must pattern match <code>F</code> and extract the <code>Int</code> from it, then build it back up to get back to the <code>Foo</code> value.</p><p id="04ecdb61-9662-444d-af70-f60219238ee2" class="">What if we could be as efficient as just using an <code>Int</code>, but retain the type safety aspect? Here&#x27;s a slightly obscure alternative: <code>newtype</code>.</p><p id="a530169a-603b-4bb3-8a25-5210004a4ea6" class="">It can <mark class="highlight-orange">only</mark> be used for types of a single unary constructor.</p><pre id="f4e1984b-deda-465d-ac61-f73623e97a98" class="code"><code>newtype Foo = F Int</code></pre><p id="23c5ccfb-2bd6-4ad3-976b-d568aa0ffff4" class=""><code>Foo</code> is now not interchangeable with <code>Int</code>, but also the compiler optimises away the pattern matching to improve efficiency!</p><p id="72230840-36c8-4df9-b14f-090a82cd0a14" class="">This is a bit of an edge case, so don&#x27;t worry too much about it.</p><h1 id="7581fd6b-fdeb-415a-8390-c0fcd09e9a7a" class="">Maybe</h1><p id="bb39efb4-346a-4fce-94b1-437a5a6353ef" class="">You know Rust&#x27;s <code>Option</code>? It&#x27;s in Haskell! (or rather Haskell&#x27;s <code>Maybe</code> is in Rust...)</p><pre id="b4647bb7-b51d-40dd-9aad-93ba632b73ce" class="code"><code>data Maybe a = Nothing | Just a</code></pre><p id="355ab4fe-1d13-49e6-8baf-2f110e4c46de" class="">This lets us handle error cases more gracefully, as it does in Rust.</p><h1 id="1bf23d4d-7bc8-420c-86eb-0bbda1528d64" class="">Recursive types</h1><p id="bb248ab9-7abb-43ba-a595-3920f005cffa" class="">Recursive types are fine as long as you&#x27;re using <code>data</code>.</p><pre id="70539c71-42cb-4204-8b36-3d131ba4efa1" class="code"><code>data MyList a = Empty | Cons a (MyList a)</code></pre><p id="599fdd7e-2e38-4c97-b306-cfc806f9eeac" class="">What quickly becomes clear when dealing with these is that <mark class="highlight-orange">pattern matching works on constructors</mark> - even user defined ones.</p><p id="f1b56fd4-33fd-458d-9496-56a679662945" class="">This makes for a powerful mechanism for defining new types and functions over them.</p><p id="2abd682e-0eb2-47ad-ac5d-387a7dea98f7" class="">For example, it&#x27;s pretty easy to build a datatype of Binary Trees.</p><pre id="eafca6ea-db86-4d86-8f85-027e79a9f5bc" class="code"><code>data Tree a = Leaf a | Node (Tree a) a (Tree a)</code></pre><p id="4857b421-073c-48f3-b84b-4612b71e7966" class="">The node contains a subtree to the left, the data it contains, and then a subtree to the right. Each subtree can actually be a <code>Leaf</code>.</p><p id="8c1c7e99-70c8-4580-854f-f03ac8faae48" class="">It&#x27;s not hard to see here that the choice of data type for Tree here is very flexible:</p><figure id="3e3eb521-2052-474b-a967-b33fcbb17aef" class="image"><a href="Defining%20Types%20f366e8f2026e4de2b881edd42e41c624/Untitled.png"><img style="width:931px" src="Defining%20Types%20f366e8f2026e4de2b881edd42e41c624/Untitled.png"/></a></figure><p id="ff20bbd8-0ab1-4bb0-8f65-a95b57b35b71" class="">
+</p></div></article></body></html>

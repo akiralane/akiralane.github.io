@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>IPv6</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b0952007-9a15-4ce4-9f74-bbead287b7ac" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">💻</span></div><h1 class="page-title">IPv6</h1></header><div class="page-body"><nav id="5da7e564-4cc8-4261-89d3-4ba5458db260" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#80f15067-346e-4344-b4bf-ee1856859a51">IPv6 features</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ad86ace9-c09b-479d-8356-8da31fc49a8d">IPv6 address scopes</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#33a9ea00-9c08-46d1-a07c-3be4717ec39d">IPv6 address conventions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bc9cdfb2-89dd-4c57-a28c-0f7ddbc098ba">IPv6 header</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7685f76d-f7af-4818-bc65-b3a6dd871a4f">Extension headers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b92c771f-fc2b-43ae-80af-1d588359499c">Neighbour discovery</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#10da84f6-3198-4964-9f08-5be43c95b519">Router advertisements</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7258cdfd-1c6e-4632-b8a6-d4c7782dec35">Technical Benefits of IPv6</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c4441ecd-eb63-4dc1-b7d0-df390691042a">Deploying IPv6</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#95a3e866-d4df-486f-a0c5-bf282096a0ef">Translation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#df541a88-79f1-4993-a08f-cf6cdb18d38c">Dual-stack</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8489a00d-7414-49ec-a112-423156e32e30">DS-lite</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ac296750-6a29-47c4-b437-6e27778d1a38">Barriers to deployment</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a2f3f7c8-103f-47f8-8af0-e9f97f2faa9e">Security</a></div></nav><hr id="b9c319ae-79b6-4b5f-a7e5-ecf285f3c44a"/><p id="fbfd4271-149f-4c62-b3cc-4a5b4b52303b" class="">We’ve run out of IPv4 addresses.</p><p id="00a18b0f-7a20-43f6-a058-4155cf17fb28" class="">We need new addresses!</p><h3 id="80f15067-346e-4344-b4bf-ee1856859a51" class="">IPv6 features</h3><p id="f009ff9d-7179-4773-9c1f-f7146fb5d66b" class="">128-bit address space.<div class="indented"><p id="df3ca8e2-4db4-49a0-a3f5-37ad8e07de50" class="">This gives us <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3.2</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>38</mn></msup></mrow><annotation encoding="application/x-tex">3.2\times10^{38}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3.2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">38</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> addresses.</p></div></p><p id="b4571b73-dc8b-4b61-9004-3d186aa4dbcf" class="">Addresses are represented in colon-hexadecimal format:<div class="indented"><p id="3b75a07b-e985-47ca-a111-6219f39a0579" class="">For example, <code>2001:0630:00d0:f500:0000:0000:0000:0064</code>.</p><p id="39b78df8-9aaa-4ac5-a9ab-da9c82129cb4" class="">This is pretty hard to read, so leading 0’s in a block can be omitted. This means that blocks which are just 0’s can be replaced with <code>::</code>.</p><p id="b52d4a13-80c6-4dc8-b2ac-aa245901c5f9" class="">The above address gets written as <code>2001:630:d0:f500::64</code>.</p></div></p><p id="123604a1-a14d-4ea6-9c90-aa8d9af92daf" class="">Subnets are represented in CIDR notation, same as IPv4:<div class="indented"><p id="3f0a38b5-cf5e-403e-beb5-87e41064ab15" class="">For example, <code>2001:630:d0:f500::/64</code></p></div></p><p id="61993ce1-e6c0-4565-9e3b-5989e27fba6e" class="">They’re not as easy to remember as IPv4!<div class="indented"><p id="52abf7d3-610d-4fe7-a085-b1bae97d11be" class="">Multicast (one to many) is an inherent part of IPv6. </p></div></p><p id="600fa035-d2ac-4c05-92d1-45bd4f5b6059" class="">IPv4 and IPv6 can co-exist in dual-stack deployments.</p><h3 id="ad86ace9-c09b-479d-8356-8da31fc49a8d" class="">IPv6 address scopes</h3><figure id="2f90c985-2ab3-4bb4-9b77-cf6d37d1fc00" class="image"><a href="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled.png"><img style="width:576px" src="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled.png"/></a></figure><h3 id="33a9ea00-9c08-46d1-a07c-3be4717ec39d" class="">IPv6 address conventions</h3><p id="32e9f0d7-67ce-44fc-b928-7e2ca7aeb425" class="">The smallest subnet is a /64. This gives you 18 quintillion addresses lmao.</p><p id="27ffddd5-0f19-4aa8-8633-fdb047c063ff" class="">Homes and small businesses typically get /56.</p><p id="cb8c8652-2b64-4daa-ab2d-676bc9f6fda9" class="">A “site” is commonly given /48.</p><p id="690dfd8a-4791-4dc6-ab67-5a4748b73828" class="">Minimum IPv6 allocation from a RIR is /32.</p><p id="994deaac-4c0f-45fa-935c-5dc0e6d369df" class="">/127 can be used for inter-router links.</p><h2 id="bc9cdfb2-89dd-4c57-a28c-0f7ddbc098ba" class="">IPv6 header</h2><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="edd43b73-dc73-4be2-b0f1-b6a7586f87b5"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">IPv6 is larger, but simpler.</div></figure><figure id="8d466d02-1551-46f3-b52b-59812786e1a2" class="image"><a href="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled%201.png"><img style="width:1102px" src="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled%201.png"/></a></figure><h3 id="7685f76d-f7af-4818-bc65-b3a6dd871a4f" class="">Extension headers</h3><p id="de40e05b-61ec-40bb-ab3e-ea7e08c16176" class="">Extension headers sit between the IPv6 and transport layer headers.<div class="indented"><p id="06f3c512-30e0-491e-8e23-2a674e3c3d06" class="">Each extenion header includes a “next header” field, which lets them be daisy chained. This does mean they need to be in a specific order, though.</p></div></p><p id="3c9574dc-da56-4ea7-bbcb-1d0a6695e4bd" class="">These allow for a lot of extra functionality:</p><figure id="1cdd29cb-6bef-4522-be8a-3a04588ef9cc" class="image"><a href="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled%202.png"><img style="width:1005px" src="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled%202.png"/></a></figure><p id="2a1ffef5-3674-4269-af23-5d10f166daff" class="">Each extension header is a multiple of eight bytes.</p><h2 id="b92c771f-fc2b-43ae-80af-1d588359499c" class="">Neighbour discovery</h2><p id="78fbc768-5322-4475-aa42-c8304635fb00" class="">This functionally replaces ARP and ICMP router discovery.</p><p id="fd86eafb-9444-44fe-b099-e0021a843dd0" class="">It defines five ICMPv6 packet types:</p><ul id="2bc1725a-ebf6-4fa0-a6ae-fcf6db15b2a9" class="bulleted-list"><li style="list-style-type:disc"><strong>Router solicitation</strong> - host request for router information</li></ul><ul id="770516b1-3dc1-438c-8602-40eaa4ba88e6" class="bulleted-list"><li style="list-style-type:disc"><strong>Router advertisement</strong> - router information</li></ul><ul id="90a5ccc2-e6d4-425e-8189-644694dd76f6" class="bulleted-list"><li style="list-style-type:disc"><strong>Neighbour solicitation </strong>- equivalent to ARP’s “who has”</li></ul><ul id="003ea477-d7cf-4a71-a52c-33bb8530d5b8" class="bulleted-list"><li style="list-style-type:disc"><strong>Neighbour advertisement</strong> - equivalent to ARP reply</li></ul><ul id="d4c4bff0-8d1c-46b2-8722-be579bf69e74" class="bulleted-list"><li style="list-style-type:disc"><strong>Redirect </strong>- router informing host of a “better” first-hop</li></ul><h3 id="10da84f6-3198-4964-9f08-5be43c95b519" class="">Router advertisements</h3><p id="9ff1015f-b31f-4a36-a62a-9c28bd877eb7" class="">A host sees or solicits a Router Advertisement (RA).<div class="indented"><p id="69c010e3-d6c2-4a9a-b389-3f754439ba58" class="">The message carries the network prefix to use (e.g. <code>/64</code>).</p><p id="d566c49a-707a-4e28-9eb7-5d0a64d7dd0c" class="">The RA’s source address implies the default router address.</p></div></p><p id="d4fdcb66-13de-46ac-9d89-54ae414488f1" class="">Prefix info is sent by multicast (one to many), either periodically or in response to a Router Solicitation.</p><h2 id="7258cdfd-1c6e-4632-b8a6-d4c7782dec35" class="">Technical Benefits of IPv6</h2><p id="8432f7b6-09d6-4391-ad9e-7e6f94ff8c3d" class="">It removes the need for NAT.<div class="indented"><p id="1e302dce-d065-43b3-adb7-93867b7d0f66" class="">In doing so, it restores end-to-end connectivity and removes the need for NAT traversal.</p></div></p><p id="f1a1d44e-404a-4fa9-98cc-b6cc5697736f" class="">It’s more plug-and-play than IPv4.<div class="indented"><p id="3df92681-c0a7-4936-bc6e-ad98a5424c6a" class="">There’s a thing called Stateless Auto Configuration (SLAAC) which I’m pretty sure I should have taken notes on.</p></div></p><p id="e6f40307-9b10-41e5-b80d-185ccaac449d" class="">More streamlined header.<div class="indented"><p id="de59ede9-723d-4b25-8b1c-79cd3f3c4e4f" class="">This means more efficient routing and packet processing.</p></div></p><p id="38228e2b-07ea-43c9-90d9-5c8e70903726" class="">Fragmentation <mark class="highlight-orange">only </mark>occurs at the sender.<div class="indented"><p id="d49ba6ef-d334-47d9-83a8-2faf6f8f0810" class="">Hosts should use Path MTU (Maximum Transmission Unit) Discovery and links must support an MTU of at least 1280.</p><p id="07d6424b-5d65-4825-9851-78d9fc66d528" class="">This is simpler for routers.</p></div></p><h2 id="c4441ecd-eb63-4dc1-b7d0-df390691042a" class="">Deploying IPv6</h2><p id="f0a4f474-952e-440e-a69a-0cb22e5b48a6" class="">The current internet is still mostly IPv4 - things are trying to deprecate it and move to IPv6, but stuff still needs to work in the meantime.</p><h3 id="95a3e866-d4df-486f-a0c5-bf282096a0ef" class="">Translation</h3><p id="d625fee2-b583-4377-9040-5fcf7c429a96" class="">One solution is to run isolated IPv6 networks and grow these over time, using IPv4 networks outside of them meanwhile.<div class="indented"><p id="2016a83e-9370-4ce3-81a5-58e95fa765ce" class="">It’s possible to encapsulate entire IPv6 packets inside IPv4 packets, alongside some header trickery. This is called <mark class="highlight-orange">tunnelling</mark>.</p><p id="b3a8451e-0bef-4fca-a4ee-ae9113b58d46" class="">Alternatively, you can use Application Layer Gateways.</p><p id="09672dab-0022-49d2-8d45-13c92b655a87" class="">Alternatively alternatively, you can use translation mechanisms - <em>NAT64</em> has a single IPv4 address NATed to an IPv6 network, for example.</p></div></p><h3 id="df541a88-79f1-4993-a08f-cf6cdb18d38c" class="">Dual-stack</h3><p id="a94ce512-d898-4b95-8fe4-5f147df3a2e2" class="">We can also run <mark class="highlight-orange">dual-stack</mark> systems, where you run both protocols on the same equipment.<div class="indented"><p id="cafa8f8e-6e7d-4e5f-85fe-d27bb130d235" class="">This is what the uni does.</p></div></p><p id="a083c961-42b4-42d8-a331-1ecd1cc082bb" class="">You choose when to use IPv4 and IPv6, but it requires and IPv4 address to speak to other networks generally(?).</p><h3 id="8489a00d-7414-49ec-a112-423156e32e30" class="">DS-lite</h3><figure id="d0e9b452-5fa3-48f1-a417-16ef7c6e995a" class="image"><a href="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled%203.png"><img style="width:144px" src="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled%203.png"/></a><figcaption>no</figcaption></figure><figure id="6a10e65c-33c9-4109-b9a8-fc93364aee2d" class="image"><a href="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled%204.png"><img style="width:1145px" src="IPv6%20b09520079a154ce49f74bbead287b7ac/Untitled%204.png"/></a></figure><p id="5d9f987c-973f-4da2-8676-b4a0bff48338" class="">This is native IPv6, tunnelled, NATed IPv4.</p><p id="66433a58-4ff1-4f7b-8c0c-d980b86a6de0" class="">DS-lite encapsulation can run on the client device.<div class="indented"><p id="80c8da0d-974a-47f9-a380-6ed829d2244b" class="">EE use it for their IPv6 and Virgin might be looking to roll it out.</p></div></p><p id="5eddb103-24b6-4791-a6bb-4c7b2133ae83" class="">This makes hosting of services in IPv4 difficult.</p><h2 id="ac296750-6a29-47c4-b437-6e27778d1a38" class="">Barriers to deployment</h2><p id="a0b1bd59-a80b-4dd1-9af7-b3b42dbee04b" class="">Time and money.<div class="indented"><p id="24838fc0-8272-49b0-aac8-f5074dc5c08d" class="">It’s hard to convince management that the investment is necessary.</p><p id="fa294d04-a034-437e-b116-c6e1234b0907" class="">The impact is not immediately obvious.</p></div></p><p id="f46b8b83-701a-4246-b84f-8e23d6e45d43" class="">Hardware support.<div class="indented"><p id="ea3732d7-86db-4c85-868b-e54cdbf1d949" class="">Many older home routers lack IPv6 support.</p></div></p><p id="68089d1b-be78-43d0-aa4c-8a306e7448e1" class="">Regular users don’t want to learn something new.</p><p id="ce810ade-0218-4f97-b374-ed3a89389f1f" class="">Chicken-egg situation with ISPs and content providers.</p><p id="35202be6-e6e4-401e-8da9-a5d28506cfc4" class="">“Peering wars” between Tier-1 network providers.</p><h2 id="a2f3f7c8-103f-47f8-8af0-e9f97f2faa9e" class="">Security</h2><p id="896ff7c7-ef2a-4e63-9430-73e58dd28312" class="">IPSEC is baked into IPv6.</p><p id="38ec36d2-53c8-4a55-a356-53cb821ee7e3" class="">The sheer volume of addresses makes scanning less feasible.</p><p id="2a06d5eb-19f2-4f22-ad9a-1e1c9a8af3e9" class="">Transition mechanisms like tunnelling and Teredo can bypass network security mechanisms.</p><p id="122cfb99-f3af-4b78-9917-3ef55103e0f7" class="">Implementations of IPv6 are going to have undiscovered flaws, since it doesn’t have the same legacy as IPv4.</p><p id="db61ec97-def2-4182-8a73-06494c810654" class="">
+</p></div></article></body></html>

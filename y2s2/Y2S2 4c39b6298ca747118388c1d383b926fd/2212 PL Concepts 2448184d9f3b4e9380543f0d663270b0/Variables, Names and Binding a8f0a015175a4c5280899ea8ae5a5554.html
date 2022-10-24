@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Variables, Names and Binding</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a8f0a015-175a-4c52-8089-9ea8ae5a5554" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧣</span></div><h1 class="page-title">Variables, Names and Binding</h1></header><div class="page-body"><nav id="b6674029-46d0-4fc0-8a56-ec8f887b16c1" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#36049408-9bf6-4f05-af03-da4757b630b1">Variables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3523b8bb-cda0-471a-94df-46046534e3c5">Attributes</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b16a43d0-7907-488c-bba2-81fca4975c9c">Bindings</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6f463a78-31fb-45db-839e-4096696301d0">Allocation and deallocation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5f6f43a2-4c70-445c-a7ee-9d97bf2cb5a6">Four kinds of variables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#81b314b8-1f18-424a-b8c4-4e40fbf18593">Types</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#26de01ea-dc61-420a-85fd-ce4b31783eea">Extent</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#809244be-160d-4dbb-ba3a-d82812498f40">Scope</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8c95ac24-6503-4b85-8ccd-ef807b24e860">Dynamic scope</a></div></nav><p id="1465ed0d-57b5-4cf3-9396-8eec9753d38a" class=""><em>This covers topics 2 and 3.</em></p><hr id="64dd722d-744d-46bd-b28a-4c32d8ccc758"/><p id="ee4ea0e1-1975-47f0-a7ad-ab1b87540a96" class="">We identify the virtual entities that we manipulate in programs using <mark class="highlight-orange">names</mark>, or <mark class="highlight-orange">identifiers</mark>.</p><h1 id="36049408-9bf6-4f05-af03-da4757b630b1" class="">Variables</h1><p id="f6727137-7fd3-4864-b424-4936743d1469" class="">Originally, a variable referred to a memory location whose contents could change - i.e., a reference.</p><p id="cc8686bb-8da3-4876-a5e9-a9b7896ba448" class="">Now, it’s more generalised to mean “a placeholder for some possibly complex value”. This is a <mark class="highlight-orange">semantic </mark>concept, not just some part of memory (except when it is, like C).</p><p id="58bfdb13-c395-4ee3-ab9a-35ba938cc958" class="">“<mark class="highlight-orange">Aliasing</mark>” refers to two variables pointing to the same memory location.<div class="indented"><p id="14e92924-2027-4a66-9580-5e4dc1a2e9e8" class="">Usually, you don’t want this - it can lead to unexpected behaviour. However, some algorithms and data structures make use of it.</p></div></p><h2 id="3523b8bb-cda0-471a-94df-46046534e3c5" class="">Attributes</h2><p id="4b89c1ee-24ed-47de-ac26-f534eef0d425" class="">A variable typically has six <mark class="highlight-orange">attributes </mark>we associate with it:</p><ul id="e03664d5-d999-4b7c-b5b2-20d00ca7b02a" class="bulleted-list"><li style="list-style-type:disc">Name</li></ul><ul id="d3098eb4-f50a-4045-ac26-8ea370d8d589" class="bulleted-list"><li style="list-style-type:disc">Address <em>(L-Value, the left-hand side of an assignment)</em></li></ul><ul id="ad202542-8882-4345-827a-f1731531f9b9" class="bulleted-list"><li style="list-style-type:disc">Value <em>(R-Value, the right-hand side</em>)</li></ul><ul id="194c7fc7-ff45-465c-99a8-28e11300ebe3" class="bulleted-list"><li style="list-style-type:disc">Type</li></ul><ul id="3549f2c8-55d4-4031-8d33-6b65d3bf3c5d" class="bulleted-list"><li style="list-style-type:disc">Extent - the time between its allocation and deallocation. Also known as lifetime.</li></ul><ul id="00b4ce2f-1027-4346-8b91-179686401a9f" class="bulleted-list"><li style="list-style-type:disc">Scope</li></ul><h2 id="b16a43d0-7907-488c-bba2-81fca4975c9c" class="">Bindings</h2><p id="9ca24662-fab4-4ae2-9d77-f219048fa646" class="">A <mark class="highlight-orange">binding</mark> is an association between an entity (usually a variable) and some <em>attribute</em>.<div class="indented"><p id="1f631970-fe4c-4692-b56d-b034ecb7ad8e" class="">e.g. between a variable and its type, or a variable and its scope.</p></div></p><p id="9be4ebf3-3b1e-46ee-b8d8-548d6f06b975" class="">Some entities don’t need to be bound at runtime while others do - it’s useful then to distinguish between <mark class="highlight-orange">static</mark> and <mark class="highlight-orange">dynamic</mark> binding.<div class="indented"><p id="ac059d21-5809-441e-af83-b62ebac64bbc" class="">As you know, <mark class="highlight-orange">static bindings</mark> happen at compile time and remain unchanged throughout execution while <mark class="highlight-orange">dynamic bindings</mark> occur <em>(and can change)</em> during runtime.</p><p id="e0dbb60d-ae7f-4d77-adc9-e05d7dfffcc2" class="">Pretty much every attribute (apart from name?) can be bound either dynamically or statically.</p></div></p><h3 id="6f463a78-31fb-45db-839e-4096696301d0" class="">Allocation and deallocation</h3><p id="03ad727d-4b1a-4918-b598-ec68e07d4458" class="">We refer to the binding of a variable to its <em>address</em> attribute as <mark class="highlight-orange">allocation</mark>.</p><p id="36bb51ae-9596-45dc-8fb7-533db13601df" class="">This can be either static or dynamic, while deallocation is pretty much just a dynamic concept.</p><p id="e2a5bb8e-1a96-4507-bea4-0ddd20776ffc" class="">As noted above, a variable’s <mark class="highlight-orange">extent</mark> is the time between its allocation and deallocation.</p><h2 id="5f6f43a2-4c70-445c-a7ee-9d97bf2cb5a6" class="">Four kinds of variables</h2><ul id="4a7994da-f146-4aa7-bd25-2413cc1cf38e" class="bulleted-list"><li style="list-style-type:disc">Static <em>(global)</em><ul id="751eef47-dd1d-49db-8e9a-8d6828003345" class="bulleted-list"><li style="list-style-type:circle">These are allocated at initialisation time.</li></ul></li></ul><ul id="cc073865-d61d-44d0-a47c-dece5e46536d" class="bulleted-list"><li style="list-style-type:disc">Stack-dynamic <em>(local)</em><ul id="76940632-b519-4ab4-b8d2-82ff9d66e622" class="bulleted-list"><li style="list-style-type:circle">Memory is allocated from a runtime stack and bound <mark class="highlight-orange">when a declaration is executed</mark>. It gets deallocated when the block containing it returns.</li></ul></li></ul><ul id="5838cdbb-db58-4e6e-a241-2b741e2946a3" class="bulleted-list"><li style="list-style-type:disc">Explicit heap-dynamic<ul id="48050825-ee40-4f81-8c12-d73e67811082" class="bulleted-list"><li style="list-style-type:circle">Abstract memory locations which are <mark class="highlight-orange">explicitly allocated</mark> by the programmer.</li></ul><ul id="86abd98e-d040-47de-8fd8-ebb08090d4bb" class="bulleted-list"><li style="list-style-type:circle">This includes things like <code>malloc</code> and <code>free</code> in C, <code>new</code> and <code>delete</code> in C++, <code>new()</code> in Java.</li></ul></li></ul><ul id="912a2006-87cb-46c0-8787-26661f7c2c51" class="bulleted-list"><li style="list-style-type:disc">Implicit heap-dynamic<ul id="6aef0d56-ab1f-450a-b289-c260a8fc30a0" class="bulleted-list"><li style="list-style-type:circle">Memory in the heap is allocated when variables are assigned to values and deallocated/reallocated with re-assignment.</li></ul><ul id="76dda9ec-edc3-4782-93b3-5413cbaf3f3d" class="bulleted-list"><li style="list-style-type:circle">This is error-prone and inefficient. Used in ALGOL, LISP, C and JavaScript (for arrays).</li></ul></li></ul><h2 id="81b314b8-1f18-424a-b8c4-4e40fbf18593" class="">Types</h2><p id="9491e18c-6602-40b2-bf4b-29d92878f439" class="">Static type binding is usually either done through <mark class="highlight-orange">explicit type declaration</mark> or through <mark class="highlight-orange">type inference</mark>.<div class="indented"><p id="512263c5-78c0-4aab-b142-582e27d17109" class="">Type declaration is most commonly used. At the point where a variable is introduced, you tell the compiler its type at the same time.</p><p id="727ef07c-ef78-46bb-a5d9-461ec6709427" class="">Type inference doesn’t require type annotation of variable declarations - the compiler works it out from how the variable gets used.<div class="indented"><p id="df8a7f28-8f4e-4297-ba56-a43b165c5f98" class="">There’s a shit version (which is arguably just explicit declaration) where types are “inferred” by how the variables are named. In Perl, <code>$p</code> is a number or string, <code>@p</code> an array etc.</p><p id="818ec54c-9e53-490b-a41e-8b8f8d27241e" class=""><mark class="highlight-orange">Hindley-Milner inference</mark> (introduced by the ML language) deduces the most general type for a variable through its usage. The most general type usually gets expressed using polymorphism or generics</p></div></p></div></p><p id="8b9c2244-55f4-4dcf-87d3-d99c7c8d6338" class="">Dynamic type binding sucks, mostly.<div class="indented"><p id="6f1e0d90-0dbe-4199-a3dc-07050f676ec1" class="">JavaScript, Python, Ruby, Lua all do it.</p><p id="20420201-28b4-4617-ac68-30d924cd4b37" class="">This can have benefits for convenience and readability, but there are obvious downsides.</p></div></p><h2 id="26de01ea-dc61-420a-85fd-ce4b31783eea" class="">Extent</h2><p id="df9663d1-21e4-48ee-a536-25b85c91c291" class="">For the third time on this page, extent is the period of execution for which a variable is bound to a particular location storing a meaningful value.</p><p id="c737b898-a32c-4cca-96c6-454584425071" class="">This is a <mark class="highlight-orange">semantic concept</mark> - what extent means, precisely, depends on the execution model.</p><p id="c632156a-7b0d-41ed-a6fd-0b0cb1576e70" class="">A running program can enter and leave a given extent multiple times - like in the case of a closure.</p><p id="b51d4da1-f636-4fbe-86d7-ccf82a81617b" class="">The four kinds of variables have different extent:<div class="indented"><p id="a109548e-f521-44fc-ab95-5ae8593368d8" class=""><em>Static variables</em> have an extent of the <mark class="highlight-orange">entire program duration</mark>.</p><p id="697fae4d-cbf3-492a-ac0c-4c5f0e2049d1" class=""><em>Stack-dyamic variables</em> have an extent of a <mark class="highlight-orange">particular stack frame</mark> or procedure.</p><p id="aab0e109-63df-4424-ad8c-4a2bcbe7345e" class=""><em>Explicit heap-dynamic variables</em> have an extent from <mark class="highlight-orange">explicit allocation</mark> to <mark class="highlight-orange">explicit deallocation</mark> - it’s all managed by the programmer. This can cause memory leaks.</p><p id="904844e9-2a72-4d71-aaf3-04e70db63534" class=""><em>Implict heap-dynamic variables</em> have an extent from <mark class="highlight-orange">implicit allocation</mark> to <mark class="highlight-orange">implicit deallocation</mark>. Values may persist in memory despite their addresses being freed.</p></div></p><h2 id="809244be-160d-4dbb-ba3a-d82812498f40" class="">Scope</h2><p id="50b266f3-d4e4-4f77-8547-9650f216bc86" class="">The scope of a variable is the part of the code in which it can be referenced.<div class="indented"><p id="1587e6e5-68e7-4df3-b6ff-4d463d802114" class="">That is, it’s the part of the program where its <mark class="highlight-orange">name</mark> is meaningful.</p><p id="edbc3384-1826-4a12-b50c-e7a2b0449276" class="">A variable’s scope affects its extent; a value which can no longer be referenced is pretty much meaningless. Garbage collectors exist to clean these up.</p></div></p><p id="823ad066-7ca8-4c9a-a537-6f5891dc094c" class="">For local variables, the scope is usually the block it’s declared in.</p><p id="29b6fb1e-4b61-491f-a3a3-cd979f52d772" class="">For static variables, the scope is usually the entire program <em>except</em> where they get hidden by locally scoped variables of the same name.</p><p id="639adc6d-dc4c-4793-9104-99798b03a4c8" class="">We refer to <mark class="highlight-orange">lexical scope</mark> where scope is aligned to statically determined areas of code, like between the two parentheses of a block or a method body.</p><h3 id="8c95ac24-6503-4b85-8ccd-ef807b24e860" class="">Dynamic scope</h3><div id="250048cf-6d0a-476c-80bd-5df6404509ab" class="column-list"><div id="207aa6b4-452e-4e6c-b8ed-b545b2fc5129" style="width:50%" class="column"><p id="51cc9f77-6c84-43e7-aa34-77cebe3f5e6d" class="">You can have dynamic scoping, but it’s uncommon and kinda sucks. Perl and Lisp use it.</p><p id="a55f9bb4-5460-44ce-9d0c-60d92267f7ee" class="">As the name implies, scope is determined at runtime, reliant on <mark class="highlight-orange">program flow</mark>. You can have one method call another and variables from the first method stay in scope even in the second.</p></div><div id="70e3c1f2-94c5-420e-8ed1-fc29f3422af3" style="width:49.99999999999999%" class="column"><figure id="f2193a2c-20bd-4455-a09f-347ca0791336" class="image"><a href="Variables,%20Names%20and%20Binding%20a8f0a015175a4c5280899ea8ae5a5554/Untitled.png"><img style="width:288px" src="Variables,%20Names%20and%20Binding%20a8f0a015175a4c5280899ea8ae5a5554/Untitled.png"/></a></figure><p id="e86d3bd2-bcec-42d9-8b2c-c37cdaa143eb" class="">
+</p></div></div></div></article></body></html>

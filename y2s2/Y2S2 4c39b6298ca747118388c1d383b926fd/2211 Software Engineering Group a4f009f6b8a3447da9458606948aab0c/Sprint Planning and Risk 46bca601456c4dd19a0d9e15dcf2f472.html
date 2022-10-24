@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Sprint Planning and Risk</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="46bca601-456c-4dd1-9a0d-9e15dcf2f472" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">⚓</span></div><h1 class="page-title">Sprint Planning and Risk</h1></header><div class="page-body"><nav id="b921f286-aff4-4c65-ada1-7626a5db5163" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7e29b002-6d1b-47f5-844a-c83c77fb3126">The process</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d117f5e2-5c61-4d82-b67b-59bcdcce3498">Step 1: Envision</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#15808d7c-aca5-4157-9e22-c283787edcba">Step 2: Development Iteration</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#45c28864-5f8c-4003-a203-48d461920cbf">Step 2A: Plan sprint</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9ae82e02-18b4-43c1-8ea7-7093a2eb53d6">Step 2a(i): Prioritise</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#eccaeb5d-cd53-4468-be28-a35ba9205534">Step 2a(ii): Prepare sprint</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#320e3904-cfbf-4394-93e5-175843d33621">Step 2b: Sprint</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#db2ad21e-44a3-48c0-9310-68d846ac6a1c">Step 2c: Review</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4802262e-0a2b-4e5e-80b4-4d4f3bcdb377">Risks</a></div></nav><hr id="1e3b3377-8e4f-4af0-97b0-6e17b9890a75"/><h1 id="7e29b002-6d1b-47f5-844a-c83c77fb3126" class="">The process</h1><p id="974a0570-f744-4ec6-ad57-ebe20a444ace" class="">As you know, we deliver increments of the system through development sprints.</p><ol type="1" id="af4575ed-9a4b-4f00-88a1-d5c2aa04b983" class="numbered-list" start="1"><li><mark class="highlight-orange"><strong>Envision</strong></mark><ol type="a" id="d07dcd74-080c-4055-99b8-94b13f79f506" class="numbered-list" start="1"><li>Produce <em>product</em> backlog</li></ol></li></ol><ol type="1" id="6201512e-368c-4b5b-898e-648b7fea016a" class="numbered-list" start="2"><li><mark class="highlight-orange"><strong>Development iteration</strong></mark><ol type="a" id="a8936477-dc99-410c-95dd-407f85067223" class="numbered-list" start="1"><li>Plan sprint<ol type="i" id="74776bb2-11c6-4b45-9193-156c7c3012b3" class="numbered-list" start="1"><li>Produce and prioritise <em>sprint</em> backlog</li></ol><ol type="i" id="b4e7b504-3b64-4f9e-aa74-13b4b1a80574" class="numbered-list" start="2"><li>Prepare sprint</li></ol></li></ol><ol type="a" id="f9540402-08ca-429e-992c-27237b94eebf" class="numbered-list" start="2"><li>Sprint<ol type="i" id="b1c79d02-ccb0-4992-844d-3bdb4f10c5f4" class="numbered-list" start="1"><li>Check progress, possibly through scrums</li></ol><ol type="i" id="1af75e17-070a-435c-949c-967cb8a90215" class="numbered-list" start="2"><li>Show progress - burndown chart</li></ol><ol type="i" id="13f48738-dab8-4e5b-92c1-30838423306e" class="numbered-list" start="3"><li>Deliver increment</li></ol></li></ol><ol type="a" id="6f38c0ba-8b2e-4ba3-9e00-4ceb7f7d29e2" class="numbered-list" start="3"><li>Review sprint</li></ol></li></ol><ol type="1" id="9bd5ddf1-87d6-4d2c-a4f8-833b1a55d1c6" class="numbered-list" start="3"><li>Repeat <strong><mark class="highlight-orange">Development iteration</mark></strong> until done.</li></ol><h1 id="d117f5e2-5c61-4d82-b67b-59bcdcce3498" class="">Step 1: Envision</h1><p id="96ff4976-5e64-4b37-a79a-d7c21a9d9e00" class="">Write down everything you can think of to create a backlog of work - this is almost always more than enough for a first sprint.<div class="indented"><p id="e6776319-0678-44e3-ba8d-bc69270f7d71" class="">The backlog then grows and changes as you learn more about the product and its customers.</p><p id="8ca49d7d-8523-4f7b-b984-011166a0d141" class="">They’re effectively requirements of the system.</p></div></p><h1 id="15808d7c-aca5-4157-9e22-c283787edcba" class="">Step 2: Development Iteration</h1><h2 id="45c28864-5f8c-4003-a203-48d461920cbf" class="">Step 2A: Plan sprint</h2><h3 id="9ae82e02-18b4-43c1-8ea7-7093a2eb53d6" class="">Step 2a(i): Prioritise</h3><p id="488241e2-f13c-4a9d-bbf0-ada3bb7186f3" class="">Apply <mark class="highlight-orange">MoSCoW</mark> prioritisation to the sprint backlog.</p><ul id="fb4c5bdf-a14f-48ab-ad4b-5d166655416a" class="bulleted-list"><li style="list-style-type:disc">MUST (requirements)</li></ul><ul id="9647f78d-ed47-430b-b27a-a8f0f8ea9913" class="bulleted-list"><li style="list-style-type:disc">SHOULD (not requirement but highly desirable)</li></ul><ul id="3797f5f3-f936-4394-83b6-451ab505f5a3" class="bulleted-list"><li style="list-style-type:disc">COULD (additional features)</li></ul><ul id="ec219c91-85f0-46d7-bb7d-de0e61e77465" class="bulleted-list"><li style="list-style-type:disc">WON’T (but might in future sprints)</li></ul><p id="7ae2c099-1e33-4fb3-9641-6a198290ab5f" class="">You can sacrifice “won’t” features if you run out of time.</p><p id="24951189-0626-4fae-8a1d-5acdc5e3504d" class="">Fundamentally, prioritisation is the role of the product owner.<div class="indented"><p id="331eac59-a7bf-40b7-b6b0-deea6f36f5d2" class="">Their input isn’t the only input, but it’s very important!</p></div></p><h3 id="eccaeb5d-cd53-4468-be28-a35ba9205534" class="">Step 2a(ii): Prepare sprint</h3><p id="00fe81b6-510f-420c-829a-8aab4b0ebaff" class="">The team collaboratively select the work to be done in the sprint.</p><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="ca555590-2840-496f-bdd4-5c5578b1cdbc"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Work with the product owner on this. What value will be delivered?</div></figure><div id="9201829f-854c-4ea6-8759-5ae7ee698d6a" class="column-list"><div id="ebf7db0d-4c06-41f5-84c4-b990f1f5aa9c" style="width:50%" class="column"><p id="6ca0ad3f-8079-462c-8029-45aa9c8dc936" class="">Identify how much of the backlog will be done in this sprint, which will become the <mark class="highlight-orange">burndown chart</mark>.</p><p id="1798aded-5fdb-4c27-b6fb-00f0be8e1fd8" class="">Decide who does what:<div class="indented"><p id="4ab3db40-e0dc-4a6b-b421-95511d6893d8" class="">Who’s buddying with whom?</p><p id="71c8f17f-cce5-486e-a3de-23f5d95c56d3" class="">Who is the scrum leader?</p></div></p><p id="cfcacc65-a8d1-496c-9e1f-0da555fe59c4" class="">Each week, check your sprint plan and adjust it.</p></div><div id="1ecf9b43-948f-46cc-9d78-568e0bbc7c74" style="width:50%" class="column"><figure id="2f2428e5-add7-407f-aaae-34fa9c811332" class="image"><a href="Sprint%20Planning%20and%20Risk%2046bca601456c4dd19a0d9e15dcf2f472/Untitled.png"><img style="width:384px" src="Sprint%20Planning%20and%20Risk%2046bca601456c4dd19a0d9e15dcf2f472/Untitled.png"/></a></figure></div></div><h2 id="320e3904-cfbf-4394-93e5-175843d33621" class="">Step 2b: Sprint</h2><p id="ef46cede-7f36-44b8-858a-9c935c04bf0a" class="">How do we know how we’re doing? Use scrums.</p><blockquote id="b39a308c-ebf0-4f28-99f3-d36a1ca1829a" class="block-color-orange">At least two per week, but preferably every day. 10-15 minutes, go through each team member.</blockquote><p id="b2383da1-f424-49b6-8b3b-650c2105b41e" class="">For each team member:<div class="indented"><p id="2cf32695-2977-4f6e-8d6d-2832a8af4c85" class="">What have I done? What will I do next? What do I need help with?</p></div></p><p id="f47c7cae-1bdc-4092-993e-2badd6da6ba9" class="">Check burndown of the sprint backlog.</p><p id="ca19799b-b0e7-4e4d-8562-5448e72fb153" class="">The scrum is NOT a working session - these should be kept separate.</p><h2 id="db2ad21e-44a3-48c0-9310-68d846ac6a1c" class="">Step 2c: Review</h2><p id="fa14f41c-f6e0-4581-95f4-58aa8ad9cca8" class="">How did we do?</p><p id="13981c00-a7a7-457a-b6c5-597173984a1c" class="">What was the feedback from the customer?</p><p id="d3301343-109d-4479-9555-ba3db80b6981" class="">What changes to our process and the product do we need to take forward into the next sprint?</p><p id="800dfd55-75f5-40f8-9a89-a9c217058a23" class="">This naturally leads into reprioritisation and the planning for the next sprint.</p><h1 id="4802262e-0a2b-4e5e-80b4-4d4f3bcdb377" class="">Risks</h1><p id="87103404-6c7d-48a5-9c06-ad563b517994" class="">Risk analysis - after establishing objectives, identify the constraints and risks of reaching those objectives.</p><p id="9ebf0117-be52-4962-9a72-7e4e8a69b1a7" class="">You should quantify the risks - we want to <mark class="highlight-orange">minimise expected severity</mark>.<div class="indented"><p id="757e2c1e-aeed-41e8-8603-d8777bedcbbf" class="">Roughly, <code>risk exposure</code> = <code>probability</code> <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">×</span></span></span></span></span><span>﻿</span></span> <code>severity</code> </p></div></p><p id="8759ccce-5e93-4c77-bcc4-89c84617d0ec" class="">If you grade your likelihoods and severity on 1-5 scales, then you can get a good quantitative idea for what you’re dealing with.</p><p id="6e517e1e-8ccf-4374-a5c9-59e9c3b279ba" class="">You should also propose mitigation accordingly.</p><figure id="a3a316d8-c0ba-4a7f-952f-9fac8bca93e2" class="image"><a href="Sprint%20Planning%20and%20Risk%2046bca601456c4dd19a0d9e15dcf2f472/Untitled%201.png"><img style="width:944px" src="Sprint%20Planning%20and%20Risk%2046bca601456c4dd19a0d9e15dcf2f472/Untitled%201.png"/></a><figcaption>An example excerpt from a risk analysis for an old ECS project.</figcaption></figure><p id="17473519-f684-4687-93c3-56619933602a" class="">
+</p></div></article></body></html>

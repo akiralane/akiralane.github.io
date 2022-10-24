@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Interrupts</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="cae103a3-dc3f-45e2-acdb-c2fd8583ccc0" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🏨</span></div><h1 class="page-title">Interrupts</h1></header><div class="page-body"><nav id="a1848082-374d-4d1e-b3c1-9100a2453caa" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e057691c-bd29-49db-b6ff-0b130cc6c13d">Basic IO methods</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d90eff5e-6def-4574-aa42-fb1738aff3d3">Interrupts</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d9687e1e-6f34-4d52-97ff-3e2dccf9e2b4">What happens when an interrupt arrives?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#935439a5-a88b-4abf-b0ea-cc69174d186e">Rules for ISRs</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0ec83621-981e-4bc4-a48a-ac5bea66d029">Latency</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#722b0e26-fbd5-4bfb-a2db-398a73baf48d">Causes of latency</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#26f8f0c6-6d49-44c8-a5d7-c4bbf03b53f8">Jitter</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e85b699f-8995-440c-a001-73a28e190c84">How do we keep ISRs fast and simple?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#571202f1-3046-46c7-b69b-9b718b4b19a3">ISRs in C</a></div></nav><hr id="b32837fc-8e09-4e9b-b332-03759fca9078"/><h3 id="e057691c-bd29-49db-b6ff-0b130cc6c13d" class="">Basic IO methods</h3><p id="95265997-9a40-403a-bc72-3cc49cb22fbc" class="">Programmed IO - or <mark class="highlight-orange">polling</mark> - is where the CPU sits in a tight loop until input is available or output can be accepted.<div class="indented"><p id="6c1071fe-b7a4-49ad-b822-a0a3657623b4" class="">This occupies the CPU, but facilitates very fast reactions.</p></div></p><p id="81b1bde9-e313-4e44-a325-bf2c62005645" class="">Alternatively, we can use <mark class="highlight-orange">interrupt-driven</mark> IO. This is where a hardware signal changes the program flow. The CPU can do other work (or sleep) until IO is possible.<div class="indented"><p id="8ee70473-3585-42a7-a551-28d4de6697c3" class="">Other IO methods like DMA or dedicated IO computers (like graphics cards) use interrupts to communicate with the CPU.</p></div></p><h1 id="d90eff5e-6def-4574-aa42-fb1738aff3d3" class="">Interrupts</h1><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="7e81eced-5635-4714-b461-aae38e3d426f"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Crucially, the state of the interrupted process needs to be preserved.</div></figure><p id="d1501b56-fdca-4c19-8f90-9f6f7c95d0fa" class="">The CPU needs to be able to continue where it was interrupted <mark class="highlight-orange">after the interrupt has been dealt with</mark>.</p><p id="935b98d3-5414-46c7-93f7-59f575eca56a" class="">A “precise interrupt” must meet certain conditions:</p><ul id="2695739d-07b1-4f30-8022-8f9cbb1d9efa" class="bulleted-list"><li style="list-style-type:disc">The state of the program counter (PC) is known.</li></ul><ul id="a43ec67c-18cc-4c6b-a999-9e3a253696bc" class="bulleted-list"><li style="list-style-type:disc">Everything before the PC has been fully executed.</li></ul><ul id="82d31432-b321-4692-bbbb-db22d67c620f" class="bulleted-list"><li style="list-style-type:disc">Nothing after the PC has been started.</li></ul><ul id="e25d4af7-72e4-44aa-810f-712faae9a2aa" class="bulleted-list"><li style="list-style-type:disc">Execution state of the instruction <em>at</em> the PC is known (Process Status Word).</li></ul><h3 id="d9687e1e-6f34-4d52-97ff-3e2dccf9e2b4" class="">What happens when an interrupt arrives?</h3><p id="a94831d4-d192-490c-9575-7ec542ea56fd" class="">The processor completes the current instruction and the acknowledges the interrupt.</p><p id="64dd6578-db5e-4e13-ba4b-4cafce0b85e5" class="">The hardware saves some state, like the PC and the process status word.</p><p id="c9dc9e27-b680-491a-a539-c138b3e99611" class="">The PC is then loaded with a value from the interrupt vector table - the control is now handed to software.<div class="indented"><p id="d4788263-fd75-4f06-8676-5479c29cc0e9" class="">The software disables interrupts and saves additional required state (like putting registers on the stack).</p><p id="c5ca9a92-107e-45be-b0e5-4edea6d39b92" class="">At this point, the software can reenable interrupts, but it’s easier to think about if it doesn’t.</p><p id="f18addde-c634-4919-be38-cb9464908465" class="">Then, it services the interrupt by jumping to the Interrupt Service Routine (ISR), at the position loaded from the interrupt vector table.</p><p id="1a6a03cf-9039-4571-bf18-2e6014d8eea8" class="">After that’s done (hopefully as fast as possible), it restores the saved state.</p></div></p><p id="37c8157d-056b-4aa0-b44c-1886a897faf1" class="">The hardware can then restore the PSW and PC.</p><h3 id="935439a5-a88b-4abf-b0ea-cc69174d186e" class="">Rules for ISRs</h3><ol type="1" id="bfe6d03a-326b-4b89-9fbc-06a13f38aaeb" class="numbered-list" start="1"><li>Keep them fast. If they’re fast, you can usually just block all other interrupts while the ISR runs, which makes our life much simpler.<ol type="a" id="f416d7f6-88a4-43b0-928f-c97552e4926a" class="numbered-list" start="1"><li>Avoid loops - makes it hard to place bounds on running time</li></ol><ol type="a" id="79b5a557-addf-4730-9eb2-caac35881d12" class="numbered-list" start="2"><li>Avoid heavy instructions (<code>printf</code>)</li></ol><ol type="a" id="13ac0010-75e9-4b27-a2ef-a2ae4e0b9f6f" class="numbered-list" start="3"><li>Avoid instructions which block (<code>scanf</code>)</li></ol></li></ol><ol type="1" id="4c861f4f-cedf-4e5e-b7fc-6d68c3ed6429" class="numbered-list" start="2"><li>Keep them simple<ol type="a" id="32a680a6-9fa4-4ea3-851f-2943a10bb9c8" class="numbered-list" start="1"><li>Debugging ISRs is hard, since they aren’t part of normal program flow.</li></ol></li></ol><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="ef4fd2d5-61a4-4c41-a779-e930d4f24e31"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Another key reason for keeping them fast and avoiding having to use re-entrant ISRs is that <mark class="highlight-orange">stack size bounds</mark> are simpler to establish - if you can interrupt an interrupt, it’s possible that your stack could grow unbounded and cause bad things.</div></figure><h1 id="0ec83621-981e-4bc4-a48a-ac5bea66d029" class="">Latency</h1><blockquote id="f691ec06-e723-43ec-8946-f7a3363a07d5" class="">Latency is the time from the moment the interrupt arrives to the moment the CPU <mark class="highlight-orange">starts</mark> servicing the interrupt.</blockquote><p id="b57f2bab-3e98-44cc-bf42-3c45f2163ac6" class="">Making latency deterministic can be important in real-time systems.<div class="indented"><p id="ca0306a9-88c7-4498-9fe4-cc04d1017c47" class="">Both algorithms and human operators are really quite good at adapting to deterministic latency, but random delays are harder to deal with.</p></div></p><p id="a0ed47e0-eb49-407f-a1de-f2d6cb835484" class="">We are often typically interested in maximum latency. We like putting bounds on things!</p><h3 id="722b0e26-fbd5-4bfb-a2db-398a73baf48d" class="">Causes of latency</h3><p id="8a658916-1ff6-43ae-bd26-caffec48416b" class="">Hardware</p><ul id="5295e93d-899a-419a-9589-6a1c2039a306" class="bulleted-list"><li style="list-style-type:disc">Waiting for current instruction to complete. This is technically non-deterministic but the variance is often very low.</li></ul><ul id="4b1c3bf7-205f-45eb-ada8-8c4855b3a049" class="bulleted-list"><li style="list-style-type:disc">Time taken for hardware support to save program state.</li></ul><p id="b3766cc9-b387-4951-b3d7-b5a572049156" class="">Software</p><ul id="ec2df26f-ef1c-4797-9ed6-18bb0ae411c8" class="bulleted-list"><li style="list-style-type:disc">Software also needs to save state.</li></ul><ul id="14b39741-2755-42de-af4f-0324d1a891e6" class="bulleted-list"><li style="list-style-type:disc">The (maximum) length of <mark class="highlight-orange">critical sections</mark> - where we’ve disabled interrupts. This is a large cause of non-deterministic latency.</li></ul><h3 id="26f8f0c6-6d49-44c8-a5d7-c4bbf03b53f8" class="">Jitter</h3><p id="5b0bbad9-1d53-499f-b2a0-c0b71d71bba2" class="">What’s the variance in our latency?<div class="indented"><p id="09913fe5-0fcd-4152-9445-ab3406edef71" class="">Some instructions take multiple clock cycles, although this is quite low (on AVR there are only two types of instruction: one-cycle and two-cycle).</p></div></p><h2 id="e85b699f-8995-440c-a001-73a28e190c84" class="">How do we keep ISRs fast and simple?</h2><p id="e73d8de5-af20-4e80-98ad-4e6bc7b738e7" class="">So, we want to <mark class="highlight-orange">minimise the length of the critical sections</mark>, but we <em>also</em> want to <mark class="highlight-orange">keep interrupts off</mark> during an ISR (effectively making the entire run time of the ISR a critical section).</p><p id="69da5ff0-7b40-4311-acac-fc27bd30cad9" class="">Keeping interrupts off means that we have no worries about stack depth arising from “nested” interrupts, and there’s no overhead from re-entrant code.<div class="indented"><p id="c21c3284-c6c4-4cc6-824b-4cf5319c2c60" class="">However, this does mean a potential increase in latency and lost interrupts (if we’re not servicing them fast enough).</p></div></p><p id="d88dac37-9069-4580-beb7-0cdeae848932" class="">Then, what do we do? One trick for an ISR:</p><ol type="1" id="d643dddb-aec0-4738-95b0-49bc77e7e19c" class="numbered-list" start="1"><li>Move the data that needs processing into some buffer.</li></ol><ol type="1" id="8d62db3a-a5cf-4759-a162-d874fe8ae1b3" class="numbered-list" start="2"><li>Set a global flag. <code>volatile</code></li></ol><ol type="1" id="27c9bd1b-33ed-446a-aa31-871681b3e930" class="numbered-list" start="3"><li>Return immediately.</li></ol><p id="7334ea71-09f4-4884-9596-c0194a2e953b" class="">Then, the main loop can continually check the flag and process the data if it’s there. <div class="indented"><p id="bfb7803f-8fa7-430f-9bb4-869abec712d1" class="">Hence, the time-critical bit has been done in a time-critical manner - the rest can be done eventually.</p></div></p><h2 id="571202f1-3046-46c7-b69b-9b718b4b19a3" class="">ISRs in C</h2><p id="b19aa7c7-04e1-4ac5-b846-2c9870861407" class="">C itself has no support for ISRs. It’s compiler-specific!<div class="indented"><p id="1fa59a26-0c66-4998-ae74-626cee897f4b" class="">For example, the Pi Pico SDK has <div class="indented"><p id="04ed553e-f305-406e-8dfe-39ad7445838b" class=""><code>irq_set_exclusive_handler(uint num, irq_handler_t handler)</code>.</p></div></p><p id="851c3ad0-2ca7-452d-93dc-6e9b8b415e84" class="">Each IRQ has a macro with its own number. For example, <code>PIO0_IRQ_0</code> is 7.</p></div></p><p id="377d620e-c368-4169-b89a-67f5a9a10a4e" class="">Note that C statements are often compiled into multiple instructions - this means that statements can be interrupted <mark class="highlight-orange">mid-statement</mark>.</p><p id="e08fece4-6a02-4a82-a0d8-da9169dfdee0" class="">
+</p></div></article></body></html>

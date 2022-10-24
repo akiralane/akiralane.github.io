@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Physical and architectural models</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="6ee6bd5e-9289-4bd7-877f-43e9e857a97b" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌩️</span></div><h1 class="page-title">Physical and architectural models</h1></header><div class="page-body"><nav id="20bceefd-2840-49b5-9a1e-48a843714ffb" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1b4973ee-f4dd-4927-b836-a64b9f9342ed">Physical models</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6efca430-827e-41df-b6cf-037a64c33471">Architectural models</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a4d05f6a-b13f-48a6-be40-72317dd30bf0">Architectural elements</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#008512f3-4c07-45c6-8910-0c6ec1121c15">Communicating entities</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4eab5b86-d3b3-4578-8736-939db151bd64">Communcation paradigms</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#284a3b78-dde0-46e0-abbf-01bfa1f7ff61">Roles and responsibilities</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9925c752-a260-43d9-bec3-02fb41c41117">Placement</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b744de55-14db-4b2c-99e7-473b845b5ee7">Architectural patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#928b844d-c59a-432a-8723-213b263666e7">Layering</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8804527b-6500-4cb6-b685-a0aabe5b94fe">Tiering</a></div></nav><hr id="705ce005-4913-4ed3-982d-94ef28d72001"/><h1 id="1b4973ee-f4dd-4927-b836-a64b9f9342ed" class="">Physical models</h1><p id="60fb04da-98a6-4a30-92ce-6588f25b40a2" class="">The baseline physical model is that:<div class="indented"><p id="38c2398a-fe13-4618-800f-e63bb5d21c1c" class="">There are components located at computers.</p><p id="1b02719e-5326-44cd-a52c-6c489183d6f4" class="">The computers are interconnected by a network.</p><p id="0d2dfa62-0ff3-465b-a31e-48a84e0101c3" class="">The components communicate by passing messages over said network.</p></div></p><figure id="a85af751-7fa6-47ec-985b-4bc886fbe7eb" class="image"><a href="Physical%20and%20architectural%20models%206ee6bd5e92894bd7877f43e9e857a97b/Untitled.png"><img style="width:1150px" src="Physical%20and%20architectural%20models%206ee6bd5e92894bd7877f43e9e857a97b/Untitled.png"/></a></figure><h1 id="6efca430-827e-41df-b6cf-037a64c33471" class="">Architectural models</h1><p id="482fd3ab-5b65-4148-88ca-5a74cd5d4f3a" class="">The architecture of a distributed system describes its structure in terms of the <mark class="highlight-orange">types of components involved</mark> and their relationships and interactions.</p><p id="78517a9b-d0bb-40f7-b442-44b8441d1534" class="">There are two main aspects to consider:<div class="indented"><p id="ebde7f97-4206-445b-92ae-1d4311cd3a59" class=""><em>Elements </em>- the building blocks, including things like components, methods of communcation, roles and deployment.</p><p id="05b70693-bff0-43bc-8a00-338809b0260f" class=""><em>Patterns</em> - common strategies for combining the elements.</p></div></p><h2 id="a4d05f6a-b13f-48a6-be40-72317dd30bf0" class="">Architectural elements</h2><h3 id="008512f3-4c07-45c6-8910-0c6ec1121c15" class="">Communicating entities</h3><p id="ed7b260f-a1e4-4110-b02b-7388190a7684" class=""><mark class="highlight-orange">System-oriented perspective</mark> (lower-level - “what’s running?”)<div class="indented"><p id="dab6c175-efb3-41a5-8d45-8bb26bb671f4" class="">Focuses on processes communcating via inter-process channels.</p></div></p><p id="f2b8dfc4-f3fd-4bba-9c22-1235331863c8" class=""><mark class="highlight-orange">Problem-oriented perspective</mark> (higher-level - “how do I abstract what’s running?”)<div class="indented"><p id="e9aca57e-cf00-4d3b-abda-6220d8a6876a" class="">Focuses on objects, which deal with the provided interface to the actual components.</p></div></p><h3 id="4eab5b86-d3b3-4578-8736-939db151bd64" class="">Communcation paradigms</h3><p id="89274e8c-eaac-4832-8088-08629a5b59d6" class=""><mark class="highlight-orange">Inter-process communication</mark> (network level)<div class="indented"><p id="f5b40fb1-2f76-40bb-80c6-4e4a495291c4" class="">Message-passing and sockets.</p></div></p><p id="37765fb6-e6b0-4a19-8a97-db23d84eb52d" class=""><mark class="highlight-orange">Remote invocation</mark> (communcation protocols based on connection and exchange)<div class="indented"><p id="ed7d9b96-be91-453c-95fa-abd9cf33f826" class="">This includes things like request-reply protocols - HTTP.</p><p id="ea6ab8f9-b0d1-4e5a-bd62-f07b22ad47d3" class="">Alternatively, Remote Procedure Call (RPC), where you request the execution of a specific remote function and receive the response.</p><p id="a71b40f6-4345-42e9-941b-f72c4ad34829" class="">Alternatively alternatively, you can be <em>more </em>specific and use Remote Method Invocation (RMI), which matches it with the <mark class="highlight-orange">problem-oriented</mark> <mark class="highlight-orange">communcating objects</mark>.<div class="indented"><p id="f9726d07-cba9-4ada-8828-644ca60aedc7" class="">You can think of RMI as object-oriented RPC. It’s the invocation of a method of a remote object.</p></div></p></div></p><p id="b375c2ca-4548-47e4-8063-de2778db109d" class="">These approaches are limited by time and space coupling.<div class="indented"><p id="62298c34-d8b6-436c-b21f-678caa6a4d97" class="">Senders need to know how to reach the receivers - the endpoints.</p><p id="3cf272df-1da6-4e5c-b728-29900a3bd79f" class="">Both senders and receivers need to be up and running at the same time.</p></div></p><p id="867aadc3-5de2-4166-8ae3-63db7d8bb9a0" class="">One approach is <mark class="highlight-orange">indirect communication</mark> - to decouple time and space between participants.<div class="indented"><p id="d7a8787f-d8d9-4c51-8404-5a77b05f1e96" class="">This includes things like group communcation, publish-subscribe systems, message queues, distributed shared memory etc.</p></div></p><h3 id="284a3b78-dde0-46e0-abbf-01bfa1f7ff61" class="">Roles and responsibilities</h3><p id="16e9a6bf-e219-406a-9aa1-c966807b25db" class=""><mark class="highlight-orange">Client-server</mark><div class="indented"><p id="29fd4729-e1b0-414f-9e57-3fba01ef4cf2" class="">Clients send requests and receive responses back.</p><p id="e689aca4-bd29-4a85-84a7-8fc99c506095" class="">Servers can be clients of other servers.</p></div></p><p id="f2256fce-f976-4325-8e8b-a985bd177cbb" class=""><mark class="highlight-orange">Peer-to-peer</mark><div class="indented"><p id="b35b86cd-4374-48aa-998d-176f1a1dfa0e" class="">All involved entities play similar roles.<div class="indented"><p id="eb7ee494-33da-4eec-89ea-e84bdecabe92" class="">Same program, same interfaces, different machines.</p></div></p><p id="acf03217-ebd3-49a8-afb3-581dd60ad97a" class="">Enables decentralised approaches, potentially improving scalability.</p><p id="29171c73-2379-43f6-bb87-7b7a1b356482" class="">The design is often much more complex than client-server.</p></div></p><h3 id="9925c752-a260-43d9-bec3-02fb41c41117" class="">Placement</h3><p id="dfc1bd36-de19-424c-8158-49dc8b2957da" class="">How do you map identified elements onto the underlying physical infrastructure?</p><p id="24dd41b0-bb6e-4fdd-bbc1-93f4d5cb4832" class="">For example, you can:<div class="indented"><p id="8a6464cf-7ca3-4c38-ba7f-cf7187261244" class="">replicate data over multiple servers</p><ul id="e5ba6d20-8ecb-45ed-a3fa-92a67ae4e4ca" class="bulleted-list"><li style="list-style-type:disc">Fault tolerance, load balancing</li></ul><ul id="fff87aaf-b4b6-4275-a3c7-bcd31e3b273e" class="bulleted-list"><li style="list-style-type:disc">Need to ensure data consistency</li></ul><p id="400df548-315d-4588-ace6-96783be4500a" class="">partition data over multiple servers</p><ul id="5cfed253-1354-40a0-8640-150398eca427" class="bulleted-list"><li style="list-style-type:disc">Lack of real fault tolerance</li></ul><ul id="7f347b51-1d2f-47ca-8b7e-3079c5233a53" class="bulleted-list"><li style="list-style-type:disc">No overhead from attempting to ensure consistency</li></ul></div></p><p id="a717d5e5-2fa4-4dce-9970-c57e2c99c10b" class="">Caching is part of the stuff as well.</p><h1 id="b744de55-14db-4b2c-99e7-473b845b5ee7" class="">Architectural patterns</h1><h2 id="928b844d-c59a-432a-8723-213b263666e7" class="">Layering</h2><p id="a4f1a9be-058f-4a2b-9028-2bb487c09c58" class="">This is the vertical organisation of services into layers.<div class="indented"><p id="72274e82-0ee5-4886-9e81-9fed9aca80ae" class="">Each layer provides a software abstraction and hides the details of the lower layers.</p></div></p><p id="f2e70bab-f495-41f4-931a-bffa9a547c95" class="">The middleware aims to mask the heterogeneity and provides convenient programming abstractions.</p><h2 id="8804527b-6500-4cb6-b685-a0aabe5b94fe" class="">Tiering</h2><p id="9b43c26b-00f7-44c0-9c0a-c8970565dcfe" class="">Organise functionality of a given layer and place this functionality into servers.<div class="indented"><p id="bab26ce6-f221-49c8-907d-454bf1e7d142" class="">Tiering is <mark class="highlight-orange">complementary</mark> to layering - it’s not an alternative.</p></div></p><p id="86726f8f-62f8-45be-8080-4a4ac8d590d8" class="">For example, tiering a client-server application into presentation logic, application logic and data logic.</p><figure id="151c5da6-6737-4866-9a8a-9374eecfeef3" class="image"><a href="Physical%20and%20architectural%20models%206ee6bd5e92894bd7877f43e9e857a97b/Untitled%201.png"><img style="width:480px" src="Physical%20and%20architectural%20models%206ee6bd5e92894bd7877f43e9e857a97b/Untitled%201.png"/></a></figure><p id="c68ee8f1-b6e8-4dcc-8a8d-3958cc462e24" class="">
+</p></div></article></body></html>

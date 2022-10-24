@@ -1,0 +1,669 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Transport Layer: TCP and UDP</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="94331681-a238-45cd-8242-51c201109109" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🎊</span></div><h1 class="page-title">Transport Layer: TCP and UDP</h1></header><div class="page-body"><nav id="242c865f-ab57-45f6-b142-63c8b3fd79f9" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c9c924e7-59a7-472a-b1a6-52fbb16c07a8">UDP - User Datagram Protocol</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a72255e3-3479-481e-b119-d9c8fc2dd1d8">TCP - Transmission Control Protocol</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cb0dbcbf-3cf8-4569-8003-3b3234125848">Details of TCP</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#695170bd-2e79-4025-aa97-59579599400c">TCP header</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#44e3cd8c-cb93-4364-8fa6-0698581c225a">TCP connection establishment</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cab5c1c3-3dfd-4506-98a7-7b71c3f2a526">Reliability</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ed06921f-1acd-462d-a0cb-f798465546aa">TCP flow control</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6fbb348e-9ef9-4138-9253-6e0ea55315a9">TCP congestion control</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5deee2f2-3919-485f-891f-fe33d50e60c8">When to use TCP vs UDP</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#31079bb1-577d-4458-bb5b-a9773897d611">Summary</a></div></nav><hr id="88774a0f-0422-485b-afc6-ff8a2b9e7f35"/><figure id="b0001d21-c99b-4183-9af9-8a8e6027c8d7" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled.png"><img style="width:432px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled.png"/></a></figure><h3 id="c9c924e7-59a7-472a-b1a6-52fbb16c07a8" class="">UDP - User Datagram Protocol</h3><ul id="dbafdf12-4a51-4ee6-9a3b-3686dc3b066a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange">Connectionless</mark> - “send and forget”. There’s no state left over in the communication itself.<ul id="4c74aa24-c1c4-41dd-af8a-e54007855b5b" class="bulleted-list"><li style="list-style-type:circle">This means that retransmission is up to the application.</li></ul><ul id="08667bb1-1378-4d6d-a6f4-5353ebbf3204" class="bulleted-list"><li style="list-style-type:circle">Congestion etc. can lead to dropped packets.</li></ul></li></ul><ul id="e6bd9e0c-8b69-4c74-ac4b-e2584bb47c4c" class="bulleted-list"><li style="list-style-type:disc">There’s no flow control or anything. UDP applications often have a fixed bitrate.</li></ul><ul id="ce82da73-3f48-428d-8277-9cd1506809e0" class="bulleted-list"><li style="list-style-type:disc">There’s a <mark class="highlight-orange">low overhead</mark> because there’s no connection management.<ul id="8582c437-264f-45ff-b0b2-626452ffe17b" class="bulleted-list"><li style="list-style-type:circle">Also, the header is pretty small.</li></ul></li></ul><ul id="79800605-d58a-4e73-9a87-932927ca5aa7" class="bulleted-list"><li style="list-style-type:disc">Good for multicast, since there’s no need to send acknowledgements - acknowledgements can flood in otherwise.</li></ul><figure id="f8a1a616-e1f1-4657-9179-ef4874656d80" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%201.png"><img style="width:576px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%201.png"/></a></figure><h3 id="a72255e3-3479-481e-b119-d9c8fc2dd1d8" class="">TCP - Transmission Control Protocol</h3><ul id="df36b13d-9639-4233-ace8-d6ae1ce1f379" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange">Connection oriented</mark> - includes acknowledgements and retransmissions as part of the protocol.</li></ul><ul id="96979cf3-4be9-410b-ba46-99c38f1b93c7" class="bulleted-list"><li style="list-style-type:disc">It provides flow control. TCP will adjust sending rate over time.</li></ul><ul id="aed5cb21-579f-4328-acd3-cc94a1faec09" class="bulleted-list"><li style="list-style-type:disc">Each segment has a sequence number, so the receiver reassembles the segments in the correct order.</li></ul><p id="734b1865-986d-4758-b0db-a993bf9e9269" class="">The sender and receiver each create a <mark class="highlight-orange">socket</mark> to act as a communication endpoint. Each socket has an IP address and port number.</p><p id="83cd1577-4970-4f7e-aeeb-956dfdbd6bbc" class="">TCP provides performance and reliability.</p><h1 id="cb0dbcbf-3cf8-4569-8003-3b3234125848" class="">Details of TCP</h1><p id="5ff887eb-52b5-4222-b308-63396cf80467" class="">You’ll have seen the Berkeley sockets API before:</p><figure id="604c8853-4f10-4a1e-9d72-0c04eaa5e2f5" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%202.png"><img style="width:528px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%202.png"/></a></figure><h3 id="695170bd-2e79-4025-aa97-59579599400c" class="">TCP header</h3><figure id="6047aad9-da3a-437e-9b22-11acb5cd621c" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%203.png"><img style="width:480px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%203.png"/></a></figure><h2 id="44e3cd8c-cb93-4364-8fa6-0698581c225a" class="">TCP connection establishment</h2><p id="5ef65fa6-64f4-4dff-b01d-f98d083aa9cb" class="">This is done with a three-way handshake: <code>SYN</code>, <code>SYN-ACK</code>, <code>ACK</code>.</p><figure id="1a95c94b-0339-46b4-a4e0-3723101321f5" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%204.png"><img style="width:288px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%204.png"/></a></figure><p id="473ecf4a-8645-4946-bce7-0507e0ef764b" class="">Each side uses a sequence number, which means that repeat packets can be discarded and lost ones resent. There’s a common understanding of the position in the data stream.</p><h3 id="cab5c1c3-3dfd-4506-98a7-7b71c3f2a526" class="">Reliability</h3><p id="a1dd5093-c2e7-4c74-b339-99060879c595" class="">ACKs are sent back by the receiver - this means that it’s on the sender to detect lost packets.<div class="indented"><p id="da6ba597-34e4-4e8b-86bb-b508f05baa98" class="">This is done via retransmission timeout. The sender estimates when an ACK is expected.</p></div></p><h2 id="ed06921f-1acd-462d-a0cb-f798465546aa" class="">TCP flow control</h2><figure id="6d632e95-7798-4d58-bfa8-b263909ad2df" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%205.png"><img style="width:480px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%205.png"/></a><figcaption>Note how the transmission rate is adjusted <em>at the tap</em>.</figcaption></figure><p id="b2892799-2e93-4381-939e-4b3b768e8200" class="">TCP uses a <em>sliding window protocol</em> to control the sending rate.</p><p id="0ebdfec6-1d41-4a81-ae71-b3d1f81a386b" class="">Effectively, it informs the sender that they shouldn’t send data unless the receiver indicates that it has enough buffer space to accept it.<div class="indented"><p id="1592c5e4-a0da-47fd-a136-4dfb1b0d85e8" class="">If they were to send it, it would just be dropped if the receiver didn’t have enough space - they would only have to resend later. That’s a waste of bandwidth!</p></div></p><p id="65893435-e6bf-4789-b43a-7d704d4af183" class="">The “sliding window” is effectively the buffer space that the receiver says it has available. This <mark class="highlight-orange">changes over time</mark> as data comes and goes.</p><figure id="e9b2c5a7-6178-4b8d-abea-f5e4d5697107" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%206.png"><img style="width:384px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%206.png"/></a><figcaption>Example of TCP flow control - the receiver reports back how much of its buffer is full and the sender waits accordingly.</figcaption></figure><h2 id="6fbb348e-9ef9-4138-9253-6e0ea55315a9" class="">TCP congestion control</h2><p id="8a9eb20a-71fc-42a6-9ca4-77a8d9fe5d61" class="">This is maintained by the sender.</p><p id="3d522837-7385-4f61-95f8-b6c85a1855b9" class="">The TCP congestion window indicates the number of bytes a sender may put into the network at any time.<div class="indented"><p id="2272701c-2d32-432f-b26c-6691580f6cf2" class="">Packet loss is an indicator of congestion.</p><p id="77355c07-b000-419d-b299-998e3a27027d" class="">This record is kept <mark class="highlight-orange">alongside</mark> the receiver’s sliding window - the smaller of the two windows is used when sending.</p></div></p><p id="79f11c72-3fa4-4406-9c47-73662c0d4087" class="">It works on a “slow start” concept - we double how much we send every time we make successful contact up to a certain threshold. If we start to see packet loss, we reset back down and build up again.</p><figure id="8f392da9-fcc7-4590-97b5-02cd7e481376" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%207.png"><img style="width:432px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%207.png"/></a></figure><h1 id="5deee2f2-3919-485f-891f-fe33d50e60c8" class="">When to use TCP vs UDP</h1><p id="2cf7049d-4343-4392-98cd-b861f5fe5b15" class="">For video, you’ll usually want TCP.<div class="indented"><p id="972b4ee2-6ae7-4431-acf6-86874dd698f0" class="">The client connects via TCP and receives the video data, <mark class="highlight-orange">buffering it</mark> before playback.</p><p id="a8c73a9c-456c-442f-ac9c-e980c3a6103d" class="">This is good for video where this is possible - for things like streaming, however, you can’t buffer and it’s not so well-suited.</p></div></p><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="09e3e7cd-db28-4e05-94db-2397ba6b4d66"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">UDP is faster but packet loss has to be handled by the application layer.</div></figure><p id="6455bbe4-93fa-4607-a08e-4c8d19af0776" class="">UDP is immediate - limited buffering, no retransmission.</p><p id="cf94c625-d8f3-4735-82ed-7cc957aa1cc8" class="">Popular uses of UDP:</p><ul id="a1915074-8048-498d-ac22-06d88c746c10" class="bulleted-list"><li style="list-style-type:disc">Streaming clients - live video</li></ul><ul id="5e2fe16f-0f36-40de-bf1c-73a03cd5e24d" class="bulleted-list"><li style="list-style-type:disc">VoIP</li></ul><ul id="65ca2fa4-2ff5-4585-9221-15344d370221" class="bulleted-list"><li style="list-style-type:disc">Multicast (as mentioned, no potential ACK floods)</li></ul><ul id="785b521e-244f-4d0b-9696-64d4f8ddbd46" class="bulleted-list"><li style="list-style-type:disc">Control, like mice etc.</li></ul><figure id="ea0d597f-1702-46ac-a02a-418cb0dd120c" class="image"><a href="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%208.png"><img style="width:528px" src="Transport%20Layer%20TCP%20and%20UDP%2094331681a23845cd824251c201109109/Untitled%208.png"/></a></figure><h1 id="31079bb1-577d-4458-bb5b-a9773897d611" class="">Summary</h1><p id="2f5093ea-0bec-4eff-9696-2ac872ea5e3b" class="">TCP offers reliable connection-oriented service.</p><p id="29d04b60-ba01-4f98-bd85-bc8b46f0ee88" class="">UDP is connectionless and lightweight.</p></div></article></body></html>

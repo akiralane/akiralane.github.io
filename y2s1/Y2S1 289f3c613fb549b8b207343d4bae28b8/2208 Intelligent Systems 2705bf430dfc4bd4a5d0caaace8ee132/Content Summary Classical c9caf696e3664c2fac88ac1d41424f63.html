@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Content Summary: Classical</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c9caf696-e366-4c2f-ac88-ac1d41424f63" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🃏</span></div><h1 class="page-title">Content Summary: Classical</h1></header><div class="page-body"><nav id="f7c89821-71de-47a4-97d1-2bee98091692" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f29fb3ac-0aaa-4cae-9755-d76c6d79e692">Blind search</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#11fa3ce6-b18d-4aae-b945-e52c7e5ca037">Qualities of blind search strategies</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d6fbe76d-aae9-4d0a-818a-a9afcc9e5520">Factors of complexity: b, d and m</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e15ae090-a5c3-42bc-8e3a-5e12897e15a2">Blind search strategies</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4c1a2b91-38dc-41a8-bc85-32855e5dbe4f">BFS</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e7c78675-980f-4488-adf9-d851a273c2e7">DFS</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#794a25c9-9193-4196-98d6-e4fe00d38bfd">Iterative-deepening DFS</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9ce3b8fc-78ad-431b-830a-f05b246bb5b4">Heuristic blind search</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ec63c0e5-b2be-42b3-aacb-021404d22645">Greedy best-first</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e08a30b6-a3e3-4f1a-bbc3-d7cfa3caf26d">A*</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c4553ee1-940a-429f-8b55-3e292eca5f11">Local search</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7b0e79bc-283b-4ff0-9744-4d23eb158123">Hill-climb and simulated annealing</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cb171043-d155-4bff-8bd3-2e9d6ead3765">Genetic algorithms</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#38763674-9cdc-4747-8f22-b77151104ed5">Constraint satisfaction</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2ca1f3a0-cd1a-423a-88a8-ba2f3dcb4fa4">Improving backtracking</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#462757f4-200f-4957-b4ab-fe85d9876796">Local search in CSP</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f99755b8-1fe4-496a-8137-bec374867b56">Minimax</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5bc279b9-7f62-4968-84a7-e33a494c5505">Quiescent search</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0921c802-05e9-423d-9292-1ae03d0a03bb">Alpha-beta pruning</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3571c25f-7817-4ca3-8be7-42dafb7b193e">Alpha-beta and minimax</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#066c93ab-85ca-495e-8bc7-9e63b72f5e4a">Philosophy</a></div></nav><hr id="e93ca6e9-557d-4113-a196-9b1eb7f1b2cb"/><h1 id="f29fb3ac-0aaa-4cae-9755-d76c6d79e692" class="">Blind search</h1><p id="0ad945f9-7961-41e4-b360-51749344d00c" class="">Blind search is typically performed using <mark class="highlight-orange">tree search algorithms</mark>.</p><p id="a64707bf-8227-4f38-9b13-6dcbfa3ef008" class="">The main idea is to generate successors of already-explored nodes, called <mark class="highlight-orange">expanding</mark> the node.</p><p id="2a800201-e064-41c8-bb6d-fda1ab648acd" class="">Blind search is performed <mark class="highlight-orange">offline</mark> - that is, all information has to be given at the start.</p><h3 id="11fa3ce6-b18d-4aae-b945-e52c7e5ca037" class="">Qualities of blind search strategies</h3><ul id="12b681c0-e3bd-41dc-a228-022b9017d21b" class="bulleted-list"><li style="list-style-type:disc"><strong>Completeness</strong>: does it always find a solution if there is one?</li></ul><ul id="80fa35b5-82ce-4d7a-9db4-daa6d32eb61b" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimality</strong>: does it always find a solution which has the least “cost”?</li></ul><ul id="21690edc-7670-4079-a660-dfc66d9cda9b" class="bulleted-list"><li style="list-style-type:disc"><strong>Time complexity</strong>: total number of nodes generated</li></ul><ul id="ffd36aee-f872-4aa6-8983-083dcbfd833d" class="bulleted-list"><li style="list-style-type:disc"><strong>Space complexity</strong>: highest number of nodes kept in memory at any point in the algorithm</li></ul><h3 id="d6fbe76d-aae9-4d0a-818a-a9afcc9e5520" class="">Factors of complexity: b, d and m</h3><ul id="fa7e2642-5a79-486b-b99c-58b7696ccae3" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span></span><span>﻿</span></span> is the <mark class="highlight-orange">maximum branching factor</mark> of the tree - how many nodes are generated when you expand a node?</li></ul><ul id="b8362d1c-95fd-4641-b3fe-5910d0862bd2" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">d</span></span></span></span></span><span>﻿</span></span> is the depth of the <mark class="highlight-orange">least-cost solution</mark>. </li></ul><ul id="513be4b3-db76-4988-88ff-f51ddb29d37f" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span></span><span>﻿</span></span> is the <mark class="highlight-orange">maximum depth of the search space</mark> - this can be infinite.</li></ul><h2 id="e15ae090-a5c3-42bc-8e3a-5e12897e15a2" class="">Blind search strategies</h2><h3 id="4c1a2b91-38dc-41a8-bc85-32855e5dbe4f" class="">BFS</h3><p id="694be201-1571-4ef5-b2cb-d2254882a3f8" class="">BFS expands the shallowest unexpanded node. This can be seen as looking at the “fringe” of the tree - the lowest unexpanded nodes - as a <mark class="highlight-orange">queue</mark>. New successors go at the end of the queue, so the shallower nodes are expanded first.</p><p id="d4676033-3c0e-4e09-8dc4-924d3ca8822f" class="">BFS is:</p><ul id="d62169f9-2c8f-4b84-a8a6-69e28d165b05" class="bulleted-list"><li style="list-style-type:disc"><strong>Complete</strong> as long is the branching factor is finite (and there are no loops).</li></ul><ul id="ff34f93e-0aea-45e7-92ab-a5b1bf416ebc" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimal</strong> as long as the cost per step is constant.</li></ul><p id="15ce1700-f047-4c0b-ac42-055e747d7093" class="">Complexities:</p><ul id="2c2a383c-03af-460f-a7bf-c924a8b69cae" class="bulleted-list"><li style="list-style-type:disc"><strong>Time</strong>: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mrow><mi>d</mi><mo>+</mo><mn>1</mn></mrow></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^{d+1})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0991079999999998em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> - at each step, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span></span><span>﻿</span></span> nodes are generated, up until the shallowest solution is found at <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">d</span></span></span></span></span><span>﻿</span></span>.</li></ul><ul id="8d9f41e8-0a64-478b-83f4-9ec9b9e79fad" class="bulleted-list"><li style="list-style-type:disc"><strong>Space</strong>: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mrow><mi>d</mi><mo>+</mo><mn>1</mn></mrow></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^{d+1})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0991079999999998em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> - every node stays in memory.</li></ul><p id="d87c1945-6ae6-4dde-a310-1be12ff51afa" class="">As you can see, BFS suffers from a space problem.</p><h3 id="e7c78675-980f-4488-adf9-d851a273c2e7" class="">DFS</h3><p id="e305afa6-20f8-442b-abd7-c928b2349d3e" class="">DFS expands the deepest unexpanded node. When considering the “fringe” of the tree, look at it like a <mark class="highlight-orange">stack</mark>. New successors go at the front, so it’ll go down one branch at a time.</p><p id="722505db-0458-4fca-8a5b-f41f7a263346" class="">DFS is:</p><ul id="759cc012-cc51-4929-bcea-569ba5dfb3ff" class="bulleted-list"><li style="list-style-type:disc"><strong>Complete</strong> as long as the maximum depth is finite (and there are no loops).</li></ul><ul id="df97a5e1-0bc1-4635-871f-0ade893010df" class="bulleted-list"><li style="list-style-type:disc"><strong>Not optimal</strong>.</li></ul><p id="e0898693-9a97-41e8-939b-4203a11d8038" class="">Complexities:</p><ul id="62a30f5e-e140-4c42-8923-0ea6d1b11d58" class="bulleted-list"><li style="list-style-type:disc"><strong>Time</strong>: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> - at each step, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span></span><span>﻿</span></span> nodes are generated, up until the maximum depth of the search space <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span></span><span>﻿</span></span>. This is often awful.</li></ul><ul id="e80d7208-3d5c-4ac1-8c34-235600a73185" class="bulleted-list"><li style="list-style-type:disc"><strong>Space</strong>: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>b</mi><mi>m</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(bm)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">bm</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> - at each step, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span></span><span>﻿</span></span> nodes are generated. Since it’s a stack, we only have <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span></span><span>﻿</span></span> of these. That is, we only need to remember the current branch. This is linear!</li></ul><p id="beecfe75-4f03-4161-9840-a25014ca7ae3" class="">Time complexity is terrible if the shallowest solution is much shallower than the total depth.</p><h3 id="794a25c9-9193-4196-98d6-e4fe00d38bfd" class="">Iterative-deepening DFS</h3><p id="eae9e587-6f41-430e-957a-95f09a09b425" class="">Iterative-deepening is a depth-limited DFS which iteratively increases its maximum depth until the solution is found.</p><p id="28c1f3ee-709d-40bf-a3fc-1626a9d99adf" class="">Iterative-deepening search is:</p><ul id="99f07059-c62c-4802-b0a4-11ee87deb13b" class="bulleted-list"><li style="list-style-type:disc"><strong>Complete</strong>.</li></ul><ul id="e9fac70a-7489-4bcb-8bec-184b20f9ec39" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimal</strong> as long as the cost per step is constant.</li></ul><p id="f4e418b9-e126-4551-91af-321bc774da5e" class="">Complexities:</p><ul id="3c02e7f9-a412-4d10-b764-607e4a21d212" class="bulleted-list"><li style="list-style-type:disc"><strong>Time</strong>: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mi>d</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^d)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> - similar reasoning to normal DFS, except we typically stop at the solution rather than the bottom of the tree.</li></ul><ul id="d47de43e-803f-49ee-915c-d5560a9919db" class="bulleted-list"><li style="list-style-type:disc">Space: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>b</mi><mi>d</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(bd)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">b</span><span class="mord mathnormal">d</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> - as above.</li></ul><p id="78001ea0-5a7b-4801-8d3e-078573f8cd0a" class="">Iterative deepening is almost always better than regular DFS.</p><p id="acbd4620-8c8c-42c8-823a-d8e18139a6a2" class="">DFS is better in specific situations, like where all the solutions are at the bottom of the tree - see <mark class="highlight-orange">constraint satisfaction problems</mark>.</p><h1 id="9ce3b8fc-78ad-431b-830a-f05b246bb5b4" class="">Heuristic blind search</h1><p id="a1077c67-9ab2-49ef-9931-d999abbdc137" class="">Best first search means that we use an <mark class="highlight-orange">evaluation function</mark> for each node, which gives us an estimate of desirability.</p><p id="5e3c9769-02b8-46f4-b82f-431fce486082" class="">This means we can <mark class="highlight-orange">order the nodes in the fringe</mark> by desirability.</p><h3 id="ec63c0e5-b2be-42b3-aacb-021404d22645" class="">Greedy best-first</h3><p id="583eea39-d008-486c-8a13-4eb7ee732319" class="">Essentially, order the nodes in the fringe by some heuristic evaluation function <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>.</p><p id="e3ae00c4-6daa-43a6-958e-f56da81fa653" class="">For example, you could use <mark class="highlight-orange">Euclidean distance</mark> or <mark class="highlight-orange">Manhattan distance</mark>. (Euclidean is straight-line distance, while Manhattan is the shortest sum of all actual paths between two points).</p><ul id="2352a3c8-b726-47a8-90c7-1bc5ee2fce6b" class="bulleted-list"><li style="list-style-type:disc"><strong>Not complete</strong> - can get stuck in loops with a bad heuristic</li></ul><ul id="2fdd165a-2609-498f-b398-cb7221cc8436" class="bulleted-list"><li style="list-style-type:disc"><strong>Not optimal</strong> - the solution depends more on the heuristic than the actual costs</li></ul><p id="2558a57c-71c9-4bdd-a9a9-6c15027963e9" class="">Time and space of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>. A good heuristic can improve time dramatically, though.</p><h3 id="e08a30b6-a3e3-4f1a-bbc3-d7cfa3caf26d" class="">A*</h3><p id="d469de15-96dd-4d66-bf05-ebe99aa2daa4" class="">The idea of A* is to avoid expanding paths which are already expensive.</p><p id="181c1b71-f946-4af1-98c0-934802ca00bb" class="">Hence, we use the evaluation function is <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>g</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>+</mo><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(n)=g(n)+h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> where:<div class="indented"><p id="5dd21a88-82ab-460c-899a-53a6324f3dc4" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> is the <mark class="highlight-orange">cost so far</mark></p><p id="42e94942-2c1e-4591-a369-2b3353ffb42d" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> is the <mark class="highlight-orange">heuristic cost </mark>from <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span> to the goal</p></div></p><p id="4347f126-0d80-48e8-81f9-b27885e88fde" class="">A heuristic is <mark class="highlight-orange">admissible</mark> if it is always less than or equal to the <mark class="highlight-orange">true cost</mark> to the goal. That is, it’s optimistic.</p><p id="c302546d-1047-42ae-91bf-102ed92e12ca" class="">A heuristic is <mark class="highlight-orange">consistent</mark> (or monotonic) if its estimate is always less than or equal to the cost of reaching a neighbour plus the estimate from that neighbour. That is, as the name suggests, the heuristic is <mark class="highlight-orange">always increasing</mark>.</p><ul id="94eeadbc-fa1c-42b5-9895-e690acb83805" class="bulleted-list"><li style="list-style-type:disc"><strong>Complete</strong> unless there are infinitely many nodes which have a cost which is estimated by the heuristic to be less cost than the goal.</li></ul><ul id="5aa92b41-8164-4aa7-a6b7-332f7d79884a" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimal</strong> on tree-search if the heuristic is admissible. Optimal on graph search if the heuristic is admissible AND consistent.</li></ul><p id="97012a32-7b66-4ef3-b79a-2fcd4d0aed8c" class="">One method to create heuristics is to consider a <mark class="highlight-orange">relaxed problem</mark> - the cost of an optimal solution to a relaxed problem is an admissible heuristic for the original problem.</p><h1 id="c4553ee1-940a-429f-8b55-3e292eca5f11" class="">Local search</h1><p id="a02d6d57-6929-4d2f-8075-77c6a24452cc" class="">In local search problems, we don’t care about the path to the goal state - we only care about the goal state itself.</p><h2 id="7b0e79bc-283b-4ff0-9744-4d23eb158123" class="">Hill-climb and simulated annealing</h2><p id="d0c1ca9f-d3b0-4119-991d-393668771836" class="">Hill-climb simply takes the route which increases its evaluation function.<div class="indented"><p id="2625b488-4a42-4c7a-ab8c-849721630030" class="">It can get stuck in local maxima, though.</p></div></p><p id="f66d73c5-497d-4dc9-9a98-d99f456e9121" class="">Simulated annealing is an extension of hill-climb where you make bad moves on purpose, but <mark class="highlight-orange">gradually decrease</mark> the probability of making those bad moves over time.<div class="indented"><p id="7f21e040-a450-492a-bb66-248ee7a790c4" class="">Simulated annealing, when the temperature decreases slowly enough, will find a global optimum with probability approaching 1. You might as well just use exhaustive search at that point, though.</p><p id="155b9199-d0cd-494e-84e1-19efafc70010" class="">Simulated annealing is actually used a fair bit irl.</p></div></p><h2 id="cb171043-d155-4bff-8bd3-2e9d6ead3765" class="">Genetic algorithms</h2><p id="6b60e871-0d58-484f-ab18-6505489d079d" class="">The gist of it is that we start with <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></span><span>﻿</span></span> randomly generated states, generate the successors to those states, check if any of them are the solution - if not, select the <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></span><span>﻿</span></span> best successors and repeat.<div class="indented"><p id="fc3524d8-4f5f-4d58-91ab-43123ce1d018" class="">The above is called local beam search and is a naive approach to genetic algorithms.</p></div></p><p id="a0f686a4-07e3-4d05-b64b-e948cce395fd" class="">We can use selection, crossover and mutation to improve this.</p><p id="4a854731-23ed-4fe6-ae73-527082251d75" class="">A state in a genetic algorithm is represented as a string over a finite alphabet.</p><p id="8884fd46-9c56-4316-ac41-4c898f3e88eb" class="">Turns out this isn’t much better than simulated annealing lmao.</p><h1 id="38763674-9cdc-4747-8f22-b77151104ed5" class="">Constraint satisfaction</h1><p id="4f0fedd0-efec-41e8-bc85-6685d918855d" class="">The main difference here is that state isn’t a black box - it’s defined by a set of variables, each with values from a domain.</p><p id="6ff351f6-b04b-4e31-a053-302eb54de4af" class="">The goal test is a set of constraints.</p><p id="f386ddb5-ce4f-411a-b40d-4e9916d06216" class="">Graph-colouring and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span>-queens are examples of CSPs.</p><p id="57fb9ca0-308d-4dab-b375-94ed23f35b23" class="">CSPs are a simple example of a formal representation language. It allows useful general-purpose algorithms with more power than standard search algorithms.</p><p id="188cd283-3257-42ee-9b40-c3cdb26dcff3" class="">For a basic approach, we have:<div class="indented"><p id="1e5d7b64-3ee2-4f65-b5be-74c0063d05df" class="">Initial state as the empty assignment of values.</p><p id="aa1b725e-4b2f-4484-badf-ea440ef60981" class="">Successor function as “assigning a value to an unassigned variable <mark class="highlight-orange">which doesn’t conflict with the existing assignment</mark>”</p><p id="a4a16358-77ea-4c58-b1eb-2ea53f03fadd" class="">Goal test as a simple check whether all variables are assigned.</p></div></p><p id="20203223-644d-40d9-b17c-46ad4e39e49c" class="">If we assign only one variable at a time, this is effectively backtracking search.</p><h2 id="2ca1f3a0-cd1a-423a-88a8-ba2f3dcb4fa4" class="">Improving backtracking</h2><p id="0e47d42f-f19e-4315-960a-ea2c42e40c57" class=""><strong>Most constrained variable</strong>: choose the one with the fewest legal values - this is most likely to prune the search tree.</p><p id="1f98a1fb-c940-47d8-84c0-fc041772f422" class=""><strong>Most constraining variable</strong>: a useful tiebreaker. Choose the one with the most constraints on remaning values - like the node connected to the most other uncoloured nodes in graph-colouring.</p><p id="35c99692-baa0-42ee-b366-e0de5b68910f" class=""><strong>Least constraining value</strong>: Choose the value which rules out the fewest other values in neighbouring variables.</p><p id="811a4d2b-efb4-4b04-a9e2-f393f50c35e2" class=""><strong>Forward checking</strong>: keep track of remaining legal values for unassigned variables. Terminate the search when any variable has no legal values.<div class="indented"><p id="43f3ca58-88d2-45d7-9e08-bca571f0ba1d" class=""><strong>Arc consistency</strong>: an arc between two variables <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><span>﻿</span></span> and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span><span>﻿</span></span> is consistent if, for each <mark class="highlight-orange">value</mark> of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><span>﻿</span></span>, there is some <mark class="highlight-orange">value</mark> of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span><span>﻿</span></span> that we can assign such that it doesn’t violate the constraints.</p><p id="1c2f911b-eb66-46af-97bb-0c1541da7062" class="">If an arc is inconsistent, we can <mark class="highlight-orange">remove</mark> all values of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><span>﻿</span></span> for which there’s no corresponding value in the domain of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span><span>﻿</span></span> in order to make the arc consistent.</p><p id="a3b4a271-d866-4275-a0bb-fe45170574c3" class="">This helps constrain the search space.</p></div></p><h2 id="462757f4-200f-4957-b4ab-fe85d9876796" class="">Local search in CSP</h2><p id="ec222444-f2fd-44ea-a88e-f3636a99c4c9" class="">Local search needs a complete state to work.</p><p id="7bb4a83c-20fb-4424-b1d9-2983d7fb3ef9" class="">To apply local search to CSPs, we allow states with constraint violations - operators <mark class="highlight-orange">reassign</mark> variable values.</p><p id="e539f525-afc6-4d34-8af9-741d31521f74" class="">This lets us use <mark class="highlight-orange">min-conflicts</mark> heuristics to apply hill-climb etc.<div class="indented"><p id="37689f0a-dd23-4c2c-adc1-abf49163d68e" class="">This is often effective in practice. Works well on <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span>-queens, at least!</p></div></p><h1 id="f99755b8-1fe4-496a-8137-bec374867b56" class="">Minimax</h1><p id="e51f07bb-ef7d-4f10-8b88-257e832ef4c6" class="">Minimax is focused on adversarial game playing, which is a traditional focus of classical AI.</p><p id="2807df19-c390-44af-abb6-f26c476ad6e1" class=""><mark class="highlight-orange">MAX is usually the player</mark>, and picks the moves whose heuristic value is the best.</p><p id="7854abc5-9094-4e51-801f-80a16f5068ff" class=""><mark class="highlight-orange">MIN is usually the opponent</mark>, and picks the moves which minimise MAX’s advantage.</p><p id="96fe1734-4e11-48cc-ab21-d071a0f50fa1" class="">We go through a tree of moves - each layer of the tree is assigned to a player, since the turns alternate.</p><p id="712d21c3-50a8-43cc-b9cb-949f24f5769a" class="">We search to a given ply - it’s a depth-limited search - and evaluate the heuristic for the leaf nodes.</p><p id="1ca0071d-b721-4baa-9185-fe3d4f36e972" class="">The internal nodes propagate the values of the heuristic back upwards, which lets you know what route to pick at the top.</p><ul id="e4a3c3f5-3ac6-40b3-8e46-21dd81b58943" class="bulleted-list"><li style="list-style-type:disc"><strong>Complete</strong> for a finite game tree</li></ul><ul id="17029b04-d495-43d7-82e8-cb9f03c0d7a3" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimal</strong> for an optimal opponent</li></ul><ul id="857c685c-edce-45a2-bc52-8bf62608b874" class="bulleted-list"><li style="list-style-type:disc"><strong>Time</strong> of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> (this is just DFS)</li></ul><ul id="bf76e61c-366f-476c-b6f2-17cf7ee84649" class="bulleted-list"><li style="list-style-type:disc"><strong>Space </strong>of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>b</mi><mi>m</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(bm)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">bm</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> (DFS again)</li></ul><h3 id="5bc279b9-7f62-4968-84a7-e33a494c5505" class="">Quiescent search</h3><p id="7b78994b-956e-4d2b-a47c-3a294373ffc1" class="">A bad evaluation function can lead to wild swings in behaviour - see evaluating chess positions on material only.</p><p id="3c59a82e-032d-4af1-87ed-ba12d17aff16" class="">We look for stable - or <mark class="highlight-orange">quiescent</mark> - positions. We can also expand nodes in nonquiescent positions until a stable solution is reached.</p><h1 id="0921c802-05e9-423d-9292-1ae03d0a03bb" class="">Alpha-beta pruning</h1><p id="bf6736f0-d511-4a68-85a5-f149fcd6cd53" class="">The main idea is that we keep track of the <mark class="highlight-orange">worst</mark> and <mark class="highlight-orange">best</mark> any given branch can do (<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span></span><span>﻿</span></span> and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span></span><span>﻿</span></span> respectively).</p><p id="c612975a-c7c3-404c-8590-b4736db2ee92" class="">If the best we can do on the current branch is less than or equal to the worst we can do elsewhere, what’s the point in carrying on here?</p><figure id="7ffee045-8fa8-482d-9a38-5622ecd1fc9c" class="image"><a href="Content%20Summary%20Classical%20c9caf696e3664c2fac88ac1d41424f63/Untitled.png"><img style="width:288px" src="Content%20Summary%20Classical%20c9caf696e3664c2fac88ac1d41424f63/Untitled.png"/></a></figure><p id="469197aa-2896-42db-8d62-3fbd715bbccc" class="">Note that alpha-beta pruning depends on the direction in which the tree is traversed.</p><p id="d1aba939-0b94-4032-b2a4-cdbd22d300c5" class="">The ordering of subtrees has a <mark class="highlight-orange">large effect </mark>on the amount of pruning.</p><h3 id="3571c25f-7817-4ca3-8be7-42dafb7b193e" class="">Alpha-beta and minimax</h3><p id="8cbf7afd-c2b9-4f0c-8d49-2420b98a0355" class="">Alpha-beta is <mark class="highlight-orange">guaranteed</mark> to give the same values as minimax, while pruning subtrees which don’t need to be searched.</p><h1 id="066c93ab-85ca-495e-8bc7-9e63b72f5e4a" class="">Philosophy</h1><p id="cb41d920-75a5-4c60-983b-b7163f7c1d9e" class="">Searle: he’s the Chinese Room guy</p><p id="34d8330b-36a3-4559-ba75-ec0520fcd4dc" class="">Brooks: Chess is a bad test of AI. It fits GOF but not general intelligence.<div class="indented"><p id="b9549dc1-32a0-4c80-b1b5-99b5d5bcb991" class="">Football is better.</p></div></p><p id="12d4efda-f4fc-4799-a92d-b5860b19ff0a" class="">
+</p></div></article></body></html>

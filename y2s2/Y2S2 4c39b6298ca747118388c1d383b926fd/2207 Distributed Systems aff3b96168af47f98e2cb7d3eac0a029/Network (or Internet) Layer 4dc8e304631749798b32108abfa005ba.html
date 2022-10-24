@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Network (or Internet) Layer</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4dc8e304-6317-4979-8b32-108abfa005ba" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🎭</span></div><h1 class="page-title">Network (or Internet) Layer</h1></header><div class="page-body"><nav id="8a0f9423-2095-4458-8e18-515a8e0ff967" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#88b5fd1b-4ed1-4547-9fdf-550f66bf2f4f">Network layer functions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3a994261-8d50-4ef1-9454-d5c75e33f257">Properties of IP</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#082b42e9-9f90-4294-a6db-908216aa46c0">Protocols</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8d6f0704-97de-41da-82b1-b1888a152a2e">Store-and-forward packet switching</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#df9df309-7c0c-4c90-b6cb-8744030b7f88">IPv4</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#581f7777-4010-454a-b534-4e020e6bdcf1">The header</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#357e30e0-7f28-47bf-b8f1-6fbc944dacc8">History of IPv4 addressing</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d3019341-7c01-433a-b8d5-1341afc7b891">Maximising use of address space</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#663643fc-9f52-4bd5-a410-6e17a3a9be9e">Subnets</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#da1d4b3c-485f-44e8-bee2-6736046b6095">CIDR - Classless Inter-Domain Routing</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0c9797f6-bdd4-44f7-a03f-c2f2b0d12006">Site example</a></div></nav><hr id="d23a5d1a-5dd7-4a06-8c23-e704cb03da89"/><p id="2e5e1643-f7b7-47a6-bb75-105362d6bb65" class="">Also sometimes known as the IP layer.</p><p id="588353c3-e00c-4706-ad7c-ecb85d4cdc2c" class="">This layer sends packets via the Link layer <em>(outgoing)</em> and passes received packets to the correct transport layer <em>(incoming)</em>.</p><p id="538fc0dd-8076-4520-9694-5706a06e443f" class="">Additionally, it provides <mark class="highlight-orange">unique addressing</mark> and handles next-hop routing.</p><h2 id="88b5fd1b-4ed1-4547-9fdf-550f66bf2f4f" class="">Network layer functions</h2><p id="802a2571-e84e-4347-bfa4-0ad5c7e0ea1b" class=""><em>Internetworking</em><div class="indented"><p id="8e91a975-ea5a-4ee9-82de-3e092c4c4a8d" class="">It hides actual routing from the layer above it (transport).</p><p id="de21f1f9-eeb9-417b-abca-92ae77fca302" class="">The internet can be thought of as a “network of networks” - there are LANs at the edges, each served by their own router. There are then routers in the core which “do the magic”, according to Kirk.</p></div></p><p id="a9761cec-1176-4e42-8e84-4bc515f299fd" class=""><em>Transmitting</em><div class="indented"><p id="cb79207f-f9e9-44c8-af5e-079b1472c279" class="">Packetising - taking data from the Transport layer and adding the IP header.</p><p id="23e3a518-8131-45cd-bd45-9a27df44443d" class="">Processing and routing IP datagrams.</p><p id="0200ec45-d350-45e3-984f-38081f37f4d2" class="">Fragmentation - where our datagram is larger than the Maximum Transmission Unit (MTU), then we break it into smaller fragments.<div class="indented"><p id="271178a6-e9ca-4921-9a47-da84fd86af73" class="">It’s preferable to avoid fragmentation where possible. Having to reassemble packets adds inefficiency and potential security issues.</p></div></p></div></p><p id="a73832b9-d3f6-459f-beff-5a580a0e0e3d" class=""><em>Receiving</em><div class="indented"><p id="23a81bce-a0fd-4795-8c87-7ed68468f582" class="">Error checking.</p><p id="07d9d0df-593e-467b-8317-17a719616b3c" class="">Reassembly of fragments where fragmentation was necessary.</p></div></p><h2 id="3a994261-8d50-4ef1-9454-d5c75e33f257" class="">Properties of IP</h2><p id="7797d3c1-3c46-4907-98dd-6c9f125d3b5a" class="">It’s packet-switched and <mark class="highlight-orange">connectionless</mark>.<div class="indented"><p id="0ec59c8c-793b-4525-a5e5-772ce608b385" class="">IP packets are routed towards their destination at each router on the path.</p><p id="2e0c4daf-ebfb-4e02-b516-d89624b06e03" class="">It’s “connectionless” because there’s no predetermined path to the destination - routers send their received packets onwards on a <em>best-effort</em> basis.</p></div></p><p id="e4a7e525-bde5-4622-b364-6bcb6090dc62" class="">This means it’s <mark class="highlight-orange">unreliable</mark>.<mark class="highlight-orange"> </mark>There’s no guarantee any given IP datagram will be received.</p><p id="6be00bfe-1248-4d16-be01-ec0fe4ba07e9" class="">Routing is usually based only on the destination IP addresss - routers maintain routing tables in order to make better decisions.</p><p id="1990f3cc-91f3-4086-a6f3-298967ebe56b" class="">That means we need <mark class="highlight-orange">globally unique addresses</mark>. <div class="indented"><p id="347ab1d4-7674-4a51-86e3-26ec4eae807c" class="">It was initially envisaged that everything would have its own unique 32-bit number, like a house number / postcode.</p></div></p><h3 id="082b42e9-9f90-4294-a6db-908216aa46c0" class="">Protocols</h3><p id="2eeb81b5-281f-4682-9a6f-78fc8dfc4173" class="">There are a few protocols which operate in this layer:<div class="indented"><p id="2725e07b-6110-4fd8-8cec-9e01c33ddbc6" class="">IPv4, IPv6</p><p id="3261dc03-e866-40c8-ae20-6453e7c5b16b" class="">ICMP, ICMPv6 <em>(for diagnostics and control, like </em><em><code>ping</code></em><em>)</em></p><p id="5dc77016-e9de-492b-8d40-28cef14d3f73" class="">IPSEC <em>(for security)</em></p><p id="2a20d156-8cf9-4165-a8ba-3b5f8e0c58cf" class="">IGMP</p></div></p><h3 id="8d6f0704-97de-41da-82b1-b1888a152a2e" class="">Store-and-forward packet switching</h3><figure id="29f79a6f-5c52-42e1-8695-17587ae52082" class="image"><a href="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled.png"><img style="width:1137px" src="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled.png"/></a></figure><p id="f57942a8-694b-4010-9d97-f0c03b14ade1" class="">You rely on the individual routers to deliver your packets onwards towards where they need to be.</p><p id="a56e0f73-dcf9-49f2-b6ff-745303a02cc6" class="">This means that IP packets might get dropped, usually due to <mark class="highlight-orange">congestion</mark>.<div class="indented"><p id="d94af607-2893-4399-971e-785fb6966f21" class="">With TCP, retransmissions are inherently handled.</p><p id="1e0f9b00-7454-46ce-9a5c-8906f9c4bc9d" class="">With UDP, the application layer has to handle retransmission.</p><p id="462bd06a-b18a-4e3f-8ae4-0ad6039ecb68" class=""><em>We’ll look at this more later.</em></p></div></p><p id="3d264ca9-bbd2-4fe9-aece-3a2a07ef5c8e" class="">Quality of service methods can help with this, like prioritising certain traffic.</p><h1 id="df9df309-7c0c-4c90-b6cb-8744030b7f88" class="">IPv4</h1><h2 id="581f7777-4010-454a-b534-4e020e6bdcf1" class="">The header</h2><p id="5eb9d9e9-1f23-404e-bcd0-9d756f10cc7c" class="">As you know, the IP layer takes data from the transport layer. It then adds the IP header to create the IP <mark class="highlight-orange">datagram</mark>, where the TCP or UDP header and data become the payload.</p><p id="fc03ebed-5a87-41cc-af33-8c46fd20cb91" class="">The IP header fields include:</p><ul id="ec0c632e-455c-4353-919d-6062672510f1" class="bulleted-list"><li style="list-style-type:disc">Source IP address</li></ul><ul id="8c16789b-fe65-4a85-a299-8bdd6414c988" class="bulleted-list"><li style="list-style-type:disc">Destination IP address</li></ul><ul id="aaed3b00-d449-4610-a46b-282adbcd6b5a" class="bulleted-list"><li style="list-style-type:disc">IHL - header length, which <mark class="highlight-orange">can vary</mark></li></ul><ul id="84577d56-6cf5-4030-93e4-3fd50bdcd794" class="bulleted-list"><li style="list-style-type:disc">Identification field and fragment offest</li></ul><ul id="2599dc10-2b18-431a-95cd-699d74caadbe" class="bulleted-list"><li style="list-style-type:disc">TTL - time to live <em>in hops</em> (used to be in seconds)</li></ul><ul id="ae682eca-7226-46a3-87d7-a1618cfc917b" class="bulleted-list"><li style="list-style-type:disc">IP header checksum</li></ul><figure id="a913b691-9091-4e5b-a347-d69bf89fe6e7" class="image"><a href="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled%201.png"><img style="width:1578px" src="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled%201.png"/></a><figcaption>Underneath ALL of this comes the payload itself (the table is just of the header).</figcaption></figure><h2 id="357e30e0-7f28-47bf-b8f1-6fbc944dacc8" class="">History of IPv4 addressing</h2><p id="3f152b07-bd3b-4291-b4cc-0cf6a639be03" class="">It’s been in use since the 1970s.</p><p id="cb1c6ceb-f3da-47cc-a7dc-1e43dd4af745" class="">It uses 32-bit addresses, written as “dotted quads”, where each of the numbers represents a byte.<div class="indented"><p id="2da08deb-1fa1-498d-87af-8d11923db4ba" class="">For example, <code>152.78.64.100</code>.</p></div></p><p id="0a799b98-ee76-49a2-b555-48d945ef5b0c" class="">Originally, IPv4 used three <mark class="highlight-orange">sizes of allocation</mark>:<div class="indented"><p id="e02ad53d-104b-42de-974a-9016568f48af" class="">/8 prefix, which gives you ~16 million addresses</p><p id="59c9f87c-74ef-46e0-af86-d6e14c8d0746" class="">/16 prefix, which gives you ~65,000 addresses <em>(as per this uni)</em></p><p id="9892e9c1-c620-4cb1-9d27-f50b99b32a07" class="">/24 prefix, which gives you 256 addresses.</p></div></p><p id="a43df956-da7e-4ca7-91e5-a03dff8a44bd" class="">The prefixes tell you how many <mark class="highlight-orange">bits in the address are fixed</mark>.<div class="indented"><p id="c36752f0-23fe-49ef-bc43-909e6c11381f" class="">For example, the Uni is allocated addresses from <code>152.78.0.0</code> to <code>152.78.255.255</code>.</p><p id="a4f0f57e-d827-44b6-a741-3bfc8183e0f0" class="">This means that the Uni’s allocation is <code>152.78.0.0/16</code> - that’s how the prefix is written. In other words, the first 16 bits are fixed.</p></div></p><p id="2fdba280-fcb6-4505-9a40-a7be1049b600" class="">This is generally very inefficient - MIT has (had?) a /8 prefix, but there’s no way they’re going to need 16 million addresses.</p><p id="a90bb1a0-fca5-4645-914d-e49d92c0345d" class="">Since 1995, variable length prefixes were introduced which let allocations be more precise, in an attempt to stop IPv4 from filling up.<div class="indented"><p id="363db37f-a4c5-4a4e-803e-2a6db94d18c6" class="">This reduced the address consumption rate, but as of 2011, IANA ran out of unused address space.</p></div></p><h3 id="d3019341-7c01-433a-b8d5-1341afc7b891" class="">Maximising use of address space</h3><p id="20b55028-6b4a-4008-898d-d41dc030071d" class="">There are a number of methods which make IPv4 address allocations more efficient.</p><p id="4cd5c741-dc5e-47a6-8ce3-314ebfbb4d24" class=""><strong>Dynamic Host Configuration Protocol</strong> (DHCP) leases<div class="indented"><p id="949fdae3-52ba-48c5-8ec9-35a9b4e94928" class="">This allows IP addresses to be <mark class="highlight-orange">reused</mark>. When a machine is turned on, it can get allocated some IP, which becomes free again when the machine is turned off.</p><p id="00427c47-cdf2-42d1-a4a5-99864c7303ef" class="">According to some people on Discord, in practice this is normally actually used to assign IPs within internal networks <em>(see below)</em>.</p></div></p><p id="c1936da9-fa51-4d92-b0ce-64ddfab32566" class=""><strong>Network Address Translation (NAT)</strong><div class="indented"><p id="787a6857-1c09-474a-9653-b3091d46bb73" class="">This uses private IPv4 addresses internally while using global ones externally. For example, a house might have one IPv4 address that gets assigned to them and all the devices in the house use their own (not necessarily unique) private one which gets translated.</p><p id="d0be4862-3d70-43a9-891b-5cc47b81fb13" class="">This is very popular (and the way that IPv4 was “rescued”, in a sense), but it comes with an <mark class="highlight-orange">architectural price</mark> - breaking the uniqueness of the IPs.<div class="indented"><p id="e176432f-a6da-47b6-8d3b-449f49b3ebee" class="">For example, what if there was a website which ratelimited based on IP address? 100 students each at home could access the website simultaneously just fine, but 100 students all on campus would be accessing from the same IP address and be cut off.</p></div></p></div></p><h2 id="663643fc-9f52-4bd5-a410-6e17a3a9be9e" class="">Subnets</h2><p id="e0b0e97f-f6e3-481e-aec0-b2467db1c14c" class="">If we’re not worried about running out of addresses thanks to NAT, we can divide local networks into <mark class="highlight-orange">subnets</mark>.</p><p id="3d1b04e7-cb4c-4284-8bd2-fd7ad129ad5b" class="">This is useful for stuff like dividing up traffic. Also, we size them to the number of devices expected to be connected to the subnet.</p><figure id="4884a00b-4198-40f2-abfe-958620622f32" class="image"><a href="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled%202.png"><img style="width:1000px" src="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled%202.png"/></a><figcaption>Campus example</figcaption></figure><p id="20c8c5d4-1f6a-46d9-8fe1-e8ae649ef346" class="">Remember prefixes? From the Uni’s <code>152.78.0.0/16</code>, one department might be assigned <code>152.78.70.0</code> to <code>152.78.70.255</code>. This is written <code>152.78.70.0/24</code> - the first 24 bits are fixed.<div class="indented"><p id="e41743db-e302-411a-a425-ccaa62dd733e" class="">The network address is the first IP in the range. (<code>.1</code>) This identifies the network.</p><p id="50ca5226-046d-42cd-9248-acc008f0cef7" class="">The IP broadcast address is the last IP in the range. (<code>.255</code>) This is (apparently) used to send a packet to all hosts on a network.</p><p id="7a804d74-c283-411e-9fa3-69245ddebbbf" class="">One IP is also required for the router.</p></div></p><p id="eddc4f63-de8d-485a-8870-848b3b4e5b30" class="">Those fixed bits are called the <mark class="highlight-orange">subnet mask</mark>. A subnet mask conveys the same information as a prefix.</p><h2 id="da1d4b3c-485f-44e8-bee2-6736046b6095" class="">CIDR - Classless Inter-Domain Routing</h2><p id="a42cf0d9-2ff6-4721-a53e-1b03d9ee7209" class="">This allows for very specific address allocations (prefixes) which don’t fall into the 8-16-24 classes. A site or ISP requesting address space gets exactly what it needs, instead of wasting a bunch of addresses.</p><p id="5671e1ef-f870-4bc8-9e81-a9254d61e6bc" class="">Many sites still have their original generous allocations, like MIT with <code>18.0.0.0/8</code>.</p><p id="5098fb99-5c41-4b08-848c-656a06d58efb" class="">Today, new applicants in the European region get at most a <code>/22</code> address block, which is 1024 addresses.</p><figure id="44cebc2b-f460-4349-b335-9823eadec811" class="image"><a href="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled%203.png"><img style="width:240px" src="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled%203.png"/></a></figure><h2 id="0c9797f6-bdd4-44f7-a03f-c2f2b0d12006" class="">Site example</h2><figure id="c0a395a8-dd11-412d-a941-53bd9fd7aa52" class="image"><a href="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled%204.png"><img style="width:576px" src="Network%20(or%20Internet)%20Layer%204dc8e304631749798b32108abfa005ba/Untitled%204.png"/></a></figure><p id="638dc8ad-4fd3-4a26-bca7-fb79c2663176" class="">
+</p></div></article></body></html>

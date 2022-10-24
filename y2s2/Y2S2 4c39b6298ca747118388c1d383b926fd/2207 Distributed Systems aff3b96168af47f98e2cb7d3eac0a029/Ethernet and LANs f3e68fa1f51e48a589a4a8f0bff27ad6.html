@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Ethernet and LANs</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f3e68fa1-f51e-48a5-89a4-a8f0bff27ad6" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧶</span></div><h1 class="page-title">Ethernet and LANs</h1></header><div class="page-body"><nav id="aecfc200-add8-4aa9-a902-fb5f5cf7d418" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#418cfaa1-affc-4073-bd30-4ed60b94a8ed">Ethernet frame</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6c322cde-c8c9-4068-b2c3-b1ec729a5169">MAC addresses</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#21be540e-4d27-455b-9930-b23e31846df1">Building Ethernet networks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d75f62ba-bfe4-45a2-a0dc-bcead6df9a41">Sending IP datagrams over Ethernet</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e7c3ef36-b169-4b3c-b1b5-71b3293c739e">ARP</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#86746932-7e2e-4b1e-bb6d-9d3af068bf21">ARP funnies</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#850e3c34-d703-4179-beeb-3729038d462d">Ethernet broadcast domains</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8a1fb70a-3881-4c76-b44b-1815289c5972">VLAN</a></div></nav><hr id="a45e8b82-3753-4289-ac14-6cbedfb2eccb"/><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="26ac459f-ccc0-462a-a388-38ab93fb8f9b"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Don’t forget! This is at the link layer.</div></figure><h3 id="418cfaa1-affc-4073-bd30-4ed60b94a8ed" class="">Ethernet frame</h3><p id="fd000806-ae11-4d75-abbe-74cad13af0bb" class="">An Ethernet frame includes:<div class="indented"><p id="62b3dc53-a152-4b49-8c71-42b665981a39" class="">The 48-bit <mark class="highlight-orange">source and destination</mark> MAC addresses.</p><p id="d456cc00-8e71-4122-a81b-be950786362d" class="">Tags for optional VLAN ID and frame priority, etc.</p></div></p><p id="17d2705f-1919-44e9-ac2a-36ad59e174c0" class="">The Max Transmission Unit (MTU) for Ethernet is usually 1500 bytes.</p><h2 id="6c322cde-c8c9-4068-b2c3-b1ec729a5169" class="">MAC addresses</h2><p id="73449041-1402-445d-84f9-b3f24050607c" class="">(Medium Access Control)</p><p id="cb9183ea-353b-4a80-b299-734c86a9f9f8" class="">These are addresses at the link layer, unique to each <mark class="highlight-orange">network device</mark>.<div class="indented"><p id="246d69a9-d204-43ec-9af9-46b981a46610" class="">Note that this isn’t just unique to each <em>device</em> - one device could have multiple network devices in it. For example, a laptop could have both a Wi-Fi card and an Ethernet controller.</p></div></p><p id="42b324af-5ccc-4368-ac42-db789393cc60" class="">MAC addresses are currently defined to be 48 bits and are extensible to 64 bits.</p><p id="d68627d7-cd52-486d-afd8-ac7830d48e0b" class="">They need to be <mark class="highlight-orange">unique</mark>, so:<div class="indented"><p id="7e5f6ac4-3d11-4c1d-ae5b-ef539da9c0d5" class="">The first 24 bits are used for <mark class="highlight-orange">vendor allocations</mark>. That is, each vendor gets their own block.</p><p id="23a20728-5240-4c89-8756-f7a6592d16bc" class="">The following 24 bits are assigned by the vendors themselves, to each device.</p></div></p><figure id="bff4aef6-d6f5-4e54-9e84-6b11fbf517f7"><a href="http://standards-oui.ieee.org/oui/oui.txt" class="block-color-orange bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">http://standards-oui.ieee.org/oui/oui.txt</div></div></a></figure><h2 id="21be540e-4d27-455b-9930-b23e31846df1" class="">Building Ethernet networks</h2><p id="038f1d8c-9b10-41da-a879-d58463fd0892" class="">Typically, each host in an Ethernetwork connects to a port on a <mark class="highlight-orange">switch</mark>.</p><p id="559faaa7-f45a-4c50-9deb-3591443e67a3" class="">These switches receive Ethernet frames and make decisions on whether to forward the frame and to which port.<div class="indented"><p id="e9e4c2a3-ecb5-45f3-bca1-263aa6bfbdfe" class="">They can remember Ethernet addresses of hosts seen on each port/interface.</p><p id="3b8391de-deff-4449-a50d-4a1cdc3a6083" class="">Hosts will usually <mark class="highlight-orange">only see packets sent to them</mark>, because of this.</p></div></p><p id="023237f4-4a36-4a92-8831-9617a6f88e7b" class="">Switches can store and forward Ethernet frames - this lets them perform error checking etc. before forwarding.</p><p id="35ca269a-e7ff-4176-b539-54916d5f914d" class="">Some switches support advanced functions, like Quality of Service (frame prioritisation) or VLANs.</p><h1 id="d75f62ba-bfe4-45a2-a0dc-bcead6df9a41" class="">Sending IP datagrams over Ethernet</h1><p id="2203b18e-8e2f-4369-a995-74af215b915c" class="">The link layer receives datagrams from the network (IP) layer and encapsulates them as the payload of an Ethernet frame.</p><p id="9f8f8a1f-e953-4c7d-af43-8d0ae146f01a" class="">The IP datagram has a source and destination IP address, and we need to somehow send it to the destination IP address over the Ethernet layer.</p><blockquote id="34942b1d-9264-4374-b844-90f68a87b7c5" class="">This means that we need some way to <mark class="highlight-orange">resolve</mark> an IP address <mark class="highlight-orange">into</mark> a MAC address.</blockquote><h2 id="e7c3ef36-b169-4b3c-b1b5-71b3293c739e" class="">ARP</h2><p id="5f32e29d-c508-4f9e-9955-f25d372a09b1" class="">We do the above using the Address Resolution Protocol - ARP.</p><p id="4e118c1e-4f62-4120-bc34-68f4efe7c508" class="">ARP uses a link layer <mark class="highlight-orange">broadcast message</mark>.</p><p id="8f9aaeb1-15c9-499b-8a66-33d4881df6fd" class="">It effectively asks “whose IP address is this??” to <code>ff:ff:ff:ff:ff:ff</code>, which broadcasts it to <mark class="highlight-orange">every host in the same Ethernet LAN</mark>.</p><p id="a1b98bf9-6049-4bf6-a9bc-4fddac6939fa" class="">Then, it’s up to the host with the target IP to respond. The sender can use this result to send the Ethernet frame on.</p><figure id="b5878cbb-e5e2-4c82-963c-29fca65c2719" class="image"><a href="Ethernet%20and%20LANs%20f3e68fa1f51e48a589a4a8f0bff27ad6/Untitled.png"><img style="width:288px" src="Ethernet%20and%20LANs%20f3e68fa1f51e48a589a4a8f0bff27ad6/Untitled.png"/></a><figcaption>ARP message format</figcaption></figure><p id="179f7428-d83e-4107-8294-56c9cd552b07" class="">The “target hardware address” is empty when it gets sent, to be filled out by the host and sent back.</p><h3 id="86746932-7e2e-4b1e-bb6d-9d3af068bf21" class="">ARP funnies</h3><p id="4d028345-9cf7-4540-b53e-da96138d3b95" class="">It’s not secure.<div class="indented"><p id="88e202e3-ec6b-4262-971f-fd8283d93f1d" class="">ARP is open to spoofing - “I’m the host you’re looking for please believe me”</p><p id="8270b022-4566-4318-a39f-9f26d20b6c4c" class="">Note that a host can change its MAC address.</p></div></p><p id="644388eb-f819-4244-85d8-8f8aeb5b1514" class="">Gratuitous ARP<div class="indented"><p id="65fb7427-e723-4d1b-890a-1699f08b6b9f" class="">You can send ARP messages when you don’t need to, which lets you quickly update your banks of information for devices which have potentially changed their MAC or IP.</p></div></p><p id="c0e912fc-37de-4a6f-a385-474335afc93a" class="">ARP probe<div class="indented"><p id="eac6e717-590a-4bed-a212-e9a11635a8dd" class="">ARPs will also tell you by nature if IP addresses clash - you might get mutliple responses when you were just expecting one. </p></div></p><h3 id="850e3c34-d703-4179-beeb-3729038d462d" class="">Ethernet broadcast domains</h3><p id="917e4f93-f535-4c0c-9221-15ed4c856143" class="">Even in a switched network, Ethernet broadcasts will flood the LAN. </p><p id="72c1d27c-3f92-4544-9ccb-c6e06a3c9e06" class="">In addition, ARP can only scale so far. We also have physical limits on the cable length.</p><p id="727f49fc-1b84-44bf-bdc4-8b653b7e39bc" class="">This means we’ve got to keep Ethernet LANs limited to a reasonable size. In a campus this is typically one LAN per floor or building.</p><h2 id="8a1fb70a-3881-4c76-b44b-1815289c5972" class="">VLAN</h2><p id="0c3fcdd9-1a97-40d5-aeea-98a0176c7557" class="">The Ethernet frame includes an optional VLAN identifier. VLAN can be used to create virtual switched networks over fixed infrastructure.</p><p id="6d378774-1048-491a-9da5-d5db5b75b2b9" class="">This avoids the need to physically re-cable and allows you to control broadcasts to certain areas.</p><p id="c3353587-522c-456c-835d-3c4f8973e62c" class="">
+</p></div></article></body></html>

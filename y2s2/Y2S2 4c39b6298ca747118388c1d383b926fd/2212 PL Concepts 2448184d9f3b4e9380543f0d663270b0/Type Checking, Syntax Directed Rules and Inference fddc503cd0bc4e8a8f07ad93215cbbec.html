@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Type Checking, Syntax Directed Rules and Inference</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="fddc503c-d0bc-4e8a-8f07-ad93215cbbec" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🛎️</span></div><h1 class="page-title">Type Checking, Syntax Directed Rules and Inference</h1></header><div class="page-body"><nav id="9fa45b85-a111-41e8-add7-5c7171d7ce3f" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ea315eb0-f4f8-4f9f-b5fa-6f9e6bf4a1d6">Getting into the relation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#22d978de-0b8d-4b2d-a35d-b1ae197e070b">Syntax directed rules</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#12980e5d-451f-4a92-8e2f-bfe328f89771">Structure of type derivation trees</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b3c66697-9ce9-4701-9762-2dc30c0314a1">Inversion lemma</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c36223be-c0cc-4b13-8cc8-22982fc226cc">Type inference</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#52a31ac2-a01e-4e0d-8d46-f885920fc2c4">Type variables and unification</a></div></nav><hr id="16a2b341-38e8-4009-b2c8-ff37463663c8"/><p id="9ba81bce-cd03-4b0b-a3ba-5155c658da93" class="">Previously, we went over how to <mark class="highlight-orange">specify</mark> a type system.</p><p id="4b18b1a2-fe32-48cb-b00c-774394e2fe48" class="">Now, we’re going to implement the rules!<div class="indented"><p id="d5a3ae4e-8adb-447d-9c93-60136625731a" class="">Apparently, this is where the pain of using inductive rules pays off.</p></div></p><h3 id="ea315eb0-f4f8-4f9f-b5fa-6f9e6bf4a1d6" class="">Getting into the relation</h3><p id="ca7f293e-0e6a-4d52-a24a-2a8757c662cb" class="">Recall that the typing relation <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Γ</mi><mo>⊢</mo><mi>E</mi><mo>:</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">\Gamma\vdash E:T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">Γ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⊢</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span><span>﻿</span></span> is defined as the <mark class="highlight-orange">smallest</mark> relation which satisfies the rules. <div class="indented"><p id="6e11dd20-5a6e-4866-be79-18c1f780dad5" class="">That is, there <mark class="highlight-orange">aren’t any excess mappings</mark> in the relation - the only mappings which are in there are the ones which exist because they <em>have to</em> (because of the rules).</p></div></p><p id="a2ac4cf8-0b78-4b96-abc7-a90d49e9941d" class="">This means that, if a given program is in this relation, then the only way it got in was by using one of the rules.</p><p id="920a488f-08c4-4bbc-8e85-91f4120df36f" class="">But which one?</p><h1 id="22d978de-0b8d-4b2d-a35d-b1ae197e070b" class="">Syntax directed rules</h1><p id="7ef9c19c-4d89-45a6-9f71-108e395bc4a8" class="">A set of rules used to define an inductive relation <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span></span><span>﻿</span></span> is called <mark class="highlight-orange">syntax directed</mark> if, whenever a program holds in <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span></span><span>﻿</span></span>, then there’s a <mark class="highlight-orange">unique rule </mark>in the set which justifies it.<div class="indented"><p id="3eac6dad-fdd9-4b9e-a2fa-b6aea7a5eb0a" class="">Further, this unique rule is determined by the syntactic operator at the root of the program.</p></div></p><p id="60276e28-bab3-4a46-95ae-4f1624b75b01" class="">Here’s an example:</p><pre id="e0f09afa-8e36-4263-8594-e482924bb4b4" class="code"><code>let foo = λ (x:Int) if (x &lt; 3) then 0 else (x + 1)
+in foo (42)</code></pre><p id="97a19b3f-4afa-4551-bcdc-aed626a0ab67" class="">Note that the <mark class="highlight-orange">last rule</mark> used to derive this fact <em>must</em> have been</p><figure id="88379585-dd0e-47fc-9aa8-6707fc72dea5" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled.png"><img style="width:528px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled.png"/></a></figure><p id="db81f3df-dc02-4216-871c-4f54c0d1f540" class="">because it’s at the root of the program’s AST.<div class="indented"><p id="880377d4-0922-45a8-ac9a-ad0c854164f2" class="">(The full derivation would obviously make use of the other rules.)</p></div></p><h3 id="12980e5d-451f-4a92-8e2f-bfe328f89771" class="">Structure of type derivation trees</h3><p id="dd75f00b-f633-4f6b-b2be-4968b767386a" class="">Interestingly, the structure of the derivation tree actually matches up with the structure of the AST of the program (<mark class="highlight-orange">as long as the rules are syntax directed</mark>).</p><p id="2a84da21-99f1-4a2d-b21b-95b818ca7e61" class="">Have a look:</p><figure id="1a2c1d6e-f240-4993-bd41-c68f79229375" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%201.png"><img style="width:240px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%201.png"/></a></figure><figure id="74747fc9-e1dc-462a-99af-f260a5dada49" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%202.png"><img style="width:384px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%202.png"/></a></figure><p id="c59c61fa-c834-433d-b22e-26a334d56643" class="">And here’s the derivation tree:</p><figure id="5bb53394-c2a7-4c08-b972-74a5737d04f7" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%203.png"><img style="width:1347px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%203.png"/></a></figure><p id="84c21d15-b4c8-4db1-b2fd-ac8aaa48d32a" class="">Doesn’t look <em>that</em> similar as it is. But, if we look at the AST upside down...</p><figure id="9b3d9ee3-8534-46a8-a554-de00086ce7bc" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%204.png"><img style="width:336px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%204.png"/></a></figure><p id="2566531d-410e-4ae3-9006-eb84357b1dc3" class="">Same structure!</p><h1 id="b3c66697-9ce9-4701-9762-2dc30c0314a1" class="">Inversion lemma</h1><p id="261637a1-1279-4b1b-b48f-0b0c0c65ddc7" class="">Another important property that we want out of a typing relation is that of <mark class="highlight-orange">inversion</mark>.</p><p id="3f7681f1-a1f6-440f-a829-4cfcc464efcc" class="">This is the ability to infer the types of <mark class="highlight-orange">subprograms from the type of the whole program</mark>.<div class="indented"><p id="fb7fcde4-aa67-4b39-ac72-103df5c4da54" class="">Essentially, we read the type rules from the bottom to the top.</p></div></p><p id="b08056da-7f99-41d4-bd79-a9c234d1f14f" class="">Here’s the inversion lemma for the Toy language:</p><figure id="208a8bc9-6056-4bda-a9ac-721d91557dae" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%205.png"><img style="width:1284px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%205.png"/></a></figure><p id="d89c758b-533a-4dad-88a3-87c3a82f31d9" class="">This is straightforward to prove - we’re pretty much just reading off the type rules.</p><p id="d20fe7dd-55cc-4abf-a542-6a4e42198989" class="">More importantly, this yields a <mark class="highlight-orange">direct algorithm</mark> for working out types!</p><figure id="5bfd987e-355c-4bfc-aada-8c9a4e12097d" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%206.png"><img style="width:1167px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%206.png"/></a></figure><p id="261480a5-ca03-4c16-be62-0a756479eeeb" class="">You can imagine that it’s fairly easy to turn the psuedocode above into Haskell.</p><h1 id="c36223be-c0cc-4b13-8cc8-22982fc226cc" class="">Type inference</h1><p id="d8b4968b-73d6-4bc1-8514-70eb2aa853aa" class="">In Toy so far, we have explicitly declared the types of variables and arguments to functions. We’d like to infer the types instead! It can make for more easily readable + writable code.<div class="indented"><p id="c8c719ef-fefb-434e-8334-7d6fe156bbc8" class="">Like <code>let x = 20 in y + x</code> is much nicer than <code>let (x : Int) = 20 in y + x</code>. And that’s a small example!</p></div></p><p id="ed5e232b-a0d9-40c0-8686-983e282a2de6" class="">Unfortunately, type inference is more algorithmically complicated than type checking.</p><p id="cbfeeff7-a540-4be8-9293-16ed6f3a57cd" class="">We can see this by taking a look at the rules we defined. For the lambda one, what if we wanted to infer the type of the argument?</p><figure id="242afc38-1dcb-4797-b828-d5bfa459cd44" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%207.png"><img style="width:336px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%207.png"/></a></figure><p id="ce33527d-9052-415c-a27d-28261acc1d24" class="">Which yields the following algorithm:</p><figure id="19fe4148-b509-4222-8568-ae5a30119105" class="image"><a href="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%208.png"><img style="width:740px" src="Type%20Checking,%20Syntax%20Directed%20Rules%20and%20Inference%20fddc503cd0bc4e8a8f07ad93215cbbec/Untitled%208.png"/></a></figure><p id="42e80604-6ac1-43d6-b217-211aee2fad9f" class="">You can see how this complicates things.</p><h2 id="52a31ac2-a01e-4e0d-8d46-f885920fc2c4" class="">Type variables and unification</h2><p id="397d077e-dcd1-4253-b402-933011ac01ef" class="">The approach often taken to solve this problem - as it is in Haskell - is to introduce <mark class="highlight-orange">type variables</mark>.</p><p id="ac923e93-7928-41da-aca5-e847723b99d4" class="">These are symbolic values that represent an unknown or unconstrained type.<div class="indented"><p id="abfc333c-2dcc-43dd-bc1c-a2cf7f2434e0" class="">When working with unknown types, type variables are used and normal type checking continues.</p></div></p><p id="40b8f6af-437d-4d8b-a3c7-6eec0bbc8521" class="">As part of type checking, certain <mark class="highlight-orange">constraints</mark> on these type variables will arise. For example, if an expression is used as a guard in an <code>if</code> and it has a type of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span></span><span>﻿</span></span>, then we know that <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span></span><span>﻿</span></span> must be a boolean.</p><p id="0f47b2e1-9682-4c41-990f-51e1bd5a9475" class="">This means that the type checking algorithm will produce - for each well-typed program - a type which may contain variables, along with a <mark class="highlight-orange">collection of constraints </mark>on these variables.<div class="indented"><p id="29093e29-021a-488a-8dc0-3e662ae4b0b0" class="">To obtain an actual type for the program, we need to solve the constraints.</p><p id="588a6fde-56ed-426e-be95-d0a843e4f291" class="">That is, we find a substitution of type variables such that all of the constraints hold.</p></div></p><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="c382ec18-2e8b-438c-a7a4-8b3382791fde"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">This is called <mark class="highlight-orange">unification</mark>.</div></figure><p id="d66a296a-8d9f-4db6-98d7-31e9b88b6cbd" class="">Unification is the basis of type inference in Haskell.</p></div></article></body></html>

@@ -1,0 +1,669 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Leader Election</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5fb49dcb-47b4-4284-8e04-836dbb68ea61" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🛹</span></div><h1 class="page-title">Leader Election</h1></header><div class="page-body"><nav id="3d64b8d5-5768-4c21-951e-64084eaee8a9" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ee152b2c-15b4-4b44-822f-ea91f3612c5a">A ring-based algorithm</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dcafdace-37de-4db4-8f6f-444d44506245">Example</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0af2831f-4309-4643-873e-c47eafdbac44">Correctness</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3d403b04-0cb5-4aed-b059-061483bdfef1">Bully election algorithm</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8398b47a-9b03-4e5e-aa84-544475cfa7fb">Correctness</a></div></nav><hr id="d79af772-c369-4097-b0bb-e692d8bd2052"/><p id="481ee59d-c777-465d-bd33-918b663f952c" class="">One solution to the tradeoff between simplicity and robustness that is inherent in centralised vs decentralised systems is to decentralise(ish) the leadership!</p><p id="eb7eaa99-9139-4fee-90e6-25df3ed6826c" class="">We want to choose a <mark class="highlight-orange">leader</mark> to undertake special tasks, like co-ordination.<div class="indented"><p id="309db166-ffea-4314-a9bc-795c2f4fd08e" class="">When the leader fails, how do we detect, or recover from this?</p><p id="6323d9fc-2b01-4279-a8c3-f1e180ab5279" class="">In addition, all processes have to agree on the choice of leader.</p></div></p><p id="44b8a41e-9cf9-467a-84a2-0b5ba86b0084" class="">For such a system, we want the following correctness properties to hold:</p><ul id="db5180a8-ed06-4641-a16f-4f0b812bc110" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange">safety</mark> - a process has either not elected anyone or elected the non-crashed process with the largest known identifier</li></ul><ul id="79a9146d-a877-4911-96f9-6138cc8373f4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange">liveness</mark> - all processes participate and eventually choose some process to elect (or crash)</li></ul><p id="ba5ef4eb-4f79-4967-ae87-4fe76de4b614" class="">Also, we want to minimise the number of messages sent. This includes <mark class="highlight-orange">turnaround</mark>, which is the number of serialised transmissions in a single run.</p><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="124086df-4661-485c-94f2-a8a527303911"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Leader election should only be used when there is need for <mark class="highlight-orange">strong consistency </mark>or <mark class="highlight-orange">complex coordination</mark>. That is, cases where a single coordinator is required - this could be stuff like making sure bank transactions are atomic.</div></figure><h1 id="ee152b2c-15b4-4b44-822f-ea91f3612c5a" class="">A ring-based algorithm</h1><p id="b2c12bf5-a18f-4fbe-a9a5-c882fca45206" class="">This involves processes arranged in a logical ring. <div class="indented"><p id="dc87663c-2c61-4c6b-b8ed-f5630e88526b" class="">Each process must have an identifier - there does not exist a deterministic algorithm for an anonymous ring leader election.<div class="indented"><p id="f6ec2a3b-ff3f-43ed-a6ff-5b3fdd662ccc" class="">This is because every process would do exactly the same thing at exactly the same time or something.</p><p id="a98e306c-1a57-4cd8-a429-c46ac9d365c9" class="">This identifier must also be <mark class="highlight-orange">orderable</mark>. The <strong>highest number identifier</strong> gets picked to be the next leader.</p></div></p><p id="63d22157-c67f-4663-a706-ef9f498d3101" class="">Each process knows who its successor is and sends messages to them. Each process receives from its predecessor.</p><p id="3ea6d494-8615-4cc5-b855-baaa572275bd" class="">I have a feeling that they have to know more - each process has to know the entire ordering of the ring, otherwise if a single process went down it could no longer function.</p></div></p><p id="1b2a6e24-017c-4309-bfcf-43a72e8707a0" class="">It’s <mark class="highlight-orange">asynchronous</mark>.</p><figure id="e04a41b8-bbad-4ea5-86d9-10406062f367" class="image"><a href="Leader%20Election%205fb49dcb47b442848e04836dbb68ea61/Untitled.png"><img style="width:288px" src="Leader%20Election%205fb49dcb47b442848e04836dbb68ea61/Untitled.png"/></a></figure><ol type="1" id="b5b23eef-f5e3-4e29-abef-3ac0a5ef9529" class="numbered-list" start="1"><li>When a process notices that the coordinator is down, it builds an <mark class="highlight-orange">election message</mark> containing its own process identifier and sends the message to its successor.</li></ol><ol type="1" id="7083504e-b4ce-4119-ac5b-5b4a89b8f4e6" class="numbered-list" start="2"><li>The successor adds its own identifier to the message and passes it on, effectively making itself a candidate to be elected as coordinator.</li></ol><ol type="1" id="3a79b3d0-b419-4724-9162-1de3a84baf8e" class="numbered-list" start="3"><li>Eventually, the message gets back to the process that started it. That process recognises this because it receives a message containing its own identifier.</li></ol><ol type="1" id="f02245ab-2e58-417a-83fa-f9921f332618" class="numbered-list" start="4"><li>At that point, the message type is changed to “coordinator” and circulated once again to inform everyone else who the coordinator is (and who the new members are).<ol type="a" id="71177fd9-34f2-4d1b-933a-072456f6cbbf" class="numbered-list" start="1"><li>The coordinator is the process whose ID has the highest <mark class="highlight-orange">value</mark> in the message.</li></ol></li></ol><ol type="1" id="ba842a3f-5fbb-4dd7-8b2c-e2bc5f91390f" class="numbered-list" start="5"><li>When this message has circulated once, it’s removed and everyone goes back to work.</li></ol><h3 id="dcafdace-37de-4db4-8f6f-444d44506245" class="">Example</h3><figure id="40c38df0-00f2-4a48-ab81-6281baafc9b0" class="image"><a href="Leader%20Election%205fb49dcb47b442848e04836dbb68ea61/Untitled%201.png"><img style="width:480px" src="Leader%20Election%205fb49dcb47b442848e04836dbb68ea61/Untitled%201.png"/></a></figure><h2 id="0af2831f-4309-4643-873e-c47eafdbac44" class="">Correctness</h2><ul id="b93e27d3-c0e4-4143-b766-0394d9ff00ac" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange">Safety</mark> - yes. Only the process with the highest ID can be elected as coordinator.</li></ul><ul id="259f6e89-97ec-4e9c-8acf-bc53a43a1e0a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange">Liveness</mark> - yes. Every process in the ring eventually participates in the election and receives the “coordinator” message. Extra elections are stopped.</li></ul><p id="3e2e3ad6-434b-43d5-9f51-9c9f151c6783" class="">If a process fails after receiving but before sending, then we might be a tad fucked.</p><h1 id="3d403b04-0cb5-4aed-b059-061483bdfef1" class="">Bully election algorithm</h1><p id="769b839c-696a-4c69-9706-6eeef16d1e39" class="">Assumptions:<div class="indented"><p id="23894c88-02cc-4bc8-8267-1944fa33b373" class="">Processes can crash, but the message delivery is reliable.</p><p id="7a23c274-94b2-45a8-9d45-ef34d5508fe2" class=""><mark class="highlight-orange">Synchronous</mark> - we use timeouts to detect process crashes.</p><p id="fe79df2a-cb25-4792-8620-d681da54cca4" class="">Each process knows <mark class="highlight-orange">all other processes</mark> and can communicate with them.</p><p id="852c31f3-0c8c-4ec6-b870-f914b7ad60c9" class="">Each process knows which processes have higher identifiers.</p></div></p><ol type="1" id="12f41cb5-4f2b-4759-aaf3-0379b9402f3f" class="numbered-list" start="1"><li>Any process, after detecting the failure of the leader, bids to become the new leader by sending an <mark class="highlight-orange">election</mark> message to every process with a higher identifier.</li></ol><ol type="1" id="0f1226a3-427c-4dca-81db-f41af95bd1c8" class="numbered-list" start="2"><li>If any process with a higher ID responds with an <mark class="highlight-orange">answer</mark> message, then the requesting process gives up its bid to become the leader. It then waits to receive a <mark class="highlight-orange">coordinator </mark>(or <mark class="highlight-orange">leader</mark>) message from some higher process.<ol type="a" id="772b28f2-18c8-48a8-92dd-1112c7da04d6" class="numbered-list" start="1"><li>If this waiting takes too long, it will re-initiate the election because it assumes that the higher process failed in the meantime.</li></ol></li></ol><ol type="1" id="481f138f-5f27-4c5c-a887-84f8c2ea94b5" class="numbered-list" start="3"><li>If no higher-numbered process responds to the election message, then it elects itself the leader and sends a <mark class="highlight-orange">coordinator</mark> message to every process in the system.</li></ol><figure id="62836740-d962-466f-8289-3ec0bd4bea06" class="image"><a href="Leader%20Election%205fb49dcb47b442848e04836dbb68ea61/Untitled%202.png"><img style="width:432px" src="Leader%20Election%205fb49dcb47b442848e04836dbb68ea61/Untitled%202.png"/></a></figure><h2 id="8398b47a-9b03-4e5e-aa84-544475cfa7fb" class="">Correctness</h2><ul id="377fe5db-4b3b-4c8d-9cc7-eebd72104e13" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange">Safety</mark> - almost, but not quite.<ul id="e4d5d83c-a18a-4633-86ff-50bbe9df4ce7" class="bulleted-list"><li style="list-style-type:circle">A lower-id process always yields to a higher one, but if a failed process is <mark class="highlight-orange">replaced</mark> during an election, the lower-id processes could disagree on which is the correct leader.</li></ul><ul id="97c0db17-c1c2-41e3-9242-7d481c1a2be0" class="bulleted-list"><li style="list-style-type:circle">Failure detection could be unreliable because of this.</li></ul></li></ul><ul id="5667cfaf-2928-4641-9b2e-d68a6adbdadd" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange">Liveness</mark> - yeah. All the processes participate and know the coordinator at the end.</li></ul></div></article></body></html>

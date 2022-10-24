@@ -1,0 +1,669 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Persistent Storage and Serial Communication</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="09694bcc-03de-4600-8429-8039974654be" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🍊</span></div><h1 class="page-title">Persistent Storage and Serial Communication</h1></header><div class="page-body"><nav id="43863c24-9007-4037-955d-ed9b66e94ca1" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9867b3db-32a9-437a-989f-fd63f5b73d53">EEPROM</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c19866a3-63ea-4c93-b861-761e311dc137">Speed vs endurance tradeoff</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1b53297a-5d88-494a-b908-7de32f51292d">Write frequency</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7c0cefed-829c-419d-ac42-32264574eee7">Flash</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f8dc6c35-7c00-40dc-834c-435a9c064aa8">File system - the physical layer</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#20fc3a9d-d5cc-4d23-ba2a-b9a85033eb94">Mapping logical addresses to physical addresses</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7d1c22d0-8cfe-4748-807d-4eee092b49e8">Serial communication</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7bafdc6b-c406-4741-b692-63e173fffd81">UART</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#365b007f-0033-4263-a13c-ff24c97fbd70">SPI</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fb0f4731-d820-4fa0-bd9a-d3d704622983">I2C</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e6ba9057-e2d8-4492-a2c8-b1aab3147ecf">Beware of wires</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6f1b53a8-e907-4bdd-aac4-c40ae7ecc993">Consistent Overhead Byte Stuffing</a></div></nav><hr id="34cdf1d4-3024-4155-a917-2a6cac251bee"/><h1 id="9867b3db-32a9-437a-989f-fd63f5b73d53" class="">EEPROM</h1><blockquote id="80b5956c-9e84-469b-bc46-ed43e112004c" class="">Electrically Erasable Programmable Read-Only Memory</blockquote><p id="b22ebc02-af70-4a5c-be75-3ecd1f3df009" class="">Single memory cells can be written (in contrast to flash, which writes &gt;512 byte blocks at a time).</p><p id="788b88cf-ca1d-4ea2-b799-4f16b2ff1681" class="">EEPROM has slow access and a fairly limited number of write cycles.<div class="indented"><p id="65b826dd-6e04-4479-af18-57b640b72757" class="">This means it’s used for parameter storage and code tracing.</p></div></p><h3 id="c19866a3-63ea-4c93-b861-761e311dc137" class="">Speed vs endurance tradeoff</h3><p id="480aeece-22e6-42e2-89b2-a94d246578d9" class="">In the design of an EEPROM, programming speed is a tradeoff against endurance.<div class="indented"><p id="569b4e48-4db2-4b00-85e1-a8d982be38c9" class="">Increasing the internal high voltage or HV ramp rate increases the programming speed but decreases the endurance.</p><p id="9513956e-fcb4-4635-ac8b-75894ae69678" class="">Increasing the oxide thickness makes for slower programming but better endurance.</p></div></p><h3 id="1b53297a-5d88-494a-b908-7de32f51292d" class="">Write frequency</h3><p id="fb5cfda6-a9a7-4e7d-aaa6-573947221ba3" class="">If you have small amounts of data with frequent writes to EEPROM, use a <mark class="highlight-orange">ringbuffer</mark> implementation. This will maximise the time between writes to the same cell and spread the writes out evenly.</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="102d6398-30a5-431b-bbdf-86b12457fa86"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">A <mark class="highlight-orange">brown-out</mark> is a non-complete drop in voltage supply. The old AVR chip had brown-out detection to prevent corruption.</div></figure><h1 id="7c0cefed-829c-419d-ac42-32264574eee7" class="">Flash</h1><p id="b9647e17-fba8-4eae-86f3-eba9a6c4ba90" class="">Flash is the most common non-volatile storage for embedded systems. It’s still relatively expensive, but embedded systems usually don’t need large amounts of memory.</p><p id="72a0af78-47c6-478a-ad25-6aa8a2c34dad" class="">It’s compact and robust.</p><p id="d03940ed-aed9-45a5-a50c-c1625646d9ef" class="">There’s read access to individual cells, but write <mark class="highlight-orange">requires an erase cycle</mark> and can <mark class="highlight-orange">only be performed in blocks</mark>.<div class="indented"><p id="c9d78a59-ff34-4de6-a27c-ef70beb1113c" class="">Sector erase may be available, which allows pre-erasing of several blocks so that you can skip the erase cycle later on.</p><p id="eb78f28d-2418-4e80-93fc-72b01cbb9628" class="">In NAND architecture specifically, flash sometimes gives up on individual cell access to acheive higher density. NOR will typically give individual read access.</p></div></p><h1 id="f8dc6c35-7c00-40dc-834c-435a9c064aa8" class="">File system - the physical layer</h1><p id="da17ed92-c313-4d78-8698-72f56968d49d" class="">On SD cards, about 1% of the capacity is reserved for DRM lol.</p><p id="a25a2d45-f1d0-4ea7-b9ca-393b0e6edb8b" class="">They make use of wear levelling to extend lifetime.<div class="indented"><p id="2a72c44f-de6e-42f9-af20-837196d5a0be" class="">If it’s near to full, wear levelling is not possible because the system has less choice of where to write. As in, if only one block is empty, you can’t do any wear levelling because you have no choice but to write there (which extends to less extreme examples).</p></div></p><h3 id="20fc3a9d-d5cc-4d23-ba2a-b9a85033eb94" class="">Mapping logical addresses to physical addresses</h3><figure id="22c93948-34d6-4e3e-811f-08ec28618f2f" class="image"><a href="Persistent%20Storage%20and%20Serial%20Communication%2009694bcc03de460084298039974654be/Untitled.png"><img style="width:576px" src="Persistent%20Storage%20and%20Serial%20Communication%2009694bcc03de460084298039974654be/Untitled.png"/></a></figure><h1 id="7d1c22d0-8cfe-4748-807d-4eee092b49e8" class="">Serial communication</h1><p id="f29d0607-a952-4dd3-8d36-692a03c77904" class="">Simplex: single direction.</p><p id="89452eab-b80f-49a4-9b27-6ba70ae7cf53" class="">Half Duplex: bi-directional alternating.</p><p id="ab90c1e9-7c24-4bbc-8cbe-a0151cf6978e" class="">Full Duplex: bi-directional at the same time.</p><h2 id="7bafdc6b-c406-4741-b692-63e173fffd81" class="">UART</h2><blockquote id="57f49334-9b6e-4805-83f5-dfe279b13e91" class="">Universal Asynchronous Receiver Transmitter</blockquote><p id="500c8883-bebd-4c88-b288-e84fcce625fc" class="">The most basic of the three we look at - apparently it’s been around since telegrams or something. Utilises a TX and RX pin on each chip, which allows for full duplex <mark class="highlight-orange">asynchronous</mark> communication.<div class="indented"><p id="f93581a2-bd1d-4ca6-8652-6008029ad390" class="">A UART is actually a <mark class="highlight-orange">physical chip</mark>, not a protocol - the chips manage the serial asynchronicity.</p></div></p><p id="134bf75c-aad6-4091-b392-a0336c8265ce" class="">The transmitter and receiver agree on stuff like baud rate.<div class="indented"><p id="e35055b4-1c42-47e3-befb-0e681ee7f225" class="">UART doesn’t have a clock pin, so they have to agree beforehand. If their clocks deviate too much, the signal can get messed up. (That’s probably why it says the clocks have to be good on the slides.)</p></div></p><div id="bf9a29dd-8b7a-470e-b666-5a6b1efebf00" class="column-list"><div id="089560fc-b1b6-496a-9ff7-ebd7cc189aee" style="width:50%" class="column"><p id="339207c6-5c5e-4830-98cd-aa503e86516f" class="">Pros:<div class="indented"><ul id="3f0f4ac8-2e24-42d9-a539-d9383396ebaa" class="bulleted-list"><li style="list-style-type:disc">No clock required (expensive?)</li></ul><ul id="1bdbae26-46fc-4fe6-aa80-8492f3a4c4f6" class="bulleted-list"><li style="list-style-type:disc">Simple and easy to operate</li></ul><ul id="46e61a3d-b08e-43f6-b44e-ab1f8b24f075" class="bulleted-list"><li style="list-style-type:disc">Few wires (two)</li></ul><ul id="542d3b20-e8f9-493e-9326-6ad2a5f0bfa8" class="bulleted-list"><li style="list-style-type:disc">Parity bit agreed for error checking</li></ul><ul id="873c36b7-1a23-4d17-98c9-b5df68f48975" class="bulleted-list"><li style="list-style-type:disc">Full duplex</li></ul></div></p></div><div id="b977ff77-a50c-414f-8ba4-27b5e222a8c7" style="width:50%" class="column"><p id="2d605a5f-a3e0-4fc4-aac7-ea3e610b2fd2" class="">Cons:<div class="indented"><ul id="85aeac9c-95f1-478d-ba92-43c240caae44" class="bulleted-list"><li style="list-style-type:disc">Slow</li></ul><ul id="b71c044a-d885-4eab-8fff-8052b4b979d7" class="bulleted-list"><li style="list-style-type:disc">Limited frame size (9 bits, apparently)</li></ul><ul id="828593c5-e83d-4673-b872-1729b64e54b0" class="bulleted-list"><li style="list-style-type:disc">Only facilitates 1-to-1 communication</li></ul></div></p></div></div><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="1f667a5c-9251-458c-8063-652dbc76304f"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Usually used as part of an integrated circuit used for serial communcations. Commonly integrated in microcontollers.</div></figure><h2 id="365b007f-0033-4263-a13c-ff24c97fbd70" class="">SPI</h2><blockquote id="4539868a-99e9-4dc2-80f9-b012e8d5ef24" class="">Serial Peripheral Interface</blockquote><p id="49300842-addc-4bc9-9105-3fcb29dd598d" class="">The main draw of SPI is its speed. It’s full duplex, based on four wires: </p><ul id="b5508f91-fa23-4f1a-8fed-a928ee2a61ce" class="bulleted-list"><li style="list-style-type:disc">Clock - controlled by master</li></ul><ul id="a0cae037-cbb1-4a66-a2e4-e626b2fec142" class="bulleted-list"><li style="list-style-type:disc">MOSI - master out slave in</li></ul><ul id="1070749d-9b06-49bf-ba89-7c636edb4a44" class="bulleted-list"><li style="list-style-type:disc">MISO - master in slave out</li></ul><ul id="17642c1c-6cd2-4c70-879a-33fe01e6e1af" class="bulleted-list"><li style="list-style-type:disc">CS or SS - chip select or slave select, used by the master to indicate that data is being sent</li></ul><p id="5d2434ed-19b5-4175-af3f-e97dc80dbf07" class="">Uses hardware addressing.</p><div id="76eb0d5a-4052-465e-9379-8c667f7955aa" class="column-list"><div id="905ac4dc-6d6c-432a-97ab-73303ca93124" style="width:50%" class="column"><p id="3d23a1d8-3cee-4f39-a3bc-9eb1f0bfb6a2" class="">Pros:<div class="indented"><ul id="7ce45971-ecaa-4d64-b48d-d8f9ccc50987" class="bulleted-list"><li style="list-style-type:disc">Fast!</li></ul><ul id="b7e641ee-c030-4c8f-8a00-fbfa8f3b2d38" class="bulleted-list"><li style="list-style-type:disc">Full duplex</li></ul><ul id="edd64c05-dcf0-4a2a-a88a-efa8c34fa086" class="bulleted-list"><li style="list-style-type:disc">Master clock means slaves don’t need precise oscillators (expensive?)</li></ul></div></p></div><div id="88ae42f4-af26-4056-a2d3-03036583f8b1" style="width:50%" class="column"><p id="4bc4544e-99ad-4004-a62a-3bee991913f9" class="">Cons:<div class="indented"><ul id="8f9652a4-efe7-4ee7-96ab-302bcbf0c5c0" class="bulleted-list"><li style="list-style-type:disc">No data receive ACK (which I2C has)</li></ul><ul id="d68e13fe-8d49-4490-b9ce-fe11de617e3f" class="bulleted-list"><li style="list-style-type:disc">No error checking</li></ul><ul id="ee55c278-6f20-474f-9267-80fd9a474b4e" class="bulleted-list"><li style="list-style-type:disc">Single master only</li></ul><ul id="f08a88df-b269-4e71-9530-b750c830b4c1" class="bulleted-list"><li style="list-style-type:disc">Wiring can get complicated for many slaves - one slave select for each slave</li></ul></div></p></div></div><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="9c08d4ce-33de-4283-8985-2757b5983d0f"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Commonly used in peripherals (duh). This especially includes those which require speed (such as SD card readers or displays with relatively fast refresh rates. Relative for microcontrollers, that is.).</div></figure><h2 id="fb0f4731-d820-4fa0-bd9a-d3d704622983" class="">I2C</h2><blockquote id="99d16e1e-1b85-41b4-9135-5f4ae336d474" class="">Inter Integrated Circuit</blockquote><p id="a522f1b2-6bdd-4db8-a37e-e87b737734f5" class="">The main selling point of I2C is that it supports several <mark class="highlight-orange">masters and slaves</mark>. It uses two pins - clock and data. This means it’s only <mark class="highlight-orange">half-duplex</mark>.</p><div id="28417ba4-5a91-4cb0-bc7a-a6518df7bba2" class="column-list"><div id="5d968600-adf3-4495-be64-9ad7f970fa03" style="width:50%" class="column"><p id="c9350014-8394-4b44-bc58-4a22cf6fcbb8" class="">Pros:<div class="indented"><ul id="36d8514b-ee5e-4c56-9e91-dfb2c46e773e" class="bulleted-list"><li style="list-style-type:disc">Multiple masters and slaves</li></ul><ul id="37e7b5ec-25fb-41dc-889d-4264834e39a1" class="bulleted-list"><li style="list-style-type:disc">Low pin count even with many devices on the bus</li></ul><ul id="2a639123-ee80-4648-bde1-6ea9f18001d9" class="bulleted-list"><li style="list-style-type:disc">Multislave and multimaster communcation</li></ul></div></p></div><div id="114c0cd9-0f5b-4f48-b481-0b585ea85e18" style="width:50%" class="column"><p id="e150da81-646a-41e2-9944-a588f0b8763b" class="">Cons:<div class="indented"><ul id="963bd128-a67d-450f-9b48-b2dab30d91a7" class="bulleted-list"><li style="list-style-type:disc">Slower than SPI (faster than UART)</li></ul><ul id="f88d1a21-015a-4452-b9d1-856957ce9cb9" class="bulleted-list"><li style="list-style-type:disc">Half-duplex</li></ul><ul id="ed4d6b27-83cd-48dc-9fc7-ee93673f554c" class="bulleted-list"><li style="list-style-type:disc">Increasing circuit complexity with many devices on the bus</li></ul></div></p></div></div><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="966f33aa-3f2d-453e-a5d8-83813fb3d80c"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Used for attaching lower-speed integrated circuits (hence the name) to microcontollers in short-distance, intra-board communication. For example, a microcontroller master with an ADC slave, DAC slave and microcontroller slave.</div></figure><h3 id="e6ba9057-e2d8-4492-a2c8-b1aab3147ecf" class="">Beware of wires</h3><p id="ed7eb614-3b42-42dc-adad-3ec55e90324e" class="">Wires act as capacitors between the signal and ground.<div class="indented"><p id="a40ee335-6f9e-419b-9895-530abf9d9666" class="">Capacitors have low resistance for high frequency.</p></div></p><p id="e7dc30ad-6368-4e06-a204-842a640068dc" class="">Hence, the longer your wire, the slower your communication needs to be to succeed.</p><h3 id="6f1b53a8-e907-4bdd-aac4-c40ae7ecc993" class="">Consistent Overhead Byte Stuffing</h3><p id="c7958fcd-3235-4ea3-bba8-efc4baf81d78" class="">Byte stuffing is a process that transforms a sequence of bytes that may contain <mark class="highlight-orange">reserved values</mark> into a potentially longer sequence that contains no occurences of those values.<div class="indented"><p id="652f7b7c-201e-460f-8057-1c516b150e8f" class="">The extra length is referred to as overhead.</p></div></p><p id="c141e179-edfc-48f5-bec3-ad82d7b6aeb3" class="">COBS is an algorithm which does this with guarantees on upper bounds of overhead.</p></div></article></body></html>

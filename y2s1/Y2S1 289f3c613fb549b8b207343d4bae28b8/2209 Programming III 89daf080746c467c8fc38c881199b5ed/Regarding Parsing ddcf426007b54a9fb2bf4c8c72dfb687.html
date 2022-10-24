@@ -1,0 +1,750 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Regarding Parsing</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ddcf4260-07b5-4a9f-b2bf-4c8c72dfb687" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🎐</span></div><h1 class="page-title">Regarding Parsing</h1></header><div class="page-body"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="e42ce452-f991-4560-a8f9-d01693a656c2"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">Adapted from Julian&#x27;s slides and <em>Functional Pearls</em> by Hutton and Meijer.</div></figure><nav id="a725a7e8-fffb-4986-ad25-8bb9828fc643" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#69ef6e5f-75fc-4944-8a5d-02524dcc0b11">The Parser</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#59f7ef35-3ea2-4ad9-996a-773ce96a4c08">Making Useful Functions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c409a98e-81d6-466c-9a61-17c8f74266fd">item</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#718b667c-c645-447f-b133-382712935f21">parse</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a16c71a2-2f53-4d6c-b24e-41e63b1803ae">alternative (&lt;|&gt;)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1c2673f8-4c4a-428d-9a01-b6696032cfd2">Sequencing Parsers</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1b5e37c6-82ec-48ad-ac84-1cd6158ce5f0">do for Parsers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9e069ff4-8a24-4ac6-8a3b-297afd52a704">Deriving Parsing Primitives</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#972eb53e-239d-454f-8d18-6bf28cd09727">Parsing Repeatedly (+, *)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#886e76ec-5bbf-4abe-8dc4-85bc3327fd13">Examples</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#281b41ea-b22e-46cd-bea0-74942395975b">Example Grammar for Arithmetic Expressions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#907543c4-d7b7-4f4b-b85a-26f870f24d21">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5c169307-e289-4ee6-a8e0-9b61ce1df21e">Implementation</a></div></nav><h2 id="69ef6e5f-75fc-4944-8a5d-02524dcc0b11" class="">The Parser</h2><p id="eb12a73d-c10a-47de-9e44-669e8cbd05b5" class="">We start by defining what a parser is:</p><pre id="4785f3c6-4c83-46ad-a6b6-330178a78f45" class="code"><code>newtype Parser a = P (String -&gt; [(a, String)])</code></pre><p id="1acd9e81-5b3d-425c-8957-cdc3fbaf7bc3" class="">That is, a parser is a function which <mark class="highlight-orange">takes a string</mark> as its argument and <mark class="highlight-orange">returns a list of results</mark>.</p><p id="0271f0e2-77b9-4a30-9824-3900a4f6660d" class="">Each result is a pair:<div class="indented"><p id="16f7da54-ac9d-468c-9ed4-7bf3063ebc60" class="">The first component is a value of type <code>a</code> produced by parsing a <mark class="highlight-orange">prefix</mark> of the string.</p><p id="b078304c-f521-49b6-8a76-28dbea9a7322" class="">The second component is the unparsed suffix of the argument string.</p></div></p><p id="025fca57-c868-4b0f-ae2a-00ee3c76a74c" class="">Intuitively, the empty list denotes the failure of a parser (where the input string does not conform to the described grammar).</p><p id="57c3a164-4573-422d-8299-cf49cdb698ee" class="">Returning a <mark class="highlight-orange">list</mark> <mark class="highlight-orange">of results</mark> allows us to build parsers for ambiguous grammars, since any one of the results is a valid interpretation.</p><h2 id="59f7ef35-3ea2-4ad9-996a-773ce96a4c08" class="">Making Useful Functions</h2><p id="fb3f2a37-b603-4f33-8843-1ab89b643907" class="">Using our newly defined concept of a parser, we can begin to build useful functions which do simple parsing.</p><h3 id="c409a98e-81d6-466c-9a61-17c8f74266fd" class="">item</h3><p id="adfaeb6b-a21a-4f5a-be5b-5ec5116f3bd1" class="">We can start by simply extracting a single item from the input string:</p><pre id="60ddfecf-5ff9-40cb-b88c-4b0da9bb7ef3" class="code"><code>item :: Parser Char
+item = P (\inp -&gt; case inp of
+										[] -&gt; []
+                    (x:xs) -&gt; [(x,xs)]
+          )</code></pre><p id="ca8679b3-01e6-415c-a4e9-6b4e273e9398" class="">This fails (returning an empty list) if the input string is empty and consumes the first character of the input string otherwise.</p><h3 id="718b667c-c645-447f-b133-382712935f21" class="">parse</h3><p id="e4359518-f33f-480c-af0c-24eb4004995f" class=""><code>parse</code> simply takes a parser and a string and feeds the string as input to the parser to retrieve its results.</p><pre id="8d518470-f00f-4a35-8f36-f1d3c77fab5d" class="code"><code>parse :: Parser a -&gt; String -&gt; [(a, String)]
+parse (P parser) input = parser input</code></pre><h3 id="a16c71a2-2f53-4d6c-b24e-41e63b1803ae" class="">alternative (&lt;|&gt;)</h3><p id="2916894d-fdcb-4f56-9c21-038bc75f875e" class="">This operator takes two parsers and tries parsing using the first. If that fails, it tries parsing using the second.</p><pre id="31a8aa08-c197-4b8d-90e6-b1cce5f47ede" class="code"><code>(&lt;|&gt;) :: Parser a -&gt; Parser a -&gt; Parser a
+p &lt;|&gt; q = P (\input -&gt; case parse p input of
+													[] -&gt; parse q input
+													[(v,out)] -&gt; [(v,out)]
+						)</code></pre><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="fa6c3336-ee60-4508-8f33-af48babad9e9"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">This operator is used extensively when parsing BNF grammars (used similarly to the | notation). Like, perhaps, challenge 4 of the coursework...</div></figure><h2 id="1c2673f8-4c4a-428d-9a01-b6696032cfd2" class="">Sequencing Parsers</h2><p id="0a9ee122-dd1c-44a7-a46f-9e259d6a3ac4" class="">In the same way as IO actions, functions of type <code>Parser</code> are not easily composed...</p><p id="b60612fb-7cf0-4c77-a0d4-c340f5517b83" class="">However, also in the same way as IO actions, the <code>do</code> notation works fine for this!</p><p id="79a94b02-e402-45d7-8b31-4dbef9a675bd" class="">Remember the <code>firstAndThird</code> example from a little while back?</p><pre id="f113f952-beee-464f-a779-0b3a63591641" class="code"><code>firstAndThird :: Parser (Char, Char)
+firstAndThird = do x &lt;- item
+									 item -- y
+									 z &lt;- item
+									 return (x,z)</code></pre><h3 id="1b5e37c6-82ec-48ad-ac84-1cd6158ce5f0" class="">do for Parsers</h3><p id="cfaf20a5-c19e-43f3-ada7-849821a35c66" class="">The rules for the <code>do</code> notation apply just the same here.<div class="indented"><p id="5aa76ab3-e625-45d6-ae8a-fd47f14509c3" class="">Each action must be column-aligned, you don&#x27;t have to bind every result, you can nest blocks, etc.</p><p id="7391dd1a-0ede-4346-b7a9-6ecf7b79bb0c" class="">Remember that the result of the last action is the return value for the whole block.</p></div></p><h2 id="9e069ff4-8a24-4ac6-8a3b-297afd52a704" class="">Deriving Parsing Primitives</h2><p id="a557a438-0878-4f46-a048-1b291ac2995b" class="">Using what we have, we can now build a library of parsing primitives by sequencing parsing actions, just as we built a library of IO actions.</p><p id="67c53a80-a699-4b46-87e8-06f23d131e18" class="">A good starting point is the <code>sat</code> parser function, which takes a single character and parses or not based on whether the character read satisfies a given predicate.</p><pre id="24af8f50-e60c-4cf3-934b-f26fc87324cb" class="code"><code>sat :: (Char -&gt; Bool) -&gt; Parser Char
+sat p = do x &lt;- item
+					 if p x then
+							return x
+					 else
+							P (\input -&gt; [])</code></pre><div id="d1abda74-f09b-49b3-8091-355c3201aecb" class="column-list"><div id="816456fc-c765-40b9-b1b3-4d25d920c942" style="width:50%" class="column"><pre id="86583b84-d4ed-4bbf-80fe-ff3c6ba88c62" class="code"><code>digit :: Parser Char
+digit = sat isDigit</code></pre></div><div id="c344eff5-1a90-4539-88a1-c393fdbc8610" style="width:50%" class="column"><pre id="d3caeaf2-9179-430a-a173-8b573ef89f47" class="code"><code>char :: Char -&gt; ParserChar
+char x = sat (x ==)</code></pre></div></div><h2 id="972eb53e-239d-454f-8d18-6bf28cd09727" class="">Parsing Repeatedly (+, *)</h2><p id="2e8fad05-c472-44ab-ac7a-319b506f067d" class="">Consider how we might parse a string of lowercase letters:</p><pre id="f66ef665-93db-4e63-a833-91427cba5f4e" class="code"><code>stringLower :: Parser String
+stringLower = do x &lt;- (sat isLower)
+                 xs &lt;- stringLower
+                 return (x:xs)
+							&lt;|&gt; return []</code></pre><p id="17cd32de-01c7-4988-9a9b-4dfaf620e794" class="">We effectively <mark class="highlight-orange">either</mark> parse zero characters <mark class="highlight-orange">or</mark> parse one and then recursively parse more.</p><p id="c1b38831-ad7f-4d6c-a461-246b2792151f" class="">We can generalise this repeated parsing to more than just <code>String</code>s.</p><div id="0ed28780-232d-4c7b-90ae-7df13fa1582b" class="column-list"><div id="abd0ecce-1239-4eeb-96f8-a86f68218cff" style="width:50%" class="column"><pre id="2a6febef-78c3-4f33-8986-393fa3064b8b" class="code"><code>many :: Parser a -&gt; Parser [a]
+many p = many1 p &lt;|&gt; return []
+
+</code></pre></div><div id="4f08cbf1-f327-4dc3-8d39-cd8496263151" style="width:50%" class="column"><pre id="d9ee3aca-da3c-4ab1-94de-acd368c836f3" class="code"><code>many1 :: Parser a -&gt; Parser [a]
+many1 p = do v &lt;- p
+             vs &lt;- many p
+             return (v:vs)</code></pre></div></div><p id="8c1f1a81-6ea7-477f-a6bb-4b5e45b8e4e0" class=""><code>many1</code> is typically called <code>some</code>.</p><h3 id="886e76ec-5bbf-4abe-8dc4-85bc3327fd13" class="">Examples</h3><p id="017a5f21-4707-4352-b660-3bf3470ae3cc" class="">Here are some examples of usage!</p><div id="3ac12010-cf87-4aa6-80bb-acd3078fec47" class="column-list"><div id="4f72c3ae-3a7f-4986-8d5b-6acca8e7f4d5" style="width:50%" class="column"><pre id="ce640e45-9213-4979-9e31-22407a2c059c" class="code"><code>nat :: Parser Int
+nat = do ds &lt;- some digit
+         return (read ds)
+
+</code></pre></div><div id="fe17e039-552e-43df-8e2e-e2d84a733d08" style="width:50%" class="column"><pre id="5bf776c9-bdc2-4d06-b223-f56e672631f6" class="code"><code>int :: Parser Int
+int = do char &#x27;-&#x27;
+				 n &lt;- nat
+	       return (-n)
+      &lt;|&gt; nat</code></pre></div></div><p id="f1e42c60-41bb-44b7-b378-570758332667" class="">Here&#x27;s one for parsing Haskell-style lists of digits:</p><pre id="cb254172-8038-45fb-94d0-d73054257da9" class="code"><code>p :: Parser String
+p = do char &#x27;[&#x27;
+       d &lt;- digit
+       ds &lt;- many (do char &#x27;,&#x27;
+                      digit)
+       char &#x27;]&#x27;
+       return (d:ds)</code></pre><pre id="defc4eab-ffc4-4aa9-b4cb-34a81541b1c0" class="code"><code>-- &gt; parse p &quot;[1,2,3,4]&quot;
+-- [(&quot;1234&quot;, &quot;&quot;)]
+
+-- &gt; parse p &quot;[1,2,3,4&quot;
+-- []</code></pre><h2 id="281b41ea-b22e-46cd-bea0-74942395975b" class="">Example Grammar for Arithmetic Expressions</h2><h3 id="907543c4-d7b7-4f4b-b85a-26f870f24d21" class="">Definition</h3><p id="5574ab44-6731-4ddc-826f-4fa4bff48e6e" class="">In order to implement the associativity and tighter binding of <code>*</code> we have to rewrite the concrete grammar of arithmetic expressions as follows:</p><pre id="f7edab28-c51e-48d5-b8d4-882ce5bde0a2" class="code"><code>expr ::= term &#x27;+&#x27; expr | term
+
+term ::= factor &#x27;*&#x27; term | factor
+
+factor ::= nat | &#x27;(&#x27; expr &#x27;)&#x27;
+
+nat ::= digit | digit nat
+digit ::= &#x27;0&#x27; | &#x27;1&#x27; | ... | &#x27;9&#x27;</code></pre><p id="4289e2c5-9a62-4d51-90d9-495ccd23fdfb" class="">Note how an <code>expr</code> is either a <code>term &#x27;+&#x27; expr</code> or a <code>term</code>. Since <code>+</code> has lower precedence than <code>*</code>, it should appear <mark class="highlight-orange">higher</mark> in the parse tree.</p><p id="6a96da4d-fc92-45ad-b0e8-558ff0a89946" class="">Notice the brackets in <code>factor</code> and how they contain an <code>expr</code> - this is effectively resetting the precedence by starting back at the top of the subtree.</p><h3 id="5c169307-e289-4ee6-a8e0-9b61ce1df21e" class="">Implementation</h3><div id="d47aa7c7-131a-4b26-b60e-e9b0c3855d50" class="column-list"><div id="68dbc76f-6593-4134-9c7c-d3b29e539192" style="width:50%" class="column"><pre id="e68a3732-d9b3-4860-9eea-101f09b18304" class="code"><code>expr :: Parser Int
+expr = do t &lt;- term
+          char &#x27;+&#x27;
+          e &lt;- expr
+          return (t + e)
+       &lt;|&gt; term</code></pre></div><div id="198daa9d-87cd-45b2-8fae-ac4df630603a" style="width:50%" class="column"><pre id="59f36ca6-0b60-478a-9c51-a958e78ebb1f" class="code"><code>term :: Parser Int
+term = do f &lt;- factor
+          char &#x27;*&#x27;
+          t &lt;- term
+          return (f * t)
+       &lt;|&gt; factor</code></pre></div></div><div id="f3c561f5-cb9c-4ff1-b55d-84325ef6ca88" class="column-list"><div id="bd3b0f7c-cbe0-45d5-b32d-a2d70aef2223" style="width:50%" class="column"><pre id="9abdbf4f-5683-4710-a31e-e657cd22452f" class="code"><code>factor :: Parser Int
+factor = nat &lt;|&gt; do char &#x27;(&#x27;
+                    e &lt;- expr
+                    char &#x27;)&#x27;
+                    return e</code></pre></div><div id="60973bbd-e260-4aff-860a-c579bb50ee68" style="width:50%" class="column"><pre id="6f3daaa4-14fa-49b3-b97b-ee7de5033ce8" class="code"><code>nat :: Parser Int
+nat = do ds &lt;- some digit
+         return (read ds)
+
+-- (defined earlier)</code></pre></div></div><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="16db7fe4-72dd-437c-a1e3-af86caaa39cf"><div style="font-size:1.5em"><span class="icon">🔪</span></div><div style="width:100%">See how useful <code>&lt;|&gt;</code> is in representing the BNF grammar?!</div></figure><p id="1eebb8fe-b900-42d9-8918-6b4049fa28e2" class="">Finally, we define the entry point to the parser:</p><pre id="bf35748e-42c5-4590-a743-6876c4c47cbb" class="code"><code>parseAndEval :: String -&gt; Int
+parseAndEval xs = fst (head (parse expr xs))
+
+-- &gt; parseAndEval &quot;2*3+4&quot;
+-- 10
+
+-- &gt; parseAndEval &quot;2*(3+4)&quot;
+-- 14</code></pre><p id="ea67305a-1ebb-4cf3-8013-0aaa05cbeade" class="">
+</p></div></article></body></html>
